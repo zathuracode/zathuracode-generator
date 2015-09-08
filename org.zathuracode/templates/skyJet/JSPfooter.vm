@@ -1,0 +1,18 @@
+<jsp:root jsfc="f:view" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<html>
+		<body>
+			<f:view>
+				<ui:composition>
+					<div id="footer">
+						<a href="http://www.zathuracode.org">Powered by Zathuracode 5.0.1</a>
+					</div>
+				</ui:composition>
+			</f:view>
+		</body>
+	</html>
+</jsp:root>

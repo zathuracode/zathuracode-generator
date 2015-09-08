@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<title>Signin Zathuracode</title>
+		<meta name="content-type" content="text/html; charset=UTF-8"/>
+		<link REL="SHORTCUT ICON" href="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/images/icon.png"/>
+		<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/css/stylelogin.css" />
+    </h:head>
+	<h:body>
+		<div class="container">
+
+	      <form  id="loginForm" name="loginForm" action="j_spring_security_check" method="post" class="form-signin">
+	        <h2 class="form-signin-heading">Please sign in</h2>
+	        <input id="usernameField" name="j_username" type="text" 	 class="form-control" placeholder="User default admin"/>
+	        <input id="passwordField" name="j_password" type="password"  class="form-control" placeholder="Password default admin"/>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	      </form>
+	      
+	      <div align="center">
+	      	<h3 class="form-signin-heading">
+				<h:outputText rendered="${param.authfailed eq 'true'}" value="authfailed" />
+				<h:outputText rendered="${param.loggedout eq 'true'}" value="loggedout" />
+				<h:outputText rendered="${param.exceededAllowed eq 'true'}" value="exceededAllowed" />
+			</h3>
+		 </div>
+	      
+    	</div>
+	</h:body>
+</html>

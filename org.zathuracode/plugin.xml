@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+         
+      <actionSet
+            label="&amp;Zathura"
+            visible="true"
+            id="org.zathuracode.eclipse.plugin.generator">
+            
+        
+         <action
+               class="org.zcode.eclipse.plugin.generator.actions.ZathuraGeneratorAction"
+               icon="icons/balvardi-Robotic1616.png"
+               id="org.zcode.eclipse.plugin.generator.actions.ZathuraGeneratorAction"
+               label="&amp;ZathuraCode Generator"               
+               toolbarPath="zathuraGroup"
+               tooltip="%action-tooltip">
+         </action>
+         
+      </actionSet>
+   </extension>
+
+</plugin>

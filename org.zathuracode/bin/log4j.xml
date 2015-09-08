@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+        
+  <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+    	<param name="ConversionPattern" value="%-4r [%p] %-c %d{ISO8601}  %m%n"/>
+    </layout>
+  </appender>
+  
+  <appender name="EclipseAppender" class="org.zcode.eclipse.plugin.log.EclipseAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+    	<param name="ConversionPattern" value="[%p] %-c %m%n"/>
+    </layout>
+  </appender>
+  
+  
+  
+
+  <appender name="FILE" class="org.apache.log4j.FileAppender">
+	   <param name="file" value="zathuraCode.log"/>
+	   <param name="immediateFlush" value="true"/>
+	   <param name="threshold" value="debug"/>
+	   <param name="append" value="false"/>
+	   <layout class="org.apache.log4j.PatternLayout">
+	      <param name="ConversionPattern" value="%-4r [%p] %-c %d{ISO8601}  %m%n"/>
+	   </layout>
+	</appender>
+ 
+  <root>
+  	<priority value="info"/>
+   <!-- 	
+     	<priority value="off"/>
+     	<priority value ="debug" />
+    	<priority value ="fatal" />
+    -->
+    <appender-ref ref="ConsoleAppender"/>
+    
+    <appender-ref ref="EclipseAppender"/>
+ 
+    <appender-ref ref="FILE"/>
+  
+  </root>
+
+</log4j:configuration> 
+    

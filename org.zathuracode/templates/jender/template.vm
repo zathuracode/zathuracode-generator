@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	 <h:head>
+                <title>.::ZathuraCode V5::.</title>
+                <link REL="SHORTCUT ICON" href="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/images/icon.png"/>
+                <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/css/style.css" />
+     </h:head>
+	
+	<h:body>
+		<div id="container">
+				<ui:insert name="header">
+					 <ui:include src="/WEB-INF/facelets/header.jspx" />
+					 <ui:include src="/WEB-INF/facelets/menu.jspx" />
+				</ui:insert>
+			
+					<ui:insert name="body"/>
+			
+				<ui:insert name="footer">
+					 <ui:include src="/WEB-INF/facelets/footer.jspx" />
+				</ui:insert>
+		</div>
+	</h:body>
+</html>

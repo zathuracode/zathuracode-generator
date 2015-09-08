@@ -1,0 +1,19 @@
+package  ${virginPackage}.dataaccess.dao;
+import java.util.List;
+import java.util.Set;
+import java.util.Date;
+import java.math.BigDecimal;
+import javax.ejb.Local;
+import ${virginPackage}.dataaccess.api.Dao;
+import $package.${metaData.getRealClassName()};
+#if($composedKey == true)
+    import $package.${metaData.primaryKey.getRealClassName()};
+#end
+/**
+* Interface for   ${metaData.getRealClassName()}DAO.
+*
+*/
+@Local
+public interface  I${metaData.getRealClassName()}DAO extends Dao<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> {
+
+}

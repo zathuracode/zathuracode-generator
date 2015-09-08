@@ -1,0 +1,45 @@
+/* Main Layout Styles */
+body {
+	background: #EBEBEB;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666;
+}
+
+#container {
+	width: 1024px;
+	padding: 0px;
+	margin: 10px auto;
+	overflow: auto;
+}
+
+#footer {
+	text-align:center;
+	margin: 10px auto;
+}
+
+/*  Para que se vean pequenos los componentes*/
+th,td {
+	font-size: 12px;
+}
+
+.emp1 .fc-event-skin {
+	background: red;
+}
+
+.emp2 .fc-event-skin {
+	background: green;
+}
+
+.canceled div {
+	border-color: red !important;
+	background-color: red !important;
+	width: 100%;
+}
+
+.ui-menubar {
+	border: 1px solid #aed0ea !important;
+	mouseover: #ff0000; 
+	background-color: #EBEBEB !important; 
+	width: 930px;
+}

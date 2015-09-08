@@ -1,0 +1,189 @@
+<!--Author Zathuracode Generator -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+	<modelVersion>4.0.0</modelVersion>	
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<name>${name}</name>
+	<description>${description}</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <ejb.version>3.1.1</ejb.version>
+        <primefaces.version>5.1</primefaces.version>
+       	<mojarra.version>2.2.9</mojarra.version>
+    </properties>
+    
+    
+     <repositories>
+	    <repository>
+	        <id>prime-repo</id>
+	        <name>PrimeFaces Maven Repository</name>
+	        <url>http://repository.primefaces.org</url>
+	        <layout>default</layout>
+	    </repository>
+	</repositories>
+	
+	
+	
+	
+	<dependencies>
+		<!--     Primefaces    -->
+	    <dependency>  
+	        <groupId>org.primefaces.themes</groupId>  
+	        <artifactId>all-themes</artifactId>  
+	        <version>1.0.10</version>  
+	    </dependency>  
+		<dependency>
+		  <groupId>org.primefaces</groupId>
+		  <artifactId>primefaces</artifactId>
+		  <version>${primefaces.version}</version>
+		</dependency>
+    <!--     Primefaces    -->
+    
+    
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		  <version>1.7.5</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-log4j12</artifactId>
+		  <version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jamonapi</groupId>
+			<artifactId>jamon</artifactId>
+			<version>2.79</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hazelcast-all</artifactId>
+					<groupId>com.hazelcast</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>org.glassfish</groupId>
+		  <artifactId>javax.faces</artifactId>
+		  <version>${mojarra.version}</version>
+		  <scope>provided</scope>
+		</dependency>
+		
+		
+		<!-- Apache commons -->
+		<dependency>
+		  <groupId>commons-beanutils</groupId>
+		  <artifactId>commons-beanutils</artifactId>
+		  <version>1.7.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-collections</groupId>
+		  <artifactId>commons-collections</artifactId>
+		  <version>3.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-dbcp</groupId>
+		  <artifactId>commons-dbcp</artifactId>
+		  <version>1.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-fileupload</groupId>
+		  <artifactId>commons-fileupload</artifactId>
+		  <version>1.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-httpclient</groupId>
+		  <artifactId>commons-httpclient</artifactId>
+		  <version>3.1</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<artifactId>commons-codec</artifactId>
+		  		<groupId>commons-codec</groupId>
+		  	</exclusion>
+		  </exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>commons-lang</groupId>
+		  <artifactId>commons-lang</artifactId>
+		  <version>2.5</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-logging</groupId>
+		  <artifactId>commons-logging</artifactId>
+		  <version>1.1.3</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<artifactId>servlet-api</artifactId>
+		  		<groupId>javax.servlet</groupId>
+		  	</exclusion>
+		  	<exclusion>
+		  		<artifactId>avalon-framework</artifactId>
+		  		<groupId>avalon-framework</groupId>
+		  	</exclusion>
+		  	<exclusion>
+		  		<artifactId>logkit</artifactId>
+		  		<groupId>logkit</groupId>
+		  	</exclusion>
+		  </exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>commons-pool</groupId>
+		  <artifactId>commons-pool</artifactId>
+		  <version>1.5.3</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-validator</groupId>
+		  <artifactId>commons-validator</artifactId>
+		  <version>1.4.0</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<artifactId>commons-digester</artifactId>
+		  		<groupId>commons-digester</groupId>
+		  	</exclusion>
+		  </exclusions>
+		</dependency>
+		<!-- Apache commons -->
+		
+		<dependency>
+		  <groupId>log4j</groupId>
+		  <artifactId>log4j</artifactId>
+		  <version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.3-1102-jdbc41</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+	    <plugins>
+	      <plugin>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	         <version>3.1</version>
+	        <configuration>
+	          <source>1.6</source>
+	          <target>1.6</target>
+	        </configuration>
+	      </plugin>
+	      <plugin>
+	        <artifactId>maven-war-plugin</artifactId>
+	        <version>2.4</version>
+	        <configuration>
+	          <version>3.0</version>
+	          <failOnMissingWebXml>false</failOnMissingWebXml>
+	        </configuration>
+	      </plugin>
+	    </plugins>
+	  </build>
+	
+</project>

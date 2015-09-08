@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<database-types>
+	
+     <database>
+     	<name>Microsoft SQL Server (jTDS driver)</name>
+		<driverClassName>net.sourceforge.jtds.jdbc.Driver</driverClassName>
+		<url>jdbc:jtds:sqlserver://&lt;hostname&gt;[:&lt;port&gt;]/&lt;dbname&gt;</url>
+		<groupId>net.sourceforge.jtds</groupId>
+		<artifactId>jtds</artifactId>
+		<version>1.3.1</version>
+	</database>
+     
+     
+    <database>	
+		<name>MySQL Connector/J</name>
+		<driverClassName>com.mysql.jdbc.Driver</driverClassName>
+		<url>jdbc:mysql://&lt;hostname&gt;[&lt;:3306&gt;]/&lt;dbname&gt;</url>	
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.33</version>
+	</database>
+	
+    <database>
+    	<name>JTOpen(AS/400)</name>
+        <driverClassName>com.ibm.as400.access.AS400JDBCDriver</driverClassName>
+        <url>jdbc:as400://&lt;host_name&gt;:8471/&lt;default-schema&gt;;&lt;properties&gt;</url>
+        <groupId>net.sf.jt400</groupId>
+		<artifactId>jt400</artifactId>
+		<version>6.7</version>
+    </database>
+	
+	<database>
+		<name>Oracle 10g, 11g (ojdbc6) (Thin driver)</name>
+		<driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
+		<url>jdbc:oracle:thin:@&lt;server&gt;[:&lt;1521&gt;]:&lt;database_name&gt;</url>
+		<groupId>com.oracle</groupId>
+		<artifactId>ojdbc6</artifactId>
+		<version>11.2.0</version>
+	</database>
+	
+	 <database>
+	 	<name>PostgreSQL</name>		
+		<url>jdbc:postgresql:[&lt;//host&gt;[:&lt;5432&gt;/]]&lt;database&gt;</url>		
+		<driverClassName>org.postgresql.Driver</driverClassName>
+		<groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>9.3-1102-jdbc41</version>
+	</database>
+
+     
+</database-types>

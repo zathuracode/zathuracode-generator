@@ -1,0 +1,376 @@
+<!--Author Zathuracode Generator -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+	<modelVersion>4.0.0</modelVersion>	
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<name>${name}</name>
+	<description>${description}</description>	
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       	<hibernate.version>4.3.8.Final</hibernate.version>
+        <primefaces.version>5.1</primefaces.version>
+		<spring.version>4.1.5.RELEASE</spring.version>
+		<spring.security.version>3.2.6.RELEASE</spring.security.version>
+		<mojarra.version>2.2.9</mojarra.version>
+		<slf4j.version>1.7.10</slf4j.version>	
+    </properties>
+    
+    
+    <repositories>
+	    <repository>
+	        <id>prime-repo</id>
+	        <name>PrimeFaces Maven Repository</name>
+	        <url>http://repository.primefaces.org</url>
+	        <layout>default</layout>
+	    </repository>
+	</repositories>
+	
+	<dependencies>
+	<!--     Primefaces    -->
+	    <dependency>  
+	        <groupId>org.primefaces.themes</groupId>  
+	        <artifactId>all-themes</artifactId>  
+	        <version>1.0.10</version>  
+	    </dependency>  
+		<dependency>
+		  <groupId>org.primefaces</groupId>
+		  <artifactId>primefaces</artifactId>
+		  <version>${primefaces.version}</version>
+		</dependency>
+    <!--     Primefaces    -->
+    
+    
+    
+    			
+		 <!--     Spring Framework    -->	
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-aop</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-aspects</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-beans</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-context</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-context-support</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-core</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-expression</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>		
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-instrument</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-instrument-tomcat</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-jdbc</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-jms</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-orm</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-oxm</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-test</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-tx</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-web</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-webmvc</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-webmvc-portlet</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-web</artifactId>
+        	<version>${spring.security.version}</version>
+    	</dependency>
+    	<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-config</artifactId>
+        	<version>${spring.security.version}</version>
+    	</dependency>
+		
+		<!--     Spring Framework    -->
+		
+		<!-- Hibernate Framework -->
+		<dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-c3p0</artifactId>
+		  <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-core</artifactId>
+		  <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-ehcache</artifactId>
+		  <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-proxool</artifactId>
+		  <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
+		<!-- Hibernate Framework -->	
+		
+	
+	
+		<dependency>
+		  <groupId>antlr</groupId>
+		  <artifactId>antlr</artifactId>
+		  <version>2.7.7</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.mchange</groupId>
+		  <artifactId>c3p0</artifactId>
+		  <version>0.9.2.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>dom4j</groupId>
+		  <artifactId>dom4j</artifactId>
+		  <version>1.6.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>net.sf.ehcache</groupId>
+		  <artifactId>ehcache-core</artifactId>
+		  <version>2.4.3</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.mchange</groupId>
+		  <artifactId>mchange-commons-java</artifactId>
+		  <version>0.2.3.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>proxool</groupId>
+		  <artifactId>proxool</artifactId>
+		  <version>0.8.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.servlet.jsp.jstl</artifactId>
+			<version>3.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.servlet.jsp</artifactId>
+			<version>3.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.servlet</artifactId>
+			<version>3.1.1</version>
+			<scope>provided</scope>
+		</dependency>		
+		
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		  <version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-log4j12</artifactId>
+		  <version>${slf4j.version}</version>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>com.jamonapi</groupId>
+			<artifactId>jamon</artifactId>
+			<version>2.79</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hazelcast-all</artifactId>
+					<groupId>com.hazelcast</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>org.glassfish</groupId>
+		  <artifactId>javax.faces</artifactId>
+		  <version>${mojarra.version}</version>
+		</dependency>
+		
+		
+		<!-- Apache commons -->
+		<dependency>
+		  <groupId>commons-beanutils</groupId>
+		  <artifactId>commons-beanutils</artifactId>
+		  <version>1.7.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-collections</groupId>
+		  <artifactId>commons-collections</artifactId>
+		  <version>3.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-dbcp</groupId>
+		  <artifactId>commons-dbcp</artifactId>
+		  <version>1.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-fileupload</groupId>
+		  <artifactId>commons-fileupload</artifactId>
+		  <version>1.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-httpclient</groupId>
+		  <artifactId>commons-httpclient</artifactId>
+		  <version>3.1</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<artifactId>commons-codec</artifactId>
+		  		<groupId>commons-codec</groupId>
+		  	</exclusion>
+		  </exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>commons-lang</groupId>
+		  <artifactId>commons-lang</artifactId>
+		  <version>2.5</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-logging</groupId>
+		  <artifactId>commons-logging</artifactId>
+		  <version>1.1.3</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<artifactId>servlet-api</artifactId>
+		  		<groupId>javax.servlet</groupId>
+		  	</exclusion>
+		  	<exclusion>
+		  		<artifactId>avalon-framework</artifactId>
+		  		<groupId>avalon-framework</groupId>
+		  	</exclusion>
+		  	<exclusion>
+		  		<artifactId>logkit</artifactId>
+		  		<groupId>logkit</groupId>
+		  	</exclusion>
+		  </exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>commons-pool</groupId>
+		  <artifactId>commons-pool</artifactId>
+		  <version>1.5.3</version>
+		</dependency>
+		<dependency>
+		  <groupId>commons-validator</groupId>
+		  <artifactId>commons-validator</artifactId>
+		  <version>1.4.0</version>
+		  <exclusions>
+		  	<exclusion>
+		  		<artifactId>commons-digester</artifactId>
+		  		<groupId>commons-digester</groupId>
+		  	</exclusion>
+		  </exclusions>
+		</dependency>
+		<!-- Apache commons -->
+		
+		
+		
+		<dependency>
+		  <groupId>log4j</groupId>
+		  <artifactId>log4j</artifactId>
+		  <version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>${groupIdConnector}</groupId>
+			<artifactId>${artifactIdConnector}</artifactId>
+			<version>${versionConnector}</version>
+		</dependency>	
+	</dependencies>
+	
+	<build>
+	    <plugins>
+	      <plugin>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	         <version>3.1</version>
+	        <configuration>
+	          <source>1.6</source>
+	          <target>1.6</target>
+	        </configuration>
+	      </plugin>
+	      <plugin>
+	        <artifactId>maven-war-plugin</artifactId>
+	        <version>2.4</version>
+	        <configuration>
+	          <version>3.0</version>
+	          <failOnMissingWebXml>false</failOnMissingWebXml>
+	        </configuration>
+	      </plugin>
+	    </plugins>
+	  </build>
+  	
+</project>

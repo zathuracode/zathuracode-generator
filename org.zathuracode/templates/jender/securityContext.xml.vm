@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Author Zathuracode Generator -->
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">          
+	
+	<http security="none" pattern="/login.xhtml" />
+	
+	
+	<http auto-config="true" access-denied-page="/login.xhtml" access-decision-manager-ref="accessDecisionManager">
+		
+		<intercept-url pattern="/XHTML/*" access="ROLE_USER,Admin" />
+
+		<form-login login-page="/login.xhtml" default-target-url="/XHTML/initialMenu.xhtml" always-use-default-target="false" authentication-failure-url="/login.xhtml?authfailed=true" />
+			
+		<logout invalidate-session="true" logout-success-url="/login.xhtml?loggedout=true" logout-url="/j_spring_security_logout" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+	</http>
+	
+	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<beans:property name="decisionVoters">
+			<beans:list>
+				<beans:bean class="org.springframework.security.access.vote.RoleVoter">
+					<beans:property name="rolePrefix" value="" />
+				</beans:bean>
+				<beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="admin" password="admin" authorities="ROLE_USER, Admin" />
+			</user-service>
+		</authentication-provider> 
+	</authentication-manager>
+</beans:beans>

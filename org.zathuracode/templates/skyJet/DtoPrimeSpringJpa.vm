@@ -1,0 +1,43 @@
+package ${virginPackage}. ${modelName}.dto;
+import java.util.Date;
+import java.io.Serializable;
+import java.sql.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+/**
+* @author Zathura Code Generator http://code.google.com/p/zathura/
+* www.zathuracode.org
+* 
+*/
+public class ${metaData.getRealClassName()}DTO implements Serializable {
+
+private static final long serialVersionUID = 1L;
+
+private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}DTO.class);
+
+	
+	#foreach($member  in $variableDto)	
+	private  $member;	
+	#end
+	    
+	#foreach($memberD  in $memberDto)	
+	  #set($str = $memberD ) 
+	  #set($upper = $str.toString().substring(0,1).toUpperCase())
+	  #set($str2 = $str.toString().substring(1))
+	  #set($type = $propertiesDto.get($memberD)) 
+	
+		public $type get$upper$str2 (){
+		 return $memberD;
+		}
+		
+		public void set$upper$str2 ($type $memberD ){
+		this.$memberD = $memberD;
+		}
+		
+	#end
+	
+	
+    }

@@ -1,0 +1,53 @@
+package  ${packageOriginal}.control;
+import ${package}.dto.${metaData.getRealClassName()}DTO;
+import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.Date;
+import java.math.BigDecimal;
+
+import javax.ejb.Local;
+
+import $package.${metaData.getRealClassName()};
+#if($composedKey)
+    import $package.${metaData.primaryKey.getRealClassName()};
+#end
+/**
+* @author Zathura Code Generator http://code.google.com/p/zathura/
+* www.zathuracode.org
+* 
+*/
+@Local
+public interface I${metaData.getRealClassName()}Logic {
+public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() throws Exception;
+	
+    
+    /**
+	 * Save an new ${metaData.getRealClassName()} entity
+	 */
+    public void save${metaData.getRealClassName()}(${metaData.getRealClassName()} entity)throws Exception;
+    /**
+	 * Delete an existing ${metaData.getRealClassName()} entity
+	 * 
+	 */
+    public void delete${metaData.getRealClassName()}(${metaData.getRealClassName()} entity)throws Exception;
+     /**
+	 * Update an existing ${metaData.getRealClassName()} entity
+	 * 
+	 */
+    public void update${metaData.getRealClassName()}(${metaData.getRealClassName()} entity)throws Exception;
+    /**
+	 * Load an existing ${metaData.getRealClassName()} entity
+	 * 
+	 */
+    public ${metaData.getRealClassName()} get${metaData.getRealClassName()}(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception;
+    
+    public List<${metaData.getRealClassName()}> findByCriteria(Object[] variables,Object[] variablesBetween, Object[] variablesBetweenDates)throws Exception ;
+    
+    public List<${metaData.getRealClassName()}> findPage${metaData.getRealClassName()}(String sortColumnName, boolean sortAscending, int startRow, int maxResults) throws Exception ;
+    
+    public Long findTotalNumber${metaData.getRealClassName()}() throws Exception ;
+	
+	public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception;
+    
+}
