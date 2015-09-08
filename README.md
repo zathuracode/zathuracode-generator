@@ -1,5 +1,7 @@
 # zathuracode-generator
 
+http://zathuracode.org/
+
 Zathuracode es un generador de código para apoyar el desarrollo de aplicaciones empresariales en JavaEE, a partir de un modelo de base de datos existente.
 
 La idea fue propuesta por Diego Armando Gómez Mosquera como solución a problemas encontrados en labores de desarrollo, de ahí partió una investigación con el Lidis (Laboratorio de Investigaciones para el Desarrollo de la Ingeniería de Software) de la Universidad de San Buenaventura Cali para analizar y decidir que piezas y que esquemas de generación de código serian los más adecuadas para poder construir software de forma eficiente, ordenada, con una arquitectura escalable y patrones de diseño adoptados a nivel mundial por la industria.
