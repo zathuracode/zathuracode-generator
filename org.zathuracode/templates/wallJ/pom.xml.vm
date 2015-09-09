@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <ejb.version>3.1.1</ejb.version>
-        <primefaces.version>5.1</primefaces.version>
+        <primefaces.version>5.2</primefaces.version>
        	<mojarra.version>2.2.9</mojarra.version>
     </properties>
     
