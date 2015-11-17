@@ -20,7 +20,7 @@ import  ${virginPackage}.utilities.Utilities;
 import ${package}.*;
 
 /**
-* @author Zathura Code Generator http://code.google.com/p/zathura/
+* @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
 * 
 */

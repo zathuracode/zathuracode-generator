@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.commons.validator.EmailValidator;
 
 /**
- * @author Zathura Code Generator http://code.google.com/p/zathura/
+ * @author Zathura Code Generator http://zathuracode.org/
  * www.zathuracode.org
  * 
  */

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
     #end
 #end
 /**
-* @author Zathura Code Generator http://code.google.com/p/zathura/
+* @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
 * 
 */

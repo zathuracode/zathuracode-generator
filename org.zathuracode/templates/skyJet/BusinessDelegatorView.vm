@@ -60,7 +60,7 @@ import ${virginPackage}.presentation.businessDelegate.IBusinessDelegatorView;
 * Finally, it should be noted that this pattern could be used to reduce coupling between other tiers, not simply the presentation and the 
 * business tiers.
 * 
-* @author Zathura Code Generator http://code.google.com/p/zathura/
+* @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
 * 
 */

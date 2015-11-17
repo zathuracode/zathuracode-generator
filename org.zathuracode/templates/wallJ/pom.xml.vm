@@ -13,8 +13,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <ejb.version>3.1.1</ejb.version>
-        <primefaces.version>5.2</primefaces.version>
-       	<mojarra.version>2.2.9</mojarra.version>
+        <primefaces.version>5.3</primefaces.version>
+       	<mojarra.version>2.2.12</mojarra.version>
     </properties>
     
     

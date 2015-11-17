@@ -30,7 +30,7 @@ import ${packageOriginal}.dto.${metaData.getRealClassName()}DTO;
 import ${virginPackage}.presentation.businessDelegate.*;
 import ${virginPackage}.utilities.*;
 /**
- * @author Zathura Code Generator http://code.google.com/p/zathura/
+ * @author Zathura Code Generator http://zathuracode.org/
  * www.zathuracode.org
  * 
  */

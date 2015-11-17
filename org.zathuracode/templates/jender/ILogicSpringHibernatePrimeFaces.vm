@@ -10,7 +10,7 @@ import $package.${metaData.getRealClassName()};
     import $package.${metaData.primaryKey.getRealClassName()};
 #end
 /**
-* @author Zathura Code Generator http://code.google.com/p/zathura/
+* @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
 * 
 */
