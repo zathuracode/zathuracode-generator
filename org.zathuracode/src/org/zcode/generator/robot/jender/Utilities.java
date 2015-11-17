@@ -549,6 +549,8 @@ public class Utilities {
 		folderBuilder.add(pckge + "exceptions");
 
 		folderBuilder.add(pckge + "utilities");
+		
+		folderBuilder.add(pckge + "security");
 
 		folderBuilder.add(dao);
 		
