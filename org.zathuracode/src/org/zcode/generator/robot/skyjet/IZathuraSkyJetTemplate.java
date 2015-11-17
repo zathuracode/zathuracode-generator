@@ -142,5 +142,15 @@ public interface IZathuraSkyJetTemplate {
 	public void doPersitenceXml(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
 	
 	public void doBackingBeans(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
+	
+	/**
+	 * Do Spring Security
+	 * @param metaData
+	 * @param context
+	 * @param hdLocation
+	 * @param dataModel
+	 * @throws Exception
+	 */
+	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception;
 
 }

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
+import org.zcode.generator.robot.jender.Utilities;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.MetaData;
@@ -327,10 +328,12 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				velocityContext.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
 
 				doDaoSpringXMLHibernate(metaData, velocityContext, hdLocation);
-				doLogicSpringXMLHibernate(metaData, velocityContext, hdLocation, metaDataModel, modelName);
-				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doBackingBeans(metaData, velocityContext, hdLocation, metaDataModel);
 				doJsp(metaData, velocityContext, hdLocation, metaDataModel);
+				doLogicSpringXMLHibernate(metaData, velocityContext, hdLocation, metaDataModel, modelName);
+				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
+				
+				
 			}
 			
 			if (EclipseGeneratorUtil.isMavenProject) {
@@ -340,6 +343,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doApiSpringHibernate(velocityContext, hdLocation);
 		    doExceptions(velocityContext, hdLocation);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
+			doAuthenticationProvider(velocityContext, hdLocation, metaDataModel, modelName);
 			doPersitenceXml(metaDataModel, velocityContext, hdLocation);						
 			doBusinessDelegator(velocityContext, hdLocation, metaDataModel);
 			doFacesConfig(metaDataModel, velocityContext, hdLocation);
@@ -651,6 +655,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			BufferedWriter bwDto = new BufferedWriter(fwDto);
 			bwDto.write(swDto.toString());
 			bwDto.close();
+			swDto.close();
 			fwDto.close();
 			log.info("End Dto");
 			
@@ -882,6 +887,54 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			throw e;
 		}
 
+	}
+	
+	@Override
+	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception{
+		
+		try {
+			
+			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "security" + GeneratorUtil.slash;
+			
+			log.info("Begin ZathuraCodeAuthenticationProvider");
+			Template templateBakcEndBean= ve.getTemplate("ZathuraCodeAuthenticationProvider.vm");
+			StringWriter swBackEndBean = new StringWriter();
+			templateBakcEndBean.merge(context, swBackEndBean);
+			
+			FileWriter fwBackEndBean = new FileWriter(path+ "ZathuraCodeAuthenticationProvider.java");
+			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
+			bwBackEndBean.write(swBackEndBean.toString());
+			bwBackEndBean.close();
+			fwBackEndBean.close();
+			log.info("Begin BackEndBean");
+			JalopyCodeFormatter.formatJavaCodeFile(path+ "ZathuraCodeAuthenticationProvider.java");
+			Utilities.getInstance().dates = null;
+			Utilities.getInstance().datesId = null;
+			
+			
+			//ManageBean for LoginView
+			path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "presentation" + GeneratorUtil.slash + "backingBeans" + GeneratorUtil.slash;
+			
+			log.info("Begin LoginView");
+			templateBakcEndBean= ve.getTemplate("LoginView.vm");
+			swBackEndBean = new StringWriter();
+			templateBakcEndBean.merge(context, swBackEndBean);
+			
+			fwBackEndBean = new FileWriter(path+ "LoginView.java");
+			bwBackEndBean = new BufferedWriter(fwBackEndBean);
+			bwBackEndBean.write(swBackEndBean.toString());
+			bwBackEndBean.close();
+			fwBackEndBean.close();
+			log.info("Begin BackEndBean");
+			JalopyCodeFormatter.formatJavaCodeFile(path+ "LoginView.java");
+			Utilities.getInstance().dates = null;
+			Utilities.getInstance().datesId = null;
+			
+			
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
 	}
 
 }
