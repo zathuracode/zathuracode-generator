@@ -15,7 +15,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
        	<hibernate.version>4.3.11.Final</hibernate.version>
         <primefaces.version>5.3</primefaces.version>
-		<spring.version>4.2.3.RELEASE</spring.version>
+		<spring.version>4.2.4.RELEASE</spring.version>
 		<spring.security.version>4.0.3.RELEASE</spring.security.version>
 		<mojarra.version>2.2.12</mojarra.version>
 		<slf4j.version>1.7.10</slf4j.version>	
