@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -21,6 +22,7 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.m2e.core.internal.IMavenConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -79,9 +81,6 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 	
 	/** The btn web root. */
 	private Button btnWebRoot;
-	
-	/** The btn lib. */
-	private Button btnLib;
 	
 	/** The lbl lib.*/
 	private Label lblLibraries;
@@ -186,18 +185,6 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		btnWebRoot.setText(Messages.WizardPageChooseSourceFolderAndPackage_11);
 		btnWebRoot.setBounds(484, 128, 87, 27);
 		
-		btnLib = new Button(choosePathGroup, SWT.NONE);
-		btnLib.setEnabled(false);
-		btnLib.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				handleBrowseLibFolder();
-				validatePageComplete();
-			}
-		});
-		btnLib.setText(Messages.WizardPageChooseSourceFolderAndPackage_12);
-		btnLib.setBounds(484, 166, 87, 27);
-		
 		cmbProject = new Combo(choosePathGroup, SWT.NONE);
 		cmbProject.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -215,14 +202,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 					
 					if (EclipseGeneratorUtil.isMavenProject) {						
 						txtLib.setText("pom.xml"); //$NON-NLS-1$
-						btnLib.setEnabled(false);
-						lblLibraries.setText("Maven Config File:"); //$NON-NLS-1$
 						EclipseGeneratorUtil.libFolderPath = ""; //$NON-NLS-1$
-						
-					}else {
-						txtLib.setText(""); //$NON-NLS-1$
-						btnLib.setEnabled(true);
-						lblLibraries.setText(Messages.WizardPageChooseSourceFolderAndPackage_17);
 					}
 				}			
 			}
@@ -230,8 +210,13 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		cmbProject.setBounds(115, 15, 363, 36);
 		IProject projectArray[]=ResourcesPlugin.getWorkspace().getRoot().getProjects();
 			for (IProject iProject : projectArray) {
-				if(iProject.isOpen()==true){
-					cmbProject.add(iProject.getName());
+				
+				try {
+					if(iProject.isOpen()==true &&  iProject.hasNature(JavaCore.NATURE_ID)==true && iProject.hasNature(IMavenConstants.NATURE_ID)==true){
+						cmbProject.add(iProject.getName());
+					}
+				} catch (CoreException e1) {
+					e1.printStackTrace();
 				}				
 			}	
 		Label lblProject = new Label(choosePathGroup, SWT.NONE);
@@ -314,6 +299,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		
 		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), project, false,	Messages.WizardPageChooseSourceFolderAndPackage_27);	
 		dialog.showClosedProjects(false);
+		
 		
 
 		if (dialog.open() == Window.OK) {
@@ -435,6 +421,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		 * Handle browse web root folder.
 		 */
 		private void handleBrowseWebRootFolder() {
+			
 			ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), project, false,	Messages.WizardPageChooseSourceFolderAndPackage_42);
 			dialog.showClosedProjects(false);
 			
