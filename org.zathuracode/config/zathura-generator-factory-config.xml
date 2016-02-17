@@ -32,11 +32,11 @@
                  <h3>The Jender Robot</h3>
                         <p>Built JavaEE applications using the following frameworks:</p>
                         <ul>
-                            <li>Primefaces 5.1</li>
-                            <li>Mojarra 2.2.9</li>
-                            <li>Spring Framework 4.1.5</li>
-                            <li>Spring Security 3.2.6</li>                    
-                            <li>Hibernate 4.3.8</li>
+                            <li>Primefaces 5.5</li>
+                            <li>Mojarra 2.2.12</li>
+                            <li>Spring Framework 4.2.4.RELEASE</li>
+                            <li>Spring Security 4.0.3.RELEASE</li>                    
+                            <li>Hibernate 4.3.11.Final</li>
                         </ul>
                 
                         <table border="0" >
@@ -89,11 +89,11 @@
                  		<h3>The SkyJet Robot</h3>
 				        <p>Built JavaEE applications using the following frameworks</p>
 				        <ul>
-				           	<li>Primefaces 5.1</li>
-				           	<li>Mojarra 2.2.9</li>
-			            	<li>Spring Framework 4.1.5</li>
-                            <li>Spring Security 3.2.6</li>
-                            <li>Hibernate 4.3.8</li>
+				           	<li>Primefaces 5.5</li>
+				           	<li>Mojarra 2.2.12</li>
+			            	<li>Spring Framework 4.2.4.RELEASE</li>
+                            <li>Spring Security 4.0.3.RELEASE</li>                    
+                            <li>Hibernate 4.3.11.Final</li>
 				            <li>JPA 2.1</li>
 				        </ul>
 				        
@@ -147,8 +147,8 @@
                  		  <h3>The Wall-J Robot</h3>
 				        <p>Built JavaEE applications using the following frameworks</p>
 				        <ul>
-				            <li>Primefaces 5.1</li>
-				            <li>Mojarra 2.2.9</li>
+				            <li>Primefaces 5.5</li>
+				            <li>Mojarra 2.2.12</li>
 				            <li>EJB 3.1 Lite</li>
 				            <li>JPA 2.1</li>
 				        </ul>
