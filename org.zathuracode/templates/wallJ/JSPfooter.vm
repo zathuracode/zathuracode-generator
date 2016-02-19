@@ -9,7 +9,7 @@
 			<f:view>
 				<ui:composition>
 					<div id="footer">
-						<a href="http://www.zathuracode.org">Powered by Zathuracode 5.0.1</a>
+						<a href="http://www.zathuracode.org">Powered by Zathuracode 5.1.0</a>
 					</div>
 				</ui:composition>
 			</f:view>
