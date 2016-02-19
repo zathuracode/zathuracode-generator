@@ -1,4 +1,4 @@
-package org.zcode.generator.robot.skyjet;
+package org.zcode.generator.robot.jender;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -24,15 +24,18 @@ import org.zcode.metadata.model.SimpleMember;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public class Utilities {
+public class JenderUtilities {
+	
+	
+	
 
 	/** The instance. */
-	private static Utilities instance = null;
+	private static JenderUtilities instance = null;
 
 	/**
 	 * The Constructor.
 	 */
-	private Utilities() {
+	private JenderUtilities() {
 	}
 
 	/**
@@ -40,9 +43,9 @@ public class Utilities {
 	 *
 	 * @return the instance
 	 */
-	public static Utilities getInstance() {
+	public static JenderUtilities getInstance() {
 		if (instance == null) {
-			instance = new Utilities();
+			instance = new JenderUtilities();
 		}
 
 		return instance;
@@ -403,8 +406,8 @@ public class Utilities {
 	 * @return true, if checks if is final param for view dates in list
 	 */
 	public boolean isFinalParamForViewDatesInList() {
-		if (Utilities.getInstance().dates != null) {
-			if (!Utilities.getInstance().dates.isEmpty() && Utilities.getInstance().dates.size() > 0) {
+		if (JenderUtilities.getInstance().dates != null) {
+			if (!JenderUtilities.getInstance().dates.isEmpty() && JenderUtilities.getInstance().dates.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -420,8 +423,8 @@ public class Utilities {
 	 * @return true, if checks if is final param for id for view dates in list
 	 */
 	public boolean isFinalParamForIdForViewDatesInList() {
-		if (Utilities.getInstance().datesId != null) {
-			if (!Utilities.getInstance().datesId.isEmpty() && Utilities.getInstance().datesId.size() > 0) {
+		if (JenderUtilities.getInstance().datesId != null) {
+			if (!JenderUtilities.getInstance().datesId.isEmpty() && JenderUtilities.getInstance().datesId.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -437,8 +440,8 @@ public class Utilities {
 	 * @return the object
 	 */
 	public Object isFinalParamForIdClassAsVariablesForDates() {
-		if (Utilities.getInstance().datesIdJSP != null) {
-			if (!Utilities.getInstance().datesIdJSP.isEmpty() && Utilities.getInstance().datesIdJSP.size() > 0) {
+		if (JenderUtilities.getInstance().datesIdJSP != null) {
+			if (!JenderUtilities.getInstance().datesIdJSP.isEmpty() && JenderUtilities.getInstance().datesIdJSP.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -454,8 +457,8 @@ public class Utilities {
 	 * @return the object
 	 */
 	public Object isFinalParamDatesAsList() {
-		if (Utilities.getInstance().datesJSP != null) {
-			if (!Utilities.getInstance().datesJSP.isEmpty() && Utilities.getInstance().datesJSP.size() > 0) {
+		if (JenderUtilities.getInstance().datesJSP != null) {
+			if (!JenderUtilities.getInstance().datesJSP.isEmpty() && JenderUtilities.getInstance().datesJSP.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -489,13 +492,13 @@ public class Utilities {
 					// scale;
 					// nullable;
 
-					Utilities.getInstance().buildStringToCheckLengths(field2, clazz, realClassName);
+					JenderUtilities.getInstance().buildStringToCheckLengths(field2, clazz, realClassName);
 
 					Member member = new SimpleMember(field2.getName(), field2.getName(), field2.getType(), -1);
-					member.setLength(Utilities.getInstance().length);
-					member.setPrecision(Utilities.getInstance().precision);
-					member.setScale(Utilities.getInstance().scale);
-					member.setNullable(Utilities.getInstance().nullable);
+					member.setLength(JenderUtilities.getInstance().length);
+					member.setPrecision(JenderUtilities.getInstance().precision);
+					member.setScale(JenderUtilities.getInstance().scale);
+					member.setNullable(JenderUtilities.getInstance().nullable);
 
 					hashMapIdsProperties.put(field2.getName(), member);
 

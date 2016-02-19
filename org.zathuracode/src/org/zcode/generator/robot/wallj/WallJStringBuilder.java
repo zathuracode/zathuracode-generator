@@ -1,4 +1,4 @@
-package org.zcode.generator.robot.skyjet;
+package org.zcode.generator.robot.wallj;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ import org.zcode.metadata.model.MetaData;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public class StringBuilder implements IStringBuilder {
+public class WallJStringBuilder implements IWallJStringBuilder {
 
 	/** The string builder for id. */
-	StringBuilderForId stringBuilderForId;
+	WallJStringBuilderForId stringBuilderForId;
 
 	/**
 	 * The Constructor.
@@ -30,7 +30,7 @@ public class StringBuilder implements IStringBuilder {
 	 * @param list the list
 	 * @param stringBuilderForId the string builder for id
 	 */
-	public StringBuilder(List<MetaData> list, StringBuilderForId stringBuilderForId) {
+	public WallJStringBuilder(List<MetaData> list, WallJStringBuilderForId stringBuilderForId) {
 		this.stringBuilderForId = stringBuilderForId;
 	}
 
@@ -71,7 +71,7 @@ public class StringBuilder implements IStringBuilder {
 
 				// String params[] = getTypeAndvariableForManyToOneProperties(
 				// member.getName(), theMetaData);
-				String params[] = Utilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getRealClassName(), theMetaData);
+				String params[] = WallJUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getRealClassName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -146,7 +146,7 @@ public class StringBuilder implements IStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = Utilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = WallJUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -197,7 +197,7 @@ public class StringBuilder implements IStringBuilder {
 		for (MetaData metaData : theMetaData) {
 			if (metaData.getRealClassName().equalsIgnoreCase(strClass)) {
 
-				Utilities.getInstance().manyToOneTempHash = metaData.getPrimaryKey().getHashMapIdsProperties();
+				WallJUtilities.getInstance().manyToOneTempHash = metaData.getPrimaryKey().getHashMapIdsProperties();
 
 				if (!metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 					Member member = metaData.getPrimaryKey();
@@ -255,7 +255,7 @@ public class StringBuilder implements IStringBuilder {
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
 
-		Utilities.getInstance().datesJSP = new ArrayList<String>();
+		WallJUtilities.getInstance().datesJSP = new ArrayList<String>();
 
 		// if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 		// Field[] field = metaData.getComposeKey().getDeclaredFields();
@@ -278,7 +278,7 @@ public class StringBuilder implements IStringBuilder {
 					finalParam = finalParam + name + ", ";
 
 					if (member.getRealClassName().equalsIgnoreCase("date")) {
-						Utilities.getInstance().datesJSP.add(name);
+						WallJUtilities.getInstance().datesJSP.add(name);
 					} else {
 						finalParam2.add(name);
 					}
@@ -316,7 +316,7 @@ public class StringBuilder implements IStringBuilder {
 								finalParam = finalParam + tmpFinalParam + ", ";
 
 								if (forstCont.equalsIgnoreCase("date")) {
-									Utilities.getInstance().datesJSP.add(name);
+									WallJUtilities.getInstance().datesJSP.add(name);
 								} else {
 									finalParam2.add(name);
 								}
@@ -608,7 +608,7 @@ public class StringBuilder implements IStringBuilder {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
-				String nameWithCapitalOnFirst = Utilities.getInstance().getGetNameOfPrimaryName(name);
+				String nameWithCapitalOnFirst = WallJUtilities.getInstance().getGetNameOfPrimaryName(name);
 				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
 						(field2.getType().toString()).length());
 
@@ -641,7 +641,7 @@ public class StringBuilder implements IStringBuilder {
 							else
 								cont++;
 
-							String tmp = Utilities.getInstance().getGetNameOfPrimaryName(params[cont]);
+							String tmp = WallJUtilities.getInstance().getGetNameOfPrimaryName(params[cont]);
 
 							tmpFinalParam = "FacesUtils.check" + tmpFinalParam + "(txt" + tmp + "), ";
 
@@ -852,7 +852,7 @@ public class StringBuilder implements IStringBuilder {
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
 
-		Utilities.getInstance().dates = new ArrayList<String>();
+		WallJUtilities.getInstance().dates = new ArrayList<String>();
 
 		// if (metaData.getRealClassName().equalsIgnoreCase("CodBarrasFamilia"))
 		// {
@@ -866,7 +866,7 @@ public class StringBuilder implements IStringBuilder {
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					String tmp2 = (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1);
 					if (member.getRealClassName().equalsIgnoreCase("date")) {
-						Utilities.getInstance().dates.add(tmp2);
+						WallJUtilities.getInstance().dates.add(tmp2);
 					} else {
 
 						finalParam2.add(tmp2);
@@ -901,7 +901,7 @@ public class StringBuilder implements IStringBuilder {
 								String tmp3 = (params[cont].substring(0, 1)).toUpperCase() + params[cont].substring(1);
 
 								if (tmpFinalParam.contains("Date")) {
-									Utilities.getInstance().dates.add(tmp3);
+									WallJUtilities.getInstance().dates.add(tmp3);
 								} else {
 									finalParam2.add(tmp3);
 								}
@@ -1645,8 +1645,8 @@ public class StringBuilder implements IStringBuilder {
 		List<String> parameterOut = new ArrayList<String>();
 		List<String> composeKey = new ArrayList<String>();
 
-		Utilities.getInstance().dtoProperties = new HashMap<String, String>();
-		Utilities.getInstance().nameMemberToDto = new ArrayList<String>();
+		WallJUtilities.getInstance().dtoProperties = new HashMap<String, String>();
+		WallJUtilities.getInstance().nameMemberToDto = new ArrayList<String>();
 
 		for (Member member : metaData.getSimpleProperties()) {
 
@@ -1661,8 +1661,8 @@ public class StringBuilder implements IStringBuilder {
 				}
 				String memberClass = realType + " "+member.getName();
 				parameterOut.add(memberClass);
-				Utilities.getInstance().dtoProperties.put(member.getName(),realType);
-				Utilities.getInstance().nameMemberToDto.add(member.getName());
+				WallJUtilities.getInstance().dtoProperties.put(member.getName(),realType);
+				WallJUtilities.getInstance().nameMemberToDto.add(member.getName());
 
 			}
 			else{
@@ -1673,11 +1673,11 @@ public class StringBuilder implements IStringBuilder {
 						String memberClass = realType + " "+field2.getName();
 						parameterOut.add(memberClass);
 						composeKey.add(field2.getName());
-						Utilities.getInstance().dtoProperties.put(field2.getName(),realType);
-						Utilities.getInstance().nameMemberToDto.add(field2.getName());
-					}
+						WallJUtilities.getInstance().dtoProperties.put(field2.getName(),realType);
+						WallJUtilities.getInstance().nameMemberToDto.add(field2.getName());
+					}	
+	
 				}
-
 			}
 		}
 
@@ -1692,8 +1692,8 @@ public class StringBuilder implements IStringBuilder {
 				String salida = cadena+" "+nombreMiembroClase;
 				if(!composeKey.contains(nombreMiembroClase)){
 					parameterOut.add(salida);
-					Utilities.getInstance().dtoProperties.put(nombreMiembroClase,cadena);
-					Utilities.getInstance().nameMemberToDto.add(nombreMiembroClase);
+					WallJUtilities.getInstance().dtoProperties.put(nombreMiembroClase,cadena);
+					WallJUtilities.getInstance().nameMemberToDto.add(nombreMiembroClase);
 				}
 
 

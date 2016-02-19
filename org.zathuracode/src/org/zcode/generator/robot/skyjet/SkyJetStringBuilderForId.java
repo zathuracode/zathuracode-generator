@@ -1,14 +1,16 @@
-package org.zcode.generator.robot.jender;
+package org.zcode.generator.robot.skyjet;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.zcode.metadata.model.ManyToOneMember;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
-
 
 
 /**
@@ -17,7 +19,9 @@ import org.zcode.metadata.model.MetaData;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public class StringBuilderForId implements IStringBuilderForId {
+public class SkyJetStringBuilderForId implements ISkyJetStringBuilderForId {
+	
+	private static final Logger log = LoggerFactory.getLogger(SkyJetStringBuilderForId.class);
 
 	/** The hash map ids. */
 	public HashMap<String, String> hashMapIds;
@@ -27,7 +31,7 @@ public class StringBuilderForId implements IStringBuilderForId {
 	 *
 	 * @param list the list
 	 */
-	public StringBuilderForId(List<MetaData> list) {
+	public SkyJetStringBuilderForId(List<MetaData> list) {
 		hashMapIds = new HashMap<String, String>();
 		neededIds(list);
 	}
@@ -47,7 +51,7 @@ public class StringBuilderForId implements IStringBuilderForId {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
-				String nameWithCapitalOnFirst = Utilities.getInstance().getGetNameOfPrimaryName(name);
+				String nameWithCapitalOnFirst = SkyJetUtilities.getInstance().getGetNameOfPrimaryName(name);
 				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
 						(field2.getType().toString()).length());
 
@@ -75,21 +79,21 @@ public class StringBuilderForId implements IStringBuilderForId {
 	public List<String> finalParamForIdClassAsVariables(List<MetaData> list, MetaData metaData) {
 		List<String> finalParam = new ArrayList<String>();
 
-		Utilities.getInstance().datesIdJSP = new ArrayList<String>();
+		SkyJetUtilities.getInstance().datesIdJSP = new ArrayList<String>();
 
 		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
 				String methodAccesorName = "entity.getId().get" + (name.substring(0, 1)).toUpperCase() + name.substring(1) + "()";
-				String realType = Utilities.getInstance().getRealClassName(field2.getType().getName());
+				String realType = SkyJetUtilities.getInstance().getRealClassName(field2.getType().getName());
 
 				if (realType.equalsIgnoreCase("date")) {
-					Utilities.getInstance().datesIdJSP.add(methodAccesorName);
+					SkyJetUtilities.getInstance().datesIdJSP.add(methodAccesorName);
 				} else {
 					
-					String stringAsVariable = Utilities.getInstance().ifcondition + methodAccesorName + "==null" + Utilities.getInstance().ifconditionClose
-												+ Utilities.getInstance().throwExceptionNull + "\"" + name + "\"" + Utilities.getInstance().throwExceptionClose;
+					String stringAsVariable = SkyJetUtilities.getInstance().ifcondition + methodAccesorName + "==null" + SkyJetUtilities.getInstance().ifconditionClose
+												+ SkyJetUtilities.getInstance().throwExceptionNull + "\"" + name + "\"" + SkyJetUtilities.getInstance().throwExceptionClose;
 					
 					finalParam.add(stringAsVariable);
 				}
@@ -99,8 +103,8 @@ public class StringBuilderForId implements IStringBuilderForId {
 			String name = metaData.getPrimaryKey().getName();			
 			String methodAccesorName = "entity.get" + name + "()";
 			
-			String stringAsVariable = Utilities.getInstance().ifcondition + methodAccesorName + "==null" + Utilities.getInstance().ifconditionClose
-										+ Utilities.getInstance().throwExceptionNull + "\"" + name + "\"" + Utilities.getInstance().throwExceptionClose;
+			String stringAsVariable = SkyJetUtilities.getInstance().ifcondition + methodAccesorName + "==null" + SkyJetUtilities.getInstance().ifconditionClose
+										+ SkyJetUtilities.getInstance().throwExceptionNull + "\"" + name + "\"" + SkyJetUtilities.getInstance().throwExceptionClose;
 			
 			finalParam.add(stringAsVariable);
 		}
@@ -155,10 +159,10 @@ public class StringBuilderForId implements IStringBuilderForId {
 				String methodAccesorName = "entity.getId().get" + (name.substring(0, 1)).toUpperCase() + name.substring(1) + "()";
 
 				finalParam = finalParam + name + ", ";
-				finalParam2.add(Utilities.getInstance().ifcondition + methodAccesorName + "==null" + Utilities.getInstance().ifconditionClose
-						+ Utilities.getInstance().throwExceptionNull + "\"" + name + "\"" + Utilities.getInstance().throwExceptionClose);				
+				finalParam2.add(SkyJetUtilities.getInstance().ifcondition + methodAccesorName + "==null" + SkyJetUtilities.getInstance().ifconditionClose
+						+ SkyJetUtilities.getInstance().throwExceptionNull + "\"" + name + "\"" + SkyJetUtilities.getInstance().throwExceptionClose);				
 
-				finalParam2 = Utilities.getInstance().addVariablesValuesToListDependingOnDataTypeForID(finalParam2, field2, name, methodAccesorName, metaData.getComposeKey());
+				finalParam2 = SkyJetUtilities.getInstance().addVariablesValuesToListDependingOnDataTypeForID(finalParam2, field2, name, methodAccesorName, metaData.getComposeKey());
 
 			}
 		}
@@ -173,11 +177,11 @@ public class StringBuilderForId implements IStringBuilderForId {
 					try {
 						if (member.getNullable() == false) {
 							finalParam = finalParam + name + ", ";
-							finalParam2.add(Utilities.getInstance().ifcondition + methodAccesorName + "==null" + Utilities.getInstance().ifconditionClose
-									+ Utilities.getInstance().throwExceptionNull + "\"" + name + "\"" + Utilities.getInstance().throwExceptionClose);
+							finalParam2.add(SkyJetUtilities.getInstance().ifcondition + methodAccesorName + "==null" + SkyJetUtilities.getInstance().ifconditionClose
+									+ SkyJetUtilities.getInstance().throwExceptionNull + "\"" + name + "\"" + SkyJetUtilities.getInstance().throwExceptionClose);
 						}
 
-						finalParam2 = Utilities.getInstance().addVariablesValuesToListDependingOnDataType(finalParam2, member.getRealClassName(),
+						finalParam2 = SkyJetUtilities.getInstance().addVariablesValuesToListDependingOnDataType(finalParam2, member.getRealClassName(),
 								name, methodAccesorName, member.getPrecision().toString(), member.getScale().toString(), member.getLength().toString());
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -190,9 +194,9 @@ public class StringBuilderForId implements IStringBuilderForId {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				Utilities.getInstance().manyToOneTempHash = new HashMap<String, Member>();
+				SkyJetUtilities.getInstance().manyToOneTempHash = new HashMap<String, Member>();
 
-				String params[] = Utilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = SkyJetUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -239,14 +243,14 @@ public class StringBuilderForId implements IStringBuilderForId {
 								// }
 								// }
 
-								Member primarySimple = Utilities.getInstance().manyToOneTempHash.get(variableNames);
+								Member primarySimple = SkyJetUtilities.getInstance().manyToOneTempHash.get(variableNames);
 
 								String methodAccesorName = "entity.get" + member.getRealClassName() + "()." + primarySimple.getMethodGetterName();
 								
 								// try {
 								// if (nullable == false) {
-								finalParam2.add(Utilities.getInstance().ifcondition + methodAccesorName + "==null" + Utilities.getInstance().ifconditionClose
-										+ Utilities.getInstance().throwExceptionNull + "\"" + tmp + "\"" + Utilities.getInstance().throwExceptionClose);
+								finalParam2.add(SkyJetUtilities.getInstance().ifcondition + methodAccesorName + "==null" + SkyJetUtilities.getInstance().ifconditionClose
+										+ SkyJetUtilities.getInstance().throwExceptionNull + "\"" + tmp + "\"" + SkyJetUtilities.getInstance().throwExceptionClose);
 								// }
 								// } catch (Exception e) {
 								// // System.out.println(e.getMessage());
@@ -254,7 +258,7 @@ public class StringBuilderForId implements IStringBuilderForId {
 
 								try {
 
-									finalParam2 = Utilities.getInstance().addVariablesValuesToListDependingOnDataType(finalParam2,
+									finalParam2 = SkyJetUtilities.getInstance().addVariablesValuesToListDependingOnDataType(finalParam2,
 											primarySimple.getRealClassName(), tmp, methodAccesorName, primarySimple.getPrecision().toString(),
 											primarySimple.getScale().toString(), primarySimple.getLength().toString());
 								} catch (Exception e) {
@@ -284,14 +288,14 @@ public class StringBuilderForId implements IStringBuilderForId {
 									}
 								}
 
-								Member primarySimple = Utilities.getInstance().manyToOneTempHash.get(variableNames2);
+								Member primarySimple = SkyJetUtilities.getInstance().manyToOneTempHash.get(variableNames2);
 
 								String methodAccesorName = "entity.get" + member.getRealClassName() + "()." + primarySimple.getMethodGetterName();
 								
 								try {
 									if (nullable == false) {
-										finalParam2.add(Utilities.getInstance().ifcondition + methodAccesorName + "==null" + Utilities.getInstance().ifconditionClose
-												+ Utilities.getInstance().throwExceptionNull + "\"" + tmp + "\"" + Utilities.getInstance().throwExceptionClose);
+										finalParam2.add(SkyJetUtilities.getInstance().ifcondition + methodAccesorName + "==null" + SkyJetUtilities.getInstance().ifconditionClose
+												+ SkyJetUtilities.getInstance().throwExceptionNull + "\"" + tmp + "\"" + SkyJetUtilities.getInstance().throwExceptionClose);
 									}
 								} catch (Exception e) {
 									// System.out.println(e.getMessage());
@@ -299,7 +303,7 @@ public class StringBuilderForId implements IStringBuilderForId {
 
 								try {
 
-									finalParam2 = Utilities.getInstance().addVariablesValuesToListDependingOnDataType(finalParam2,
+									finalParam2 = SkyJetUtilities.getInstance().addVariablesValuesToListDependingOnDataType(finalParam2,
 											primarySimple.getRealClassName(), tmp, methodAccesorName, primarySimple.getPrecision().toString(),
 											primarySimple.getScale().toString(), primarySimple.getLength().toString());
 								} catch (Exception e) {
@@ -336,19 +340,19 @@ public class StringBuilderForId implements IStringBuilderForId {
 
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
-		Utilities.getInstance().datesId = new ArrayList<String>();
+		SkyJetUtilities.getInstance().datesId = new ArrayList<String>();
 
 		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
-				String type = Utilities.getInstance().getRealClassName(field2.getType().getName());
+				String type = SkyJetUtilities.getInstance().getRealClassName(field2.getType().getName());
 
 				String tmp1 = (name.substring(0, 1)).toUpperCase() + name.substring(1);
 
 				if (type.equalsIgnoreCase("date")) {
-					if (!Utilities.getInstance().dates.contains(tmp1))
-						Utilities.getInstance().datesId.add(tmp1);
+					if (!SkyJetUtilities.getInstance().dates.contains(tmp1))
+						SkyJetUtilities.getInstance().datesId.add(tmp1);
 				} else {
 					finalParam2.add(tmp1);
 				}
@@ -359,8 +363,8 @@ public class StringBuilderForId implements IStringBuilderForId {
 			String type = metaData.getPrimaryKey().getRealClassName();
 			String tmp1 = (finalParam.substring(0, 1)).toUpperCase() + finalParam.substring(1);
 			if (type.equalsIgnoreCase("date")) {
-				if (!Utilities.getInstance().dates.contains(tmp1))
-					Utilities.getInstance().datesId.add(tmp1);
+				if (!SkyJetUtilities.getInstance().dates.contains(tmp1))
+					SkyJetUtilities.getInstance().datesId.add(tmp1);
 			} else {
 				finalParam2.add(tmp1);
 			}
@@ -760,6 +764,7 @@ public class StringBuilderForId implements IStringBuilderForId {
 			
 		}
 
+		log.info(finalParam);
 		return finalParam2;
 
 	}

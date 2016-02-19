@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
-import org.zcode.generator.robot.jender.Utilities;
+
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.MetaData;
@@ -156,10 +156,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		try {
 			
 			
-
-			
-			ve= new VelocityEngine();
-			VelocityContext velocityContext= new VelocityContext();
+	
+			ve= new VelocityEngine();		
 			Properties propiedadesVelocity= new Properties();
 			propiedadesVelocity.put("file.resource.loader.description", "Velocity File Resource Loader");
 			propiedadesVelocity.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
@@ -167,15 +165,17 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			propiedadesVelocity.put("file.resource.loader.cache", "false");
 			propiedadesVelocity.put("file.resource.loader.modificationCheckInterval", "2");
 			ve.init(propiedadesVelocity);
-
+			
+			VelocityContext velocityContext= new VelocityContext();
 			List<MetaData> listMetaData= metaDataModel.getTheMetaData();
-
+			
+			ISkyJetStringBuilderForId stringBuilderForId = new SkyJetStringBuilderForId(listMetaData);
+			ISkyJetStringBuilder stringBuilder = new SkyJetStringBuilder(listMetaData, (SkyJetStringBuilderForId) stringBuilderForId);
 			String packageOriginal = null;
 			String virginPackage = null;
 			String modelName = null;
 
-			IStringBuilderForId stringBuilderForId = new StringBuilderForId(listMetaData);
-			IStringBuilder stringBuilder = new StringBuilder(listMetaData, (StringBuilderForId) stringBuilderForId);
+			
 
 			if (specificityLevel.intValue() == 2) {
 				try {
@@ -204,14 +204,6 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				}
 			}
 
-			/***
-			 *  packageOriginal es el nombre del paquete donde se encuentra las entitys com.mauricio.demogenerator.model
-			 *  package  es el path donde se generan las entitys /home/mauricio/Workspaces/zathura/DemoGenerator/srs/com/mauricio/demogenerator/model
-			 *  proyectName obvio
-			 *  domainName el nombre del dominio para este ejemplo seria com
-			 *  modelName el este caso seria model
-			 */
-
 			velocityContext.put("packageOriginal", packageOriginal);
 			velocityContext.put("virginPackage", virginPackage);
 			velocityContext.put("package", jpaPckgName);
@@ -226,14 +218,13 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			velocityContext.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
 
 			this.paqueteVirgen = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
-			Utilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
-			Utilities.getInstance().biuldHashToGetIdValuesLengths(listMetaData);
+			SkyJetUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
+			SkyJetUtilities.getInstance().biuldHashToGetIdValuesLengths(listMetaData);
 
 			for (MetaData metaData : listMetaData) {
 
 				log.info(metaData.getRealClassName());
-			
-				log.info("prueba");
+		
 
 
 				String var= metaData.getPrimaryKey().getName();
@@ -255,8 +246,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 				// generacion de nuevos dto
 				velocityContext.put("variableDto", stringBuilder.getPropertiesDto(listMetaData, metaData));
-				velocityContext.put("propertiesDto",Utilities.getInstance().dtoProperties);
-				velocityContext.put("memberDto",Utilities.getInstance().nameMemberToDto);
+				velocityContext.put("propertiesDto",SkyJetUtilities.getInstance().dtoProperties);
+				velocityContext.put("memberDto",SkyJetUtilities.getInstance().nameMemberToDto);
 				// generacion de la nueva logica 
 				velocityContext.put("dtoConvert", stringBuilderForId.dtoConvert(listMetaData,metaData));
 				velocityContext.put("dtoConvert2", stringBuilder.dtoConvert2(listMetaData, metaData));
@@ -265,15 +256,15 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				velocityContext.put("finalParamForIdClassAsVariables", stringBuilderForId.finalParamForIdClassAsVariables(listMetaData, metaData));
 
 				velocityContext.put("finalParamForViewVariablesInList", stringBuilder.finalParamForViewVariablesInList(listMetaData, metaData));
-				velocityContext.put("isFinalParamForViewDatesInList", Utilities.getInstance().isFinalParamForViewDatesInList());
-				velocityContext.put("isFinalParamForIdForViewDatesInList", Utilities.getInstance().isFinalParamForIdForViewDatesInList());
+				velocityContext.put("isFinalParamForViewDatesInList", SkyJetUtilities.getInstance().isFinalParamForViewDatesInList());
+				velocityContext.put("isFinalParamForIdForViewDatesInList", SkyJetUtilities.getInstance().isFinalParamForIdForViewDatesInList());
 
 				velocityContext.put("finalParamForDtoUpdate", stringBuilder.finalParamForDtoUpdate(listMetaData, metaData));
 				velocityContext.put("finalParamForIdForDtoForSetsVariablesInList", stringBuilderForId.finalParamForIdForDtoForSetsVariablesInList(listMetaData, metaData));
 				velocityContext.put("finalParamForDtoForSetsVariablesInList", stringBuilder.finalParamForDtoForSetsVariablesInList(listMetaData, metaData));
 				velocityContext.put("finalParamForIdForDtoForSetsVariablesInList", stringBuilderForId.finalParamForIdForDtoForSetsVariablesInList(listMetaData, metaData));
 				velocityContext.put("finalParamForIdForViewVariablesInList", stringBuilderForId.finalParamForIdForViewVariablesInList(listMetaData, metaData));
-				velocityContext.put("isFinalParamForIdForViewDatesInList", Utilities.getInstance().isFinalParamForIdForViewDatesInList());
+				velocityContext.put("isFinalParamForIdForViewDatesInList", SkyJetUtilities.getInstance().isFinalParamForIdForViewDatesInList());
 				velocityContext.put("finalParamForIdForViewClass", stringBuilderForId.finalParamForIdForViewClass(listMetaData, metaData));
 				velocityContext.put("finalParamForViewForSetsVariablesInList", stringBuilder.finalParamForViewForSetsVariablesInList(listMetaData, metaData));
 				velocityContext.put("finalParamForView", stringBuilder.finalParamForView(listMetaData, metaData));
@@ -281,13 +272,13 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				velocityContext.put("finalParamForDtoUpdateOnlyVariables", stringBuilder.finalParamForDtoUpdateOnlyVariables(listMetaData, metaData));
 				velocityContext.put("finalParamForIdForDtoInViewForSetsVariablesInList", stringBuilderForId.finalParamForIdForDtoInViewForSetsVariablesInList(listMetaData,metaData));
 				velocityContext.put("finalParamForDtoInViewForSetsVariablesInList", stringBuilder.finalParamForDtoInViewForSetsVariablesInList(listMetaData, metaData));
-				velocityContext.put("finalParamForIdForViewDatesInList", Utilities.getInstance().datesId);
-				velocityContext.put("finalParamForViewDatesInList", Utilities.getInstance().dates);
-				velocityContext.put("isFinalParamForIdClassAsVariablesForDates", Utilities.getInstance().isFinalParamForIdClassAsVariablesForDates());
-				velocityContext.put("finalParamForIdClassAsVariablesForDates", Utilities.getInstance().datesIdJSP);
+				velocityContext.put("finalParamForIdForViewDatesInList", SkyJetUtilities.getInstance().datesId);
+				velocityContext.put("finalParamForViewDatesInList", SkyJetUtilities.getInstance().dates);
+				velocityContext.put("isFinalParamForIdClassAsVariablesForDates", SkyJetUtilities.getInstance().isFinalParamForIdClassAsVariablesForDates());
+				velocityContext.put("finalParamForIdClassAsVariablesForDates", SkyJetUtilities.getInstance().datesIdJSP);
 				velocityContext.put("finalParamVariablesAsList", stringBuilder.finalParamVariablesAsList(listMetaData, metaData));
-				velocityContext.put("isFinalParamDatesAsList", Utilities.getInstance().isFinalParamDatesAsList());
-				velocityContext.put("finalParamDatesAsList", Utilities.getInstance().datesJSP);
+				velocityContext.put("isFinalParamDatesAsList", SkyJetUtilities.getInstance().isFinalParamDatesAsList());
+				velocityContext.put("finalParamDatesAsList", SkyJetUtilities.getInstance().datesJSP);
 				velocityContext.put("finalParamForIdClassAsVariables2", stringBuilderForId.finalParamForIdClassAsVariables2(listMetaData, metaData));
 				velocityContext.put("finalParamForVariablesDataTablesForIdAsList", stringBuilderForId.finalParamForVariablesDataTablesForIdAsList(listMetaData, metaData));
 				velocityContext.put("finalParamVariablesAsList2", stringBuilder.finalParamVariablesAsList2(listMetaData, metaData));
@@ -581,8 +572,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwDataTableEditable.close();
 			log.info("End DataTableEditable");
 			
-			Utilities.getInstance().datesJSP = null;
-			Utilities.getInstance().datesIdJSP = null;
+			SkyJetUtilities.getInstance().datesJSP = null;
+			SkyJetUtilities.getInstance().datesIdJSP = null;
 			
 			
 		} catch (Exception e) {
@@ -646,21 +637,19 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
 		try {
 
-			log.info("Begin Dto");
 			Template dtoTemplate = ve.getTemplate("DtoPrimeSpringJpa.vm");
-			StringWriter swDto= new StringWriter();
+			StringWriter swDto = new StringWriter();
 			dtoTemplate.merge(context, swDto);
-			String path= hdLocation + paqueteVirgen + GeneratorUtil.slash + modelName + GeneratorUtil.slash + "dto"+ GeneratorUtil.slash;
-			FileWriter fwDto = new FileWriter(path+ metaData.getRealClassName() + "DTO.java");
+
+			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash + modelName + GeneratorUtil.slash + "dto"+ GeneratorUtil.slash;
+			FileWriter fwDto = new FileWriter(path+metaData.getRealClassName()+"DTO.java");
 			BufferedWriter bwDto = new BufferedWriter(fwDto);
 			bwDto.write(swDto.toString());
 			bwDto.close();
 			swDto.close();
 			fwDto.close();
-			log.info("End Dto");
-			
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "DTO.java");
-			
+			JalopyCodeFormatter.formatJavaCodeFile(path+metaData.getRealClassName()+"DTO.java");
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -879,8 +868,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bwBackEndBean.close();
 			fwBackEndBean.close();
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "View.java");
-			Utilities.getInstance().dates = null;
-			Utilities.getInstance().datesId = null;
+			SkyJetUtilities.getInstance().dates = null;
+			SkyJetUtilities.getInstance().datesId = null;
 			
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -908,8 +897,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwBackEndBean.close();
 			log.info("Begin BackEndBean");
 			JalopyCodeFormatter.formatJavaCodeFile(path+ "ZathuraCodeAuthenticationProvider.java");
-			Utilities.getInstance().dates = null;
-			Utilities.getInstance().datesId = null;
+			SkyJetUtilities.getInstance().dates = null;
+			SkyJetUtilities.getInstance().datesId = null;
 			
 			
 			//ManageBean for LoginView
@@ -927,8 +916,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwBackEndBean.close();
 			log.info("Begin BackEndBean");
 			JalopyCodeFormatter.formatJavaCodeFile(path+ "LoginView.java");
-			Utilities.getInstance().dates = null;
-			Utilities.getInstance().datesId = null;
+			SkyJetUtilities.getInstance().dates = null;
+			SkyJetUtilities.getInstance().datesId = null;
 			
 			
 		} catch (Exception e) {

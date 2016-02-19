@@ -1,4 +1,4 @@
-package org.zcode.generator.robot.skyjet;
+package org.zcode.generator.robot.wallj;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.zcode.metadata.model.MetaData;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public interface IStringBuilder {
+public interface IWallJStringBuilder {
 
 	// finalParameter(List<MetaData> theMetaData, MetaData metaData) {
 	/**

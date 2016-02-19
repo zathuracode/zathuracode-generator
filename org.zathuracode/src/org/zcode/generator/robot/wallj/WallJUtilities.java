@@ -24,15 +24,15 @@ import org.zcode.metadata.model.SimpleMember;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public class Utilities {
+public class WallJUtilities {
 
 	/** The instance. */
-	private static Utilities instance = null;
+	private static WallJUtilities instance = null;
 
 	/**
 	 * The Constructor.
 	 */
-	private Utilities() {
+	private WallJUtilities() {
 	}
 
 	/**
@@ -40,9 +40,9 @@ public class Utilities {
 	 *
 	 * @return the instance
 	 */
-	public static Utilities getInstance() {
+	public static WallJUtilities getInstance() {
 		if (instance == null) {
-			instance = new Utilities();
+			instance = new WallJUtilities();
 		}
 
 		return instance;
@@ -403,8 +403,8 @@ public class Utilities {
 	 * @return true, if checks if is final param for view dates in list
 	 */
 	public boolean isFinalParamForViewDatesInList() {
-		if (Utilities.getInstance().dates != null) {
-			if (!Utilities.getInstance().dates.isEmpty() && Utilities.getInstance().dates.size() > 0) {
+		if (WallJUtilities.getInstance().dates != null) {
+			if (!WallJUtilities.getInstance().dates.isEmpty() && WallJUtilities.getInstance().dates.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -420,8 +420,8 @@ public class Utilities {
 	 * @return true, if checks if is final param for id for view dates in list
 	 */
 	public boolean isFinalParamForIdForViewDatesInList() {
-		if (Utilities.getInstance().datesId != null) {
-			if (!Utilities.getInstance().datesId.isEmpty() && Utilities.getInstance().datesId.size() > 0) {
+		if (WallJUtilities.getInstance().datesId != null) {
+			if (!WallJUtilities.getInstance().datesId.isEmpty() && WallJUtilities.getInstance().datesId.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -437,8 +437,8 @@ public class Utilities {
 	 * @return the object
 	 */
 	public Object isFinalParamForIdClassAsVariablesForDates() {
-		if (Utilities.getInstance().datesIdJSP != null) {
-			if (!Utilities.getInstance().datesIdJSP.isEmpty() && Utilities.getInstance().datesIdJSP.size() > 0) {
+		if (WallJUtilities.getInstance().datesIdJSP != null) {
+			if (!WallJUtilities.getInstance().datesIdJSP.isEmpty() && WallJUtilities.getInstance().datesIdJSP.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -454,8 +454,8 @@ public class Utilities {
 	 * @return the object
 	 */
 	public Object isFinalParamDatesAsList() {
-		if (Utilities.getInstance().datesJSP != null) {
-			if (!Utilities.getInstance().datesJSP.isEmpty() && Utilities.getInstance().datesJSP.size() > 0) {
+		if (WallJUtilities.getInstance().datesJSP != null) {
+			if (!WallJUtilities.getInstance().datesJSP.isEmpty() && WallJUtilities.getInstance().datesJSP.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -489,13 +489,13 @@ public class Utilities {
 					// scale;
 					// nullable;
 
-					Utilities.getInstance().buildStringToCheckLengths(field2, clazz, realClassName);
+					WallJUtilities.getInstance().buildStringToCheckLengths(field2, clazz, realClassName);
 
 					Member member = new SimpleMember(field2.getName(), field2.getName(), field2.getType(), -1);
-					member.setLength(Utilities.getInstance().length);
-					member.setPrecision(Utilities.getInstance().precision);
-					member.setScale(Utilities.getInstance().scale);
-					member.setNullable(Utilities.getInstance().nullable);
+					member.setLength(WallJUtilities.getInstance().length);
+					member.setPrecision(WallJUtilities.getInstance().precision);
+					member.setScale(WallJUtilities.getInstance().scale);
+					member.setNullable(WallJUtilities.getInstance().nullable);
 
 					hashMapIdsProperties.put(field2.getName(), member);
 

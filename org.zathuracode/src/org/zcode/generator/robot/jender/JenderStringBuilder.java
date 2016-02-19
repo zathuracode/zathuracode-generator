@@ -22,13 +22,13 @@ import org.zcode.metadata.model.MetaData;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public class StringBuilder implements IStringBuilder {
+public class JenderStringBuilder implements IJenderStringBuilder {
 	
 	
-	private static final Logger log = LoggerFactory.getLogger(StringBuilder.class);
+	private static final Logger log = LoggerFactory.getLogger(JenderStringBuilder.class);
 
 	/** The string builder for id. */
-	StringBuilderForId stringBuilderForId;
+	JenderStringBuilderForId stringBuilderForId;
 
 	/**
 	 * The Constructor.
@@ -36,7 +36,7 @@ public class StringBuilder implements IStringBuilder {
 	 * @param list the list
 	 * @param stringBuilderForId the string builder for id
 	 */
-	public StringBuilder(List<MetaData> list, StringBuilderForId stringBuilderForId) {
+	public JenderStringBuilder(List<MetaData> list, JenderStringBuilderForId stringBuilderForId) {
 		this.stringBuilderForId = stringBuilderForId;
 	}
 
@@ -77,7 +77,7 @@ public class StringBuilder implements IStringBuilder {
 
 				// String params[] = getTypeAndvariableForManyToOneProperties(
 				// member.getName(), theMetaData);
-				String params[] = Utilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getRealClassName(), theMetaData);
+				String params[] = JenderUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getRealClassName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -152,7 +152,7 @@ public class StringBuilder implements IStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = Utilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = JenderUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -203,7 +203,7 @@ public class StringBuilder implements IStringBuilder {
 		for (MetaData metaData : theMetaData) {
 			if (metaData.getRealClassName().equalsIgnoreCase(strClass)) {
 
-				Utilities.getInstance().manyToOneTempHash = metaData.getPrimaryKey().getHashMapIdsProperties();
+				JenderUtilities.getInstance().manyToOneTempHash = metaData.getPrimaryKey().getHashMapIdsProperties();
 
 				if (!metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 					Member member = metaData.getPrimaryKey();
@@ -261,7 +261,7 @@ public class StringBuilder implements IStringBuilder {
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
 
-		Utilities.getInstance().datesJSP = new ArrayList<String>();
+		JenderUtilities.getInstance().datesJSP = new ArrayList<String>();
 
 		// if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 		// Field[] field = metaData.getComposeKey().getDeclaredFields();
@@ -284,7 +284,7 @@ public class StringBuilder implements IStringBuilder {
 					finalParam = finalParam + name + ", ";
 
 					if (member.getRealClassName().equalsIgnoreCase("date")) {
-						Utilities.getInstance().datesJSP.add(name);
+						JenderUtilities.getInstance().datesJSP.add(name);
 					} else {
 						finalParam2.add(name);
 					}
@@ -322,7 +322,7 @@ public class StringBuilder implements IStringBuilder {
 								finalParam = finalParam + tmpFinalParam + ", ";
 
 								if (forstCont.equalsIgnoreCase("date")) {
-									Utilities.getInstance().datesJSP.add(name);
+									JenderUtilities.getInstance().datesJSP.add(name);
 								} else {
 									finalParam2.add(name);
 								}
@@ -614,7 +614,7 @@ public class StringBuilder implements IStringBuilder {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
-				String nameWithCapitalOnFirst = Utilities.getInstance().getGetNameOfPrimaryName(name);
+				String nameWithCapitalOnFirst = JenderUtilities.getInstance().getGetNameOfPrimaryName(name);
 				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
 						(field2.getType().toString()).length());
 
@@ -647,7 +647,7 @@ public class StringBuilder implements IStringBuilder {
 							else
 								cont++;
 
-							String tmp = Utilities.getInstance().getGetNameOfPrimaryName(params[cont]);
+							String tmp = JenderUtilities.getInstance().getGetNameOfPrimaryName(params[cont]);
 
 							tmpFinalParam = "FacesUtils.check" + tmpFinalParam + "(txt" + tmp + "), ";
 
@@ -858,7 +858,7 @@ public class StringBuilder implements IStringBuilder {
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
 
-		Utilities.getInstance().dates = new ArrayList<String>();
+		JenderUtilities.getInstance().dates = new ArrayList<String>();
 
 		// if (metaData.getRealClassName().equalsIgnoreCase("CodBarrasFamilia"))
 		// {
@@ -872,7 +872,7 @@ public class StringBuilder implements IStringBuilder {
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					String tmp2 = (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1);
 					if (member.getRealClassName().equalsIgnoreCase("date")) {
-						Utilities.getInstance().dates.add(tmp2);
+						JenderUtilities.getInstance().dates.add(tmp2);
 					} else {
 
 						finalParam2.add(tmp2);
@@ -907,7 +907,7 @@ public class StringBuilder implements IStringBuilder {
 								String tmp3 = (params[cont].substring(0, 1)).toUpperCase() + params[cont].substring(1);
 
 								if (tmpFinalParam.contains("Date")) {
-									Utilities.getInstance().dates.add(tmp3);
+									JenderUtilities.getInstance().dates.add(tmp3);
 								} else {
 									finalParam2.add(tmp3);
 								}
@@ -1651,10 +1651,9 @@ public class StringBuilder implements IStringBuilder {
 		List<String> parameterOut = new ArrayList<String>();
 		List<String> composeKey = new ArrayList<String>();
 
-		Utilities.getInstance().dtoProperties = new HashMap<String, String>();
-		Utilities.getInstance().nameMemberToDto = new ArrayList<String>();
+		JenderUtilities.getInstance().dtoProperties = new HashMap<String, String>();
+		JenderUtilities.getInstance().nameMemberToDto = new ArrayList<String>();
 
-		
 		for (Member member : metaData.getSimpleProperties()) {
 			
 			log.info(member.getName());
@@ -1670,9 +1669,8 @@ public class StringBuilder implements IStringBuilder {
 			
 				String memberClass = realType + " "+member.getName();
 				parameterOut.add(memberClass);
-				Utilities.getInstance().dtoProperties.put(member.getName(),realType);
-				Utilities.getInstance().nameMemberToDto.add(member.getName());
-
+				JenderUtilities.getInstance().dtoProperties.put(member.getName(),realType);
+				JenderUtilities.getInstance().nameMemberToDto.add(member.getName());
 			}
 			else{
 				
@@ -1683,8 +1681,8 @@ public class StringBuilder implements IStringBuilder {
 						String memberClass = realType + " "+field2.getName();
 						parameterOut.add(memberClass);
 						composeKey.add(field2.getName());
-						Utilities.getInstance().dtoProperties.put(field2.getName(),realType);
-						Utilities.getInstance().nameMemberToDto.add(field2.getName());
+						JenderUtilities.getInstance().dtoProperties.put(field2.getName(),realType);
+						JenderUtilities.getInstance().nameMemberToDto.add(field2.getName());
 					}	
 				}
 			}
@@ -1701,8 +1699,8 @@ public class StringBuilder implements IStringBuilder {
 				String salida = cadena+" "+nombreMiembroClase;
 				if(!composeKey.contains(nombreMiembroClase)){
 					parameterOut.add(salida);
-					Utilities.getInstance().dtoProperties.put(nombreMiembroClase,cadena);
-					Utilities.getInstance().nameMemberToDto.add(nombreMiembroClase);
+					JenderUtilities.getInstance().dtoProperties.put(nombreMiembroClase,cadena);
+					JenderUtilities.getInstance().nameMemberToDto.add(nombreMiembroClase);
 				}
 
 

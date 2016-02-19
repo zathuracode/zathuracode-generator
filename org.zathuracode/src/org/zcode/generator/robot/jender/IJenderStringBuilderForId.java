@@ -1,4 +1,4 @@
-package org.zcode.generator.robot.skyjet;
+package org.zcode.generator.robot.jender;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.zcode.metadata.model.MetaData;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public interface IStringBuilderForId {
+public interface IJenderStringBuilderForId {
 
 	/**
 	 * Final param for id class as variables as string.

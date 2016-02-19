@@ -11,7 +11,7 @@ import org.zcode.metadata.model.MetaData;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
-public interface IStringBuilderForId {
+public interface IWallJStringBuilderForId {
 
 	/**
 	 * Final param for id class as variables as string.

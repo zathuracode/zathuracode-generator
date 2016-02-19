@@ -154,8 +154,8 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			MetaDataModel dataModel = metaDataModel;
 			List<MetaData> list = dataModel.getTheMetaData();
 	
-			IStringBuilderForId stringBuilderForId = new StringBuilderForId(list);
-			IStringBuilder stringBuilder = new StringBuilder(list, (StringBuilderForId) stringBuilderForId);
+			IWallJStringBuilderForId stringBuilderForId = new WallJStringBuilderForId(list);
+			IWallJStringBuilder stringBuilder = new WallJStringBuilder(list, (WallJStringBuilderForId) stringBuilderForId);
 			String packageOriginal = null;
 			String virginPackage = null;
 			String modelName = null;
@@ -197,12 +197,12 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			context.put("domainName", domainName);
 			
 			this.virginPackageInHd = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
-			Utilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
-			Utilities.getInstance().biuldHashToGetIdValuesLengths(list);
+			WallJUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
+			WallJUtilities.getInstance().biuldHashToGetIdValuesLengths(list);
 	
 			for (MetaData metaData : list) {
 	
-				List<String> imports = Utilities.getInstance().getRelatedClasses(metaData, dataModel);
+				List<String> imports = WallJUtilities.getInstance().getRelatedClasses(metaData, dataModel);
 	
 				if (imports != null) {
 					if (imports.size() > 0 && !imports.isEmpty()) {
@@ -217,8 +217,8 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 	
 				// generacion de nuevos dto
 				context.put("variableDto", stringBuilder.getPropertiesDto(list, metaData));
-				context.put("propertiesDto",Utilities.getInstance().dtoProperties);
-				context.put("memberDto",Utilities.getInstance().nameMemberToDto);
+				context.put("propertiesDto",WallJUtilities.getInstance().dtoProperties);
+				context.put("memberDto",WallJUtilities.getInstance().nameMemberToDto);
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));
 				context.put("dtoConvert2", stringBuilder.dtoConvert2(list, metaData));
@@ -227,11 +227,11 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 				context.put("finalParamForDtoUpdate", stringBuilder.finalParamForDtoUpdate(list, metaData));
 				context.put("finalParamForDtoUpdateOnlyVariables", stringBuilder.finalParamForDtoUpdateOnlyVariables(list, metaData));
 				context.put("finalParamForViewVariablesInList", stringBuilder.finalParamForViewVariablesInList(list, metaData));
-				context.put("isFinalParamForViewDatesInList", Utilities.getInstance().isFinalParamForViewDatesInList());
-				context.put("finalParamForViewDatesInList", Utilities.getInstance().dates);
+				context.put("isFinalParamForViewDatesInList", WallJUtilities.getInstance().isFinalParamForViewDatesInList());
+				context.put("finalParamForViewDatesInList", WallJUtilities.getInstance().dates);
 				context.put("finalParamForIdForViewVariablesInList", stringBuilderForId.finalParamForIdForViewVariablesInList(list, metaData));
-				context.put("isFinalParamForIdForViewDatesInList", Utilities.getInstance().isFinalParamForIdForViewDatesInList());
-				context.put("finalParamForIdForViewDatesInList", Utilities.getInstance().datesId);
+				context.put("isFinalParamForIdForViewDatesInList", WallJUtilities.getInstance().isFinalParamForIdForViewDatesInList());
+				context.put("finalParamForIdForViewDatesInList", WallJUtilities.getInstance().datesId);
 				context.put("finalParamForGetIdForViewClass", stringBuilder.finalParamForGetIdForViewClass(list, metaData));
 				context.put("finalParamForGetIdByDtoForViewClass", stringBuilder.finalParamForGetIdByDtoForViewClass(list, metaData));
 				context.put("finalParamForIdForViewClass", stringBuilderForId.finalParamForIdForViewClass(list, metaData));
@@ -267,13 +267,13 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 				context.put("finalParamVariablesAsList", stringBuilder.finalParamVariablesAsList(list, metaData));
 				context.put("finalParamVariablesAsList2", stringBuilder.finalParamVariablesAsList2(list, metaData));
 				context.put("finalParamVariablesDatesAsList2", stringBuilder.finalParamVariablesDatesAsList2(list, metaData));
-				context.put("isFinalParamDatesAsList", Utilities.getInstance().isFinalParamDatesAsList());
-				context.put("finalParamDatesAsList", Utilities.getInstance().datesJSP);
+				context.put("isFinalParamDatesAsList", WallJUtilities.getInstance().isFinalParamDatesAsList());
+				context.put("finalParamDatesAsList", WallJUtilities.getInstance().datesJSP);
 	
 				context.put("finalParamForIdClassAsVariables", stringBuilderForId.finalParamForIdClassAsVariables(list, metaData));
 				context.put("finalParamForIdClassAsVariables2", stringBuilderForId.finalParamForIdClassAsVariables2(list, metaData));
-				context.put("isFinalParamForIdClassAsVariablesForDates", Utilities.getInstance().isFinalParamForIdClassAsVariablesForDates());
-				context.put("finalParamForIdClassAsVariablesForDates", Utilities.getInstance().datesIdJSP);
+				context.put("isFinalParamForIdClassAsVariablesForDates", WallJUtilities.getInstance().isFinalParamForIdClassAsVariablesForDates());
+				context.put("finalParamForIdClassAsVariablesForDates", WallJUtilities.getInstance().datesIdJSP);
 	
 				context.put("finalParamForVariablesDataTablesAsList", stringBuilder.finalParamForVariablesDataTablesAsList(list, metaData));
 				context.put("finalParamForVariablesDataTablesForIdAsList", stringBuilderForId.finalParamForVariablesDataTablesForIdAsList(list, metaData));
@@ -582,8 +582,8 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			bwDataTable.write(swDataTable.toString());
 			bwDataTable.close();
 			fwDataTable.close();
-			Utilities.getInstance().datesJSP = null;
-			Utilities.getInstance().datesIdJSP = null;
+			WallJUtilities.getInstance().datesJSP = null;
+			WallJUtilities.getInstance().datesIdJSP = null;
 			log.info("End DataTable XHTML");
 			
 			log.info("Begin DataTableEditable XHTML");
@@ -597,8 +597,8 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			fwDataTableEditable.close();
 			log.info("Begin DataTableEditable XHTML");
 			
-			Utilities.getInstance().datesJSP = null;
-			Utilities.getInstance().datesIdJSP = null;
+			WallJUtilities.getInstance().datesJSP = null;
+			WallJUtilities.getInstance().datesIdJSP = null;
 			
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -783,8 +783,8 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			fwBackEndBean.close();
 			log.info("End BackEndBean");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "View.java");
-			Utilities.getInstance().dates = null;
-			Utilities.getInstance().datesId = null;
+			WallJUtilities.getInstance().dates = null;
+			WallJUtilities.getInstance().datesId = null;
 			
 			
 		} catch (Exception e) {
