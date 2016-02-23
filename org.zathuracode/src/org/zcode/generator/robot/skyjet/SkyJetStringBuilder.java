@@ -1665,6 +1665,10 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					realType = member.getType().toString().substring((member.getType().toString()).lastIndexOf(".") + 1,(member.getType().toString()).length());
 				}else{
 					realType=member.getRealClassName();
+					//cuando son class [B es un arreglo de byte []
+					if(realType!=null && realType.equalsIgnoreCase("[B")==true){
+						realType="byte[]";
+					}
 				}
 				
 				String memberClass = realType + " "+member.getName();
