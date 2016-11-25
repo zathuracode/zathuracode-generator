@@ -13,8 +13,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <ejb.version>3.1.1</ejb.version>
-        <primefaces.version>5.3</primefaces.version>
+        <primefaces.version>6.0</primefaces.version>
        	<mojarra.version>2.2.12</mojarra.version>
+       	<slf4j.version>1.7.21</slf4j.version>
+		<log4j2.version>2.7</log4j2.version>
     </properties>
     
     
@@ -163,11 +165,33 @@
 		</dependency>
 		<!-- Apache commons -->
 		
+		<!-- Logger -->
+		<!-- LOGS log4j2 y SLF4J -->
+
 		<dependency>
-		  <groupId>log4j</groupId>
-		  <artifactId>log4j</artifactId>
-		  <version>1.2.17</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- LOGS log4j2 y SLF4J -->
+		<!-- Logger -->
+		
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -182,8 +206,8 @@
 	         <version>3.1</version>
 	        <configuration>
 	        	<encoding>UTF-8</encoding>
-	          	<source>1.6</source>
-	          	<target>1.6</target>
+	          	<source>1.7</source>
+	          	<target>1.7</target>
 	        </configuration>
 	      </plugin>
 	      <plugin>

@@ -13,12 +13,13 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-       	<hibernate.version>4.3.11.Final</hibernate.version>
-        <primefaces.version>5.3</primefaces.version>
-		<spring.version>4.2.4.RELEASE</spring.version>
-		<spring.security.version>4.0.3.RELEASE</spring.security.version>
+		<hibernate.version>5.2.5.Final</hibernate.version>
+        <primefaces.version>6.0</primefaces.version>
+		<spring.version>4.3.4.RELEASE</spring.version>
+		<spring.security.version>4.2.0.RELEASE</spring.security.version>
 		<mojarra.version>2.2.12</mojarra.version>
-		<slf4j.version>1.7.10</slf4j.version>	
+		<slf4j.version>1.7.21</slf4j.version>
+		<log4j2.version>2.7</log4j2.version>
     </properties>
     
     
@@ -168,21 +169,30 @@
 		</dependency>
 
 		<!-- Logger -->
+		<!-- LOGS log4j2 y SLF4J -->
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
+
+		<!-- LOGS log4j2 y SLF4J -->
 		<!-- Logger -->
 
 
@@ -227,8 +237,8 @@
 	         <version>3.1</version>
 	        <configuration>
 	        	<encoding>UTF-8</encoding>
-	          	<source>1.6</source>
-	          	<target>1.6</target>
+	          	<source>1.7</source>
+	          	<target>1.7</target>
 	        </configuration>
 	      </plugin>
 	      <plugin>
