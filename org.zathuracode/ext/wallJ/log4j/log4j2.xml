@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration monitorInterval="60">
+	<Properties>
+		<Property name="log-path">logs</Property>
+	</Properties>
 
 	<Appenders>
 		<Console name="Console-Appender" target="SYSTEM_OUT">
@@ -16,5 +19,4 @@
 			<AppenderRef ref="Console-Appender" />
 		</Root>
 	</Loggers>
-	
 </Configuration>
