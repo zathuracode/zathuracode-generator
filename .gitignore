@@ -1,0 +1,10 @@
+.metadata/
+.recommenders/
+RemoteSystemsTempFiles/
+*class
+.classpath
+.project
+.settings/
+target/
+Servers/
+dataSourceContext.xml

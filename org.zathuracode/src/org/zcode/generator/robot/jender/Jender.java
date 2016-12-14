@@ -324,6 +324,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				doJsp(metaData, context, hdLocation, dataModel);
 				doLogicSpringXMLHibernate(metaData, context, hdLocation, dataModel, modelName);
 				doDto(metaData, context, hdLocation, dataModel, modelName);
+				doRestControllers(metaData, context, hdLocation, dataModel);
 				
 			}
 	
@@ -339,7 +340,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			doJspInitialMenu(dataModel, context, hdLocation);
 			doFacesConfig(dataModel, context, hdLocation);
 			doJspFacelets(context, hdLocation);
-			doSpringContextConfFiles(context, hdLocation, dataModel, modelName);
+			doSpringContextConfFiles(context, hdLocation, dataModel, modelName);			
 		
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -900,6 +901,34 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			log.error(e.toString());
 			throw e;
 		}
+	}
+	
+	@Override
+	public void doRestControllers(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers" + GeneratorUtil.slash;
+			
+			log.info("Begin RestControllers");
+			Template templateBakcEndBean= ve.getTemplate("RestController.vm");
+			StringWriter swBackEndBean = new StringWriter();
+			templateBakcEndBean.merge(context, swBackEndBean);
+			
+			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "RestController.java");
+			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
+			bwBackEndBean.write(swBackEndBean.toString());
+			bwBackEndBean.close();
+			fwBackEndBean.close();
+			log.info("Begin RestControllers 2");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
+			JenderUtilities.getInstance().dates = null;
+			JenderUtilities.getInstance().datesId = null;
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
 	}
 	
 }
