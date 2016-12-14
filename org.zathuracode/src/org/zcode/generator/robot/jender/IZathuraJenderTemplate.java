@@ -152,6 +152,9 @@ public interface IZathuraJenderTemplate {
 	
 	
 	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception;
+
+	void doRestControllers(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
+			throws Exception;
 	
 	
 }
