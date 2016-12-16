@@ -1,0 +1,75 @@
+package com.rest.controllers;
+
+import java.util.List;
+
+import javax.faces.bean.ManagedProperty;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.presentation.businessDelegate.IBusinessDelegatorView;
+import ${package}.${metaData.getRealClassName()};
+import ${package}.dto.${metaData.getRealClassName()}DTO;
+
+@RestController
+@RequestMapping("/${metaData.getRealClassName()}")
+public class ${metaData.getRealClassName()}RestController {
+
+	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}RestController.class);
+
+	@ManagedProperty(value = "#{BusinessDelegatorView}")
+    private IBusinessDelegatorView businessDelegatorView;
+  
+            
+    @RequestMapping(value = "/save${metaData.getRealClassName()}", method = RequestMethod.PUT)
+    public void save${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception {
+    	try {
+    		businessDelegatorView.save${metaData.getRealClassName()}(entity);
+    	} catch (Exception e) {
+    		log.error(e.getMessage(), e);
+    	}
+    }
+    
+    @RequestMapping(value = "/delete${metaData.getRealClassName()}", method = RequestMethod.DELETE)
+    public void delete${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception {
+    	try {
+    		businessDelegatorView.delete${metaData.getRealClassName()}(entity);
+    	} catch (Exception e) {
+    		log.error(e.getMessage(), e);
+    	}
+    }
+        
+    @RequestMapping(value = "/update${metaData.getRealClassName()}", method = RequestMethod.PUT)
+    public void update${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception {
+    	try {
+    		businessDelegatorView.update${metaData.getRealClassName()}(entity);
+    	} catch (Exception e) {
+    		log.error(e.getMessage(), e);
+    	}
+    }
+    
+    @RequestMapping(value = "/getData${metaData.getRealClassName()}", method = RequestMethod.POST)
+    public List<${metaData.getRealClassName()}DTO> getData${metaData.getRealClassName()}() throws Exception {
+		try {
+			return businessDelegatorView.getData${metaData.getRealClassName()}();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return null;
+    }
+    
+    @RequestMapping(value = "/get${metaData.getRealClassName()}", method = RequestMethod.GET)
+    public ${metaData.getRealClassName()} get${metaData.getRealClassName()}(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception {
+    	try {
+			return businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return null;
+    }
+        
+    
+} 
