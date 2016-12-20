@@ -565,6 +565,8 @@ public class JenderUtilities {
 		if (specificityLevel.intValue() == 2) {
 			folderBuilder.add(model + "pojos");
 		}
+		
+		folderBuilder.add(pckge + "dto_mapper");
 
 		folderBuilder.add(model + "dto");
 

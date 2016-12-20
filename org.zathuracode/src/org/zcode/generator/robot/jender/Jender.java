@@ -238,7 +238,15 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));
 				context.put("dtoConvert2", stringBuilder.dtoConvert2(list, metaData));
-	
+				
+				// generacion de atributos para mapear de Entidad a DTO
+				context.put("dtoAttributes", stringBuilderForId.obtainDTOMembersAndSetEntityAttributes(list, metaData));
+				context.put("dtoAttributes2", stringBuilder.obtainDTOMembersAndSetEntityAttributes2(list, metaData));
+				
+				// generacion de los atributos para mapear de DTO a Entidad 
+				context.put("entityAttributes", stringBuilderForId.obtainEntityMembersAndSetDTOAttributes(list, metaData));
+				context.put("entityAttributes2", stringBuilder.obtainEntityMembersAndSetDTOAttributes2(list, metaData));
+				
 				context.put("finalParamForView", stringBuilder.finalParamForView(list, metaData));
 				context.put("finalParamForDtoUpdate", stringBuilder.finalParamForDtoUpdate(list, metaData));
 				context.put("finalParamForDtoUpdateOnlyVariables", stringBuilder.finalParamForDtoUpdateOnlyVariables(list, metaData));
@@ -325,6 +333,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				doLogicSpringXMLHibernate(metaData, context, hdLocation, dataModel, modelName);
 				doDto(metaData, context, hdLocation, dataModel, modelName);
 				doRestControllers(metaData, context, hdLocation, dataModel);
+				doDTOMapper(metaData, context, hdLocation, dataModel);
 				
 			}
 	
@@ -923,6 +932,45 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
 			JenderUtilities.getInstance().dates = null;
 			JenderUtilities.getInstance().datesId = null;
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "dto" + GeneratorUtil.slash + "mapper" + GeneratorUtil.slash;
+			
+			log.info("Begin I DTO Mapper");
+			Template templateIMapperDTO = ve.getTemplate("IMapperDTOHbm.vm");
+			StringWriter swIMapperDTO = new StringWriter();
+			templateIMapperDTO.merge(context, swIMapperDTO);
+			
+			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "DTOMapper.java");
+			BufferedWriter bwIMapperDTO = new BufferedWriter(fwIMapperDTO);
+			bwIMapperDTO.write(swIMapperDTO.toString());
+			bwIMapperDTO.close();
+			fwIMapperDTO.close();
+			
+			log.info("Begin DTO Mapper");
+			
+			Template templateMapperDTO = ve.getTemplate("MapperDTOHbm.vm");
+			StringWriter swMapperDTO = new StringWriter();
+			templateMapperDTO.merge(context, swMapperDTO);
+			
+			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "DTOMapper.java");
+			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
+			bwMapperDTO.write(swMapperDTO.toString());
+			bwMapperDTO.close();
+			fwMapperDTO.close();
+			
+			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "DTOMapper.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "DTOMapper.java");
 					
 		} catch (Exception e) {
 			log.error(e.toString());

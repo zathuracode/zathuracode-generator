@@ -1,0 +1,86 @@
+package ${virginPackage}.dto.mapper;
+import $package.${metaData.getRealClassName()};
+import ${package}.dto.${metaData.getRealClassName()}DTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import  ${virginPackage}.exceptions.*;
+import 	${package}.control.*;
+import  ${virginPackage}.utilities.Utilities;
+import ${package}.*;
+
+/**
+* @author Zathura Code Generator http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+@Component
+@Scope("singleton")
+public class ${metaData.getRealClassName()}DTOMapper implements I${metaData.getRealClassName()}DTOMapper {
+	
+	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}DTOMapper.class);
+	
+	@Autowired
+	private I${metaData.getRealClassName()}Logic ${metaData.getRealClassNameAsVariable()}Logic;
+    
+    #if(${metaData.isGetManyToOneProperties()})
+		#foreach($member  in ${metaData.getManyToOneProperties()})
+            /**
+		 	* Logic injected by Spring that manages ${member.getRealClassName()} entities
+		 	* 
+		 	*/
+			@Autowired
+			I${member.getRealClassName()}Logic logic${member.getRealClassName()}$velocityCount;
+		#end
+    #end
+	
+	@Transactional(readOnly = true)
+	public ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{
+		try{
+			
+			${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO = new ${metaData.getRealClassName()}DTO();
+			
+			#foreach($member2  in $dtoAttributes)
+                ${member2}
+            #end
+			#foreach($member2  in $dtoAttributes2)
+                ${member2}
+            #end
+					
+			return ${metaData.getRealClassNameAsVariable()}DTO ;
+					
+		}catch(Exception e){
+			throw e;	
+		}
+	}
+	
+	@Transactional(readOnly = true)
+	public ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws Exception{
+		try{
+			
+			${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = new ${metaData.getRealClassName()}();
+			
+			#foreach($member2  in $entityAttributes)
+                ${member2}
+            #end
+			#foreach($member2  in $entityAttributes2)
+                ${member2}
+            #end
+				
+			return ${metaData.getRealClassNameAsVariable()};
+			
+		}catch(Exception e){
+			throw e;	
+		}
+			
+	}
+
+}

@@ -179,5 +179,10 @@ public interface IJenderStringBuilder {
 	public List<String> finalParamForViewForSetsVariablesDtoInList(List<MetaData> theMetaData, MetaData metaData);
 	
 	public List<String> finalParamForGetManyToOneForViewClass(List<MetaData> list, MetaData metaData);
-
+	
+	public List<String> obtainDTOMembersAndSetEntityAttributes2(List<MetaData> theMetaData,
+			MetaData metaData);
+	
+	public List<String> obtainEntityMembersAndSetDTOAttributes2(List<MetaData> theMetaData,
+			MetaData metaData);
 }
