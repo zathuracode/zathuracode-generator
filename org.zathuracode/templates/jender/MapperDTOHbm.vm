@@ -82,5 +82,49 @@ public class ${metaData.getRealClassName()}DTOMapper implements I${metaData.getR
 		}
 			
 	}
-
+	
+	@Transactional(readOnly = true)
+	public List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}) throws Exception{
+		try{
+			List<${metaData.getRealClassName()}DTO> ${metaData.getRealClassNameAsVariable()}DTOs = new ArrayList<${metaData.getRealClassName()}DTO>();
+			
+			for (${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} : list${metaData.getRealClassName()}) {
+				
+				${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO = new ${metaData.getRealClassName()}DTO();
+				
+				${metaData.getRealClassNameAsVariable()}DTO = ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()});
+				
+				${metaData.getRealClassNameAsVariable()}DTOs.add(${metaData.getRealClassNameAsVariable()}DTO);
+			}
+			
+			return ${metaData.getRealClassNameAsVariable()}DTOs;
+		}catch(Exception e){
+			throw e;	
+		}
+		
+			
+	}
+	
+	@Transactional(readOnly = true)
+	public List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}DTOToList${metaData.getRealClassName()}(List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}DTO) throws Exception{
+		try{
+			List<${metaData.getRealClassName()}> list${metaData.getRealClassName()} = new ArrayList<${metaData.getRealClassName()}>();
+			
+			for (${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO : list${metaData.getRealClassName()}DTO) {
+				
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = new ${metaData.getRealClassName()}();
+				
+				${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
+				
+				list${metaData.getRealClassName()}.add(${metaData.getRealClassNameAsVariable()});
+			}
+			
+			return list${metaData.getRealClassName()};
+		}catch(Exception e){
+			throw e;	
+		}
+		
+			
+	}		
+	
 }
