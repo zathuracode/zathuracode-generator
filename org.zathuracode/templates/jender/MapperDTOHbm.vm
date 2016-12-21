@@ -90,9 +90,7 @@ public class ${metaData.getRealClassName()}DTOMapper implements I${metaData.getR
 			
 			for (${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} : list${metaData.getRealClassName()}) {
 				
-				${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO = new ${metaData.getRealClassName()}DTO();
-				
-				${metaData.getRealClassNameAsVariable()}DTO = ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()});
+				${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO = ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()});
 				
 				${metaData.getRealClassNameAsVariable()}DTOs.add(${metaData.getRealClassNameAsVariable()}DTO);
 			}
@@ -112,9 +110,7 @@ public class ${metaData.getRealClassName()}DTOMapper implements I${metaData.getR
 			
 			for (${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO : list${metaData.getRealClassName()}DTO) {
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = new ${metaData.getRealClassName()}();
-				
-				${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
 				
 				list${metaData.getRealClassName()}.add(${metaData.getRealClassNameAsVariable()});
 			}
