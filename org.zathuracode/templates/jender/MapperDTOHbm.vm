@@ -24,9 +24,9 @@ import ${package}.*;
 */
 @Component
 @Scope("singleton")
-public class ${metaData.getRealClassName()}DTOMapper implements I${metaData.getRealClassName()}DTOMapper {
+public class ${metaData.getRealClassName()}Mapper implements I${metaData.getRealClassName()}Mapper {
 	
-	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}DTOMapper.class);
+	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}Mapper.class);
 	
 	@Autowired
 	private I${metaData.getRealClassName()}Logic ${metaData.getRealClassNameAsVariable()}Logic;
