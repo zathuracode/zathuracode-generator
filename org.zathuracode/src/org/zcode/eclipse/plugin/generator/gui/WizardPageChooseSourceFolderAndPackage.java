@@ -278,17 +278,6 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		bRadioHibernateReverseEngineering.setBounds(10, 218, 232, 22);
 		bRadioHibernateReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_25);
 		
-		Button bRadioPOJOReverseEngineering = new Button(container, SWT.RADIO);
-		bRadioPOJOReverseEngineering.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				loadListGeneratorsNextWizard();
-			}
-		});
-		bRadioPOJOReverseEngineering.setEnabled(false);
-		bRadioPOJOReverseEngineering.setBounds(10, 274, 189, 16);
-		bRadioPOJOReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_26);
-		
 		
 	}
 	
