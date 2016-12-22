@@ -1,17 +1,20 @@
 package com.rest.controllers;
 
+import com.dto.mapper.I${metaData.getRealClassName()}Mapper;
 import java.util.List;
 
 import javax.faces.bean.ManagedProperty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.presentation.businessDelegate.IBusinessDelegatorView;
@@ -31,32 +34,36 @@ public class ${metaData.getRealClassName()}RestController {
 	private I${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
      
     @PutMapping
-    @RequestMapping(value = "/save${metaData.getRealClassName()}")
-    public void save${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO entity) throws Exception {
+    @RequestMapping(value = "/save${metaData.getRealClassName()}/{${metaData.getRealClassNameAsVariable()}DTO}")
+    public void save${metaData.getRealClassName()}(@PathVariable("${metaData.getRealClassNameAsVariable()}DTO") ${metaData.getRealClassName()}DTO entity, ModelMap modelMap) throws Exception {
     	try {
-    		${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}Mapper(entity);
+    		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(entity);
     		
-    		businessDelegatorView.save${metaData.getRealClassName()}(entity);
+    		businessDelegatorView.save${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     	}
     }
     
     @DeleteMapping
-    @RequestMapping(value = "/delete${metaData.getRealClassName()}")
-    public void delete${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO entity) throws Exception {
+    @RequestMapping(value = "/delete${metaData.getRealClassName()}/{${metaData.getRealClassNameAsVariable()}DTO}")
+    public void delete${metaData.getRealClassName()}(@PathVariable("${metaData.getRealClassNameAsVariable()}DTO") ${metaData.getRealClassName()}DTO entity, ModelMap modelMap) throws Exception {
     	try {
-    		businessDelegatorView.delete${metaData.getRealClassName()}(entity);
+    		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(entity);
+    		
+    		businessDelegatorView.delete${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     	}
     }
      
     @PutMapping   
-    @RequestMapping(value = "/update${metaData.getRealClassName()}")
-    public void update${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO entity) throws Exception {
+    @RequestMapping(value = "/update${metaData.getRealClassName()}/{${metaData.getRealClassNameAsVariable()}DTO}")
+    public void update${metaData.getRealClassName()}(@PathVariable("${metaData.getRealClassNameAsVariable()}DTO") ${metaData.getRealClassName()}DTO entity, ModelMap modelMap) throws Exception {
     	try {
-    		businessDelegatorView.update${metaData.getRealClassName()}(entity);
+    		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(entity);
+    		
+    		businessDelegatorView.update${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     	}
@@ -64,7 +71,7 @@ public class ${metaData.getRealClassName()}RestController {
     
     @PostMapping
     @RequestMapping(value = "/getData${metaData.getRealClassName()}")
-    public List<${metaData.getRealClassName()}DTO> getData${metaData.getRealClassName()}() throws Exception {
+    public List<${metaData.getRealClassName()}DTO> getData${metaData.getRealClassName()}(ModelMap modelMap) throws Exception {
 		try {
 			return businessDelegatorView.getData${metaData.getRealClassName()}();
 		} catch (Exception e) {
@@ -74,10 +81,12 @@ public class ${metaData.getRealClassName()}RestController {
     }
     
     @GetMapping
-    @RequestMapping(value = "/get${metaData.getRealClassName()}")
-    public ${metaData.getRealClassName()} get${metaData.getRealClassName()}(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception {
+    @RequestMapping(value = "/get${metaData.getRealClassName()}/{cliId}")
+    public ${metaData.getRealClassName()}DTO get${metaData.getRealClassName()}(@PathVariable("cliId") ${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}, ModelMap modelMap) throws Exception {
     	try {
-			return businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+    		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+						
+			return ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()});
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
