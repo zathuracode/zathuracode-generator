@@ -951,7 +951,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			StringWriter swIMapperDTO = new StringWriter();
 			templateIMapperDTO.merge(context, swIMapperDTO);
 			
-			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "DTOMapper.java");
+			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "Mapper.java");
 			BufferedWriter bwIMapperDTO = new BufferedWriter(fwIMapperDTO);
 			bwIMapperDTO.write(swIMapperDTO.toString());
 			bwIMapperDTO.close();
@@ -963,14 +963,14 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			StringWriter swMapperDTO = new StringWriter();
 			templateMapperDTO.merge(context, swMapperDTO);
 			
-			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "DTOMapper.java");
+			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "Mapper.java");
 			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
 			bwMapperDTO.write(swMapperDTO.toString());
 			bwMapperDTO.close();
 			fwMapperDTO.close();
 			
-			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "DTOMapper.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "DTOMapper.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Mapper.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
 					
 		} catch (Exception e) {
 			log.error(e.toString());
