@@ -44,7 +44,20 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/applicationContext.xml</param-value>
 	</context-param>
+	
+	<!-- MVC -->
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/rest/controllers/*</url-pattern>
+	</servlet-mapping>
+	<!-- MVC -->
+	
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

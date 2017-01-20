@@ -8,10 +8,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
 import  ${virginPackage}.exceptions.*;
 import 	${package}.control.*;
 import  ${virginPackage}.utilities.Utilities;
@@ -22,8 +24,7 @@ import ${package}.*;
 * www.zathuracode.org
 * 
 */
-@Component
-@Scope("singleton")
+@Singleton
 public class ${metaData.getRealClassName()}Mapper implements I${metaData.getRealClassName()}Mapper {
 	
 	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}Mapper.class);
@@ -34,12 +35,12 @@ public class ${metaData.getRealClassName()}Mapper implements I${metaData.getReal
 		 	* Logic injected by Spring that manages ${member.getRealClassName()} entities
 		 	* 
 		 	*/
-			@Autowired
+			@EJB
 			I${member.getRealClassName()}Logic logic${member.getRealClassName()}$velocityCount;
 		#end
     #end
 	
-	@Transactional(readOnly = true)
+	@TransactionAttribute
 	public ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{
 		try{
 			
@@ -59,7 +60,7 @@ public class ${metaData.getRealClassName()}Mapper implements I${metaData.getReal
 		}
 	}
 	
-	@Transactional(readOnly = true)
+	@TransactionAttribute
 	public ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws Exception{
 		try{
 			
@@ -80,7 +81,7 @@ public class ${metaData.getRealClassName()}Mapper implements I${metaData.getReal
 			
 	}
 	
-	@Transactional(readOnly = true)
+	@TransactionAttribute
 	public List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}) throws Exception{
 		try{
 			List<${metaData.getRealClassName()}DTO> ${metaData.getRealClassNameAsVariable()}DTOs = new ArrayList<${metaData.getRealClassName()}DTO>();
@@ -100,7 +101,7 @@ public class ${metaData.getRealClassName()}Mapper implements I${metaData.getReal
 			
 	}
 	
-	@Transactional(readOnly = true)
+	@TransactionAttribute
 	public List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}DTOToList${metaData.getRealClassName()}(List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}DTO) throws Exception{
 		try{
 			List<${metaData.getRealClassName()}> list${metaData.getRealClassName()} = new ArrayList<${metaData.getRealClassName()}>();

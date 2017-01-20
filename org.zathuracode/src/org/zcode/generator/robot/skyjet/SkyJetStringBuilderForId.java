@@ -814,4 +814,94 @@ public class SkyJetStringBuilderForId implements ISkyJetStringBuilderForId {
 		return finalParam2;
 
 	}
+	
+	public List<String> obtainDTOMembersAndSetEntityAttributes(List<MetaData> theMetaData, MetaData metaData) {
+
+		List<String> finalParam2 = new ArrayList<String>();
+		String finalParam = new String();
+
+		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+			Field[] field = metaData.getComposeKey().getDeclaredFields();
+			for (Field field2 : field) {
+				String name = field2.getName();
+				finalParam = finalParam + name;
+				 String type = field2.getType().getSimpleName();
+
+				 
+					String tmp1 = metaData.getRealClassNameAsVariable() + "DTO.set" + name.substring(0, 1).toUpperCase() + name.substring(1) + "("
+							+ metaData.getRealClassNameAsVariable() + ".get" + metaData.getPrimaryKey().getGetNameOfPrimaryName() + "()" + ".get"
+							+ (name.substring(0, 1)).toUpperCase() + name.substring(1) + "()" + ");";
+
+					finalParam2.add(tmp1);
+				}
+			
+
+		} else {
+		
+			String type = metaData.getPrimaryKey().getRealClassName();
+			finalParam = metaData.getPrimaryKey().getName();
+			
+				String tmp1 = metaData.getRealClassNameAsVariable() + "DTO.set" + finalParam.substring(0, 1).toUpperCase() + finalParam.substring(1) + "("
+						+ metaData.getRealClassNameAsVariable() + ".get" + (finalParam.substring(0, 1)).toUpperCase() + finalParam.substring(1) + "())"
+						+ ";";
+				finalParam2.add(tmp1);
+			
+		}
+
+		log.info(finalParam);
+		return finalParam2;
+
+	}
+	
+	public List<String> obtainEntityMembersAndSetDTOAttributes(List<MetaData> theMetaData, MetaData metaData) {
+
+		List<String> finalParam2 = new ArrayList<String>();
+		String finalParam = new String();
+
+		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+			Field[] field = metaData.getComposeKey().getDeclaredFields();
+			
+			String tmpId = metaData.getRealClassName() + "Id " + metaData.getRealClassNameAsVariable() + "Id = new " + metaData.getRealClassName() + "Id();";
+			finalParam2.add(tmpId);
+			
+			for (Field field2 : field) {
+				String name = field2.getName();
+				finalParam = finalParam + name;
+				String type = field2.getType().getSimpleName();
+				 
+				 	String tmp1 = "			if(" + metaData.getRealClassNameAsVariable() + "DTO.get" + name.substring(0, 1).toUpperCase() + name.substring(1)
+				 				  + "() != null && " + metaData.getRealClassNameAsVariable() + "DTO.get" 
+				 				  + name.substring(0, 1).toUpperCase() + name.substring(1) 
+				 				  + "().toString().length() <= 0 ) {" + "\n"
+				 				  + "				throw new Exception(\"La llave no puede ser nula\");" + "\n"
+				 				  + "			}" + "\n\n"
+				 				  + metaData.getRealClassNameAsVariable() + "Id.set" + name.substring(0, 1).toUpperCase() + name.substring(1)
+				 				  + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" + name.substring(0, 1).toUpperCase() + name.substring(1)
+				 				  + "() != null ? " + metaData.getRealClassNameAsVariable() + "DTO.get" + name.substring(0, 1).toUpperCase() + name.substring(1)
+				 				  + "() : null);";
+				 	
+					finalParam2.add(tmp1);
+			}
+			
+			tmpId = metaData.getRealClassNameAsVariable() + ".setId(" + metaData.getRealClassNameAsVariable() +"Id);";
+			finalParam2.add(tmpId);
+			
+			
+		} else {
+		
+			String type = metaData.getPrimaryKey().getRealClassName();
+			finalParam = metaData.getPrimaryKey().getName();
+			
+				String tmp1 = metaData.getRealClassNameAsVariable() + ".set" + finalParam.substring(0, 1).toUpperCase() + finalParam.substring(1) + "("
+						+ metaData.getRealClassNameAsVariable() + "DTO.get" + (finalParam.substring(0, 1)).toUpperCase() + finalParam.substring(1) + "())"
+						+ ";";
+				finalParam2.add(tmp1);
+			
+		}
+
+		log.info(finalParam);
+		return finalParam2;
+
+	}
+
 }

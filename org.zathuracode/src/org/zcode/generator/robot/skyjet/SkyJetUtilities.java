@@ -548,7 +548,11 @@ public class SkyJetUtilities {
 		folderBuilder.add(pckge + "utilities");
 		
 		folderBuilder.add(pckge + "security");
-
+		
+		folderBuilder.add(pckge + "dto_mapper");
+		
+		folderBuilder.add(pckge + "rest_controllers");
+		
 		folderBuilder.add(dao);
 		
 		folderBuilder.add(api);

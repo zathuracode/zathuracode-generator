@@ -228,9 +228,9 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
 						
 						return ${metaData.getRealClassNameAsVariable()}DTO ;
 					
-					}catch(Exception e){
+				}catch(Exception e){
 					throw e;	
-					}
+				}
 			
 			}
 			

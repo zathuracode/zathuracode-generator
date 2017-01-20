@@ -2567,99 +2567,47 @@ public class JenderStringBuilder implements IJenderStringBuilder {
 									String tmp3 = "";
 
 									if (hashMapProve == null) {
-										if (!tmpFinalParam3.equalsIgnoreCase("date")) {
 
-											//TiposDocumentos tiposDocumentos = new TiposDocumentos();
+											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+													+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
+													+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
+													+ "()); \n\n" + "if (" + member.getRealClassVariableName() + "!= null) { \n"
+													+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
+													+ member.getRealClassVariableName() + "); \n	}";
+											logicAux++;
+										
+									} else {
+										if (hashMapProve.equals("")) {
+
 											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-
-													//if (clientesDTO.getTdocCodigo_TiposDocumentos() != null) {
-
 													+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam2.substring(0, 1).toUpperCase()
 													+ tmpFinalParam2.substring(1) + "() != null) {" 
-
-													/*	tiposDocumentos = logicTiposDocumentos1.getTiposDocumentos
-													(clientesDTO.getTdocCodigo_TiposDocumentos());
-											}
-													 */
-
 													+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
 													+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
 													+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
 													+ "()); \n } \n\n"
-
-													/*
- 													if (tiposDocumentos != null) {
-														clientes.setTiposDocumentos(tiposDocumentos);
-													}
-													 */
-
 													+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
 													+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
 													+ member.getRealClassVariableName() + "); \n	}";
+
 											logicAux++;
 
 										} else {
+
 											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
 													+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-													+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+													+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
+													+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ?"
+													+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
+													+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "(): null);";
 											logicAux++;
-										}
-									} else {
-										if (hashMapProve.equals("")) {
-											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
 
-												tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-														+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "() != null) {" 
-														+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
-														+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-														+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
-														+ "()); \n } \n\n"
-														+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
-														+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
-														+ member.getRealClassVariableName() + "); \n	}";
-												
-												logicAux++;
-											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
-												logicAux++;
-											}
-										} else {
-											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-
-												//												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												//														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-												//														+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												//														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-												//														+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-												//														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												//														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "() : null);";
-
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-														+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ?"
-														+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-														+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
-														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "(): null);";
-												logicAux++;
-											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-														+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
-												logicAux++;
-											}
 										}
 									}
-									
+
 									finalParam2.add(tmp3);
 								}
 							}
@@ -2697,60 +2645,47 @@ public class JenderStringBuilder implements IJenderStringBuilder {
 
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
+									if(campoIsNull(metaData,member.getRealClassName().toLowerCase())){
 
-									if (!tmpFinalParam3.equalsIgnoreCase("date")) {
+										String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
+												+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "() != null) {" 
+												+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+												+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
+												+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
+												+ "()); \n } \n\n"
+												+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
+												+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
+												+ member.getRealClassVariableName() + "); \n	}";
 
-										if(campoIsNull(metaData,member.getRealClassName().toLowerCase())){
-											
-											String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-													+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-													+ tmpFinalParam1.substring(1) + "() != null) {" 
-													+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
-													+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-													+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
-													+ "()); \n } \n\n"
-													+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
-													+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
-													+ member.getRealClassVariableName() + "); \n	}";
-						
-											finalParam2.add(tmp3);  	
-											logicAux++;
-										} else{
-											
-											String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-													+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-													+ tmpFinalParam1.substring(1) + "() != null) {" 
-													+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
-													+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-													+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
-													+ "()); \n } \n\n"
-													+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
-													+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
-													+ member.getRealClassVariableName() + "); \n	}";
-											
-											logicAux++;
-											finalParam2.add(tmp3);
-										}
+										finalParam2.add(tmp3);  	
+										logicAux++;
+									} else{
 
-									} else {
-										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-												+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-												+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "());";
-										
-										
+										String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
+												+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "() != null) {" 
+												+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+												+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
+												+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
+												+ "()); \n } \n\n"
+												+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
+												+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
+												+ member.getRealClassVariableName() + "); \n	}";
+
 										logicAux++;
 										finalParam2.add(tmp3);
 									}
+
 								}
 							}
-							
+
 						}
 					}
 				}
 			}
 		}
-		
+
 		List primaryKey = stringBuilderForId.finalParamForIdForDtoInViewForSetsVariablesInList(theMetaData, metaData);
 		return ListUtils.subtract(finalParam2, primaryKey);
 

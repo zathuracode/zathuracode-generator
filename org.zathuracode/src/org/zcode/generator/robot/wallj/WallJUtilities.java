@@ -546,7 +546,11 @@ public class WallJUtilities {
 		folderBuilder.add(pckge + "exceptions");
 
 		folderBuilder.add(pckge + "utilities");
-
+		
+		folderBuilder.add(pckge + "dto_mapper");
+		
+		folderBuilder.add(pckge + "rest_controllers");
+		
 		folderBuilder.add(dao);
 		
 		folderBuilder.add(api);

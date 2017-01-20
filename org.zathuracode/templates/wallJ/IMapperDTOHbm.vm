@@ -1,0 +1,25 @@
+package ${virginPackage}.dto.mapper;
+import $package.${metaData.getRealClassName()};
+import ${package}.dto.${metaData.getRealClassName()}DTO;
+
+#if($composedKey)
+    import $package.${metaData.primaryKey.getRealClassName()};
+#end
+
+import java.util.List;
+
+/**
+* @author Zathura Code Generator http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+public interface I${metaData.getRealClassName()}Mapper {
+
+	public ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}) throws Exception;
+	
+	public ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO) throws Exception;
+	
+	public List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(List<${metaData.getRealClassName()}> ${metaData.getRealClassNameAsVariable()}s) throws Exception;
+
+	public List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}DTOToList${metaData.getRealClassName()}(List<${metaData.getRealClassName()}DTO> ${metaData.getRealClassNameAsVariable()}DTOs) throws Exception;
+}

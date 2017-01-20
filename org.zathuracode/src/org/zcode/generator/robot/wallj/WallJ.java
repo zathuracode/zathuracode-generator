@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
+import org.zcode.generator.robot.jender.JenderUtilities;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.MetaData;
@@ -222,7 +223,15 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));
 				context.put("dtoConvert2", stringBuilder.dtoConvert2(list, metaData));
-	
+				
+				// generacion de atributos para mapear de Entidad a DTO
+				context.put("dtoAttributes", stringBuilderForId.obtainDTOMembersAndSetEntityAttributes(list, metaData));
+				context.put("dtoAttributes2", stringBuilder.obtainDTOMembersAndSetEntityAttributes2(list, metaData));
+				
+				// generacion de los atributos para mapear de DTO a Entidad 
+				context.put("entityAttributes", stringBuilderForId.obtainEntityMembersAndSetDTOAttributes(list, metaData));
+				context.put("entityAttributes2", stringBuilder.obtainEntityMembersAndSetDTOAttributes2(list, metaData));
+				
 				context.put("finalParamForView", stringBuilder.finalParamForView(list, metaData));
 				context.put("finalParamForDtoUpdate", stringBuilder.finalParamForDtoUpdate(list, metaData));
 				context.put("finalParamForDtoUpdateOnlyVariables", stringBuilder.finalParamForDtoUpdateOnlyVariables(list, metaData));
@@ -299,7 +308,10 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 				doJsp(metaData, context, hdLocation, dataModel);
 				doLogicEjbJpa(metaData, context, hdLocation, dataModel, modelName);
 				doDto(metaData, context, hdLocation, dataModel, modelName);
-				doPersitenceXml(dataModel, context, hdLocation);				
+				doPersitenceXml(dataModel, context, hdLocation);
+				doDTOMapper(metaData, context, hdLocation, dataModel);
+				doRestControllers(metaData, context, hdLocation, dataModel);
+				
 			}
 	
 			if (EclipseGeneratorUtil.isMavenProject) {
@@ -794,4 +806,70 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 
 	}
 	
+	@Override
+	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "dto" + GeneratorUtil.slash + "mapper" + GeneratorUtil.slash;
+			
+			log.info("Begin I DTO Mapper");
+			Template templateIMapperDTO = ve.getTemplate("IMapperDTOHbm.vm");
+			StringWriter swIMapperDTO = new StringWriter();
+			templateIMapperDTO.merge(context, swIMapperDTO);
+			
+			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "Mapper.java");
+			BufferedWriter bwIMapperDTO = new BufferedWriter(fwIMapperDTO);
+			bwIMapperDTO.write(swIMapperDTO.toString());
+			bwIMapperDTO.close();
+			fwIMapperDTO.close();
+			
+			log.info("Begin DTO Mapper");
+			
+			Template templateMapperDTO = ve.getTemplate("MapperDTOHbm.vm");
+			StringWriter swMapperDTO = new StringWriter();
+			templateMapperDTO.merge(context, swMapperDTO);
+			
+			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "Mapper.java");
+			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
+			bwMapperDTO.write(swMapperDTO.toString());
+			bwMapperDTO.close();
+			fwMapperDTO.close();
+			
+			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Mapper.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doRestControllers(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers" + GeneratorUtil.slash;
+			
+			log.info("Begin RestControllers");
+			Template templateBakcEndBean= ve.getTemplate("RestController.vm");
+			StringWriter swBackEndBean = new StringWriter();
+			templateBakcEndBean.merge(context, swBackEndBean);
+			
+			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "RestController.java");
+			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
+			bwBackEndBean.write(swBackEndBean.toString());
+			bwBackEndBean.close();
+			fwBackEndBean.close();
+			log.info("Begin RestControllers 2");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
+			JenderUtilities.getInstance().dates = null;
+			JenderUtilities.getInstance().datesId = null;
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
 }

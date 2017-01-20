@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
-
+import org.zcode.generator.robot.jender.JenderUtilities;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.MetaData;
@@ -248,6 +248,16 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				velocityContext.put("variableDto", stringBuilder.getPropertiesDto(listMetaData, metaData));
 				velocityContext.put("propertiesDto",SkyJetUtilities.getInstance().dtoProperties);
 				velocityContext.put("memberDto",SkyJetUtilities.getInstance().nameMemberToDto);
+				
+				// generacion de atributos para mapear de Entidad a DTO
+				velocityContext.put("dtoAttributes", stringBuilderForId.obtainDTOMembersAndSetEntityAttributes(listMetaData, metaData));
+				velocityContext.put("dtoAttributes2", stringBuilder.obtainDTOMembersAndSetEntityAttributes2(listMetaData, metaData));
+				
+				// generacion de los atributos para mapear de DTO a Entidad 
+				velocityContext.put("entityAttributes", stringBuilderForId.obtainEntityMembersAndSetDTOAttributes(listMetaData, metaData));
+				velocityContext.put("entityAttributes2", stringBuilder.obtainEntityMembersAndSetDTOAttributes2(listMetaData, metaData));
+				
+				
 				// generacion de la nueva logica 
 				velocityContext.put("dtoConvert", stringBuilderForId.dtoConvert(listMetaData,metaData));
 				velocityContext.put("dtoConvert2", stringBuilder.dtoConvert2(listMetaData, metaData));
@@ -323,7 +333,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				doJsp(metaData, velocityContext, hdLocation, metaDataModel);
 				doLogicSpringXMLHibernate(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
-				
+				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
+				doRestControllers(metaData, velocityContext, hdLocation, metaDataModel);
 				
 			}
 			
@@ -925,5 +936,71 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			throw e;
 		}
 	}
+	
+	@Override
+	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "dto" + GeneratorUtil.slash + "mapper" + GeneratorUtil.slash;
+			
+			log.info("Begin I DTO Mapper");
+			Template templateIMapperDTO = ve.getTemplate("IMapperDTOHbm.vm");
+			StringWriter swIMapperDTO = new StringWriter();
+			templateIMapperDTO.merge(context, swIMapperDTO);
+			
+			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "Mapper.java");
+			BufferedWriter bwIMapperDTO = new BufferedWriter(fwIMapperDTO);
+			bwIMapperDTO.write(swIMapperDTO.toString());
+			bwIMapperDTO.close();
+			fwIMapperDTO.close();
+			
+			log.info("Begin DTO Mapper");
+			
+			Template templateMapperDTO = ve.getTemplate("MapperDTOHbm.vm");
+			StringWriter swMapperDTO = new StringWriter();
+			templateMapperDTO.merge(context, swMapperDTO);
+			
+			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "Mapper.java");
+			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
+			bwMapperDTO.write(swMapperDTO.toString());
+			bwMapperDTO.close();
+			fwMapperDTO.close();
+			
+			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Mapper.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
 
+	}
+	
+	@Override
+	public void doRestControllers(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers" + GeneratorUtil.slash;
+			
+			log.info("Begin RestControllers");
+			Template templateBakcEndBean= ve.getTemplate("RestController.vm");
+			StringWriter swBackEndBean = new StringWriter();
+			templateBakcEndBean.merge(context, swBackEndBean);
+			
+			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "RestController.java");
+			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
+			bwBackEndBean.write(swBackEndBean.toString());
+			bwBackEndBean.close();
+			fwBackEndBean.close();
+			log.info("Begin RestControllers 2");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
+			JenderUtilities.getInstance().dates = null;
+			JenderUtilities.getInstance().datesId = null;
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
 }

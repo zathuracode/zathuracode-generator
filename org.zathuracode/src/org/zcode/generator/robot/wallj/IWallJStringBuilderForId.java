@@ -142,5 +142,9 @@ public interface IWallJStringBuilderForId {
 	
 	public List<String> finalParamForIdForViewForSetsVariablesDtoInList(List<MetaData> theMetaData, MetaData metaData);
 	
+	public List<String> obtainDTOMembersAndSetEntityAttributes(List<MetaData> theMetaData, MetaData metaData);
+	
+	public List<String> obtainEntityMembersAndSetDTOAttributes(List<MetaData> theMetaData, MetaData metaData);
+
 
 }

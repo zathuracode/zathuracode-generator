@@ -17,6 +17,7 @@ import javax.ejb.TransactionAttributeType;
 import  ${virginPackage}.exceptions.*;
 import 	${virginPackage}.dataaccess.dao.*;
 import  ${virginPackage}.utilities.Utilities;
+import  ${virginPackage}.dto.mapper.I${metaData.getRealClassName()}Mapper;
 import ${package}.*;
 
 
@@ -36,6 +37,9 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
 	 */
 	@EJB
 	private I${metaData.getRealClassName()}DAO ${metaData.getRealClassNameAsVariable()}DAO;
+	
+	@EJB
+	private I${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
 	
     #if(${metaData.isGetOneToManyProperties()})
 		#foreach($member  in ${metaData.getOneToManyProperties()})
@@ -207,23 +211,18 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
 					
 					List<${metaData.getRealClassName()}DTO > ${metaData.getRealClassNameAsVariable()}DTO = new ArrayList<${metaData.getRealClassName()}DTO>();
 						for (${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}Tmp : ${metaData.getRealClassNameAsVariable()}) {
-							${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO2 = new ${metaData.getRealClassName()}DTO();
 							
-								#foreach($member2  in $dtoConvert)
-                                    ${member2}
-                                #end
-                                #foreach($member2  in $dtoConvert2)
-                                    ${member2}
-								#end
-								${metaData.getRealClassNameAsVariable()}DTO.add(${metaData.getRealClassNameAsVariable()}DTO2);	
+							
+							${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO2 = 
+								${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}Tmp);
+							${metaData.getRealClassNameAsVariable()}DTO.add(${metaData.getRealClassNameAsVariable()}DTO2);	
 						}
 						
 						return ${metaData.getRealClassNameAsVariable()}DTO ;
 					
-					}catch(Exception e){
+				}catch(Exception e){
 					throw e;	
-					}
-			
+				}
 			}
 			
 			
