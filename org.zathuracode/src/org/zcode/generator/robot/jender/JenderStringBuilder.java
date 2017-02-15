@@ -2691,5 +2691,4 @@ public class JenderStringBuilder implements IJenderStringBuilder {
 
 	}
 
-
 }

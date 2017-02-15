@@ -157,5 +157,8 @@ public interface IZathuraJenderTemplate {
 
 	void doDTOMapper(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
 			throws Exception;
+
+	void doEntityGenerator(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
+			throws Exception;
 	
 }

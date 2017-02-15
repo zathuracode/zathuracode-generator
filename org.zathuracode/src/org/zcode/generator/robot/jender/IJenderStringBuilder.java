@@ -185,4 +185,5 @@ public interface IJenderStringBuilder {
 	
 	public List<String> obtainEntityMembersAndSetDTOAttributes2(List<MetaData> theMetaData,
 			MetaData metaData);
+
 }

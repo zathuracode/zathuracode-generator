@@ -545,6 +545,7 @@ public class JenderUtilities {
 		List<String> folderBuilder = new ArrayList<String>();
 
 		folderBuilder.add(pckge);
+		
 		folderBuilder.add(pckge + "exceptions");
 
 		folderBuilder.add(pckge + "utilities");
@@ -552,7 +553,9 @@ public class JenderUtilities {
 		folderBuilder.add(pckge + "security");
 		
 		folderBuilder.add(pckge + "rest_controllers");
-
+		
+		folderBuilder.add(pckge + "test");
+		
 		folderBuilder.add(dao);
 		
 		folderBuilder.add(api);

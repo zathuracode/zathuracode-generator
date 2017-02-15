@@ -1,0 +1,17 @@
+package ${virginPackage}.test;
+import $package.${metaData.getRealClassName()};
+
+/**
+* @author Zathura Code Generator http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+public class ${metaData.getRealClassName()}Id {
+
+	#foreach($member  in ${metaData.getProperties()})
+        
+        ${member.getShowName()};
+    	
+    #end
+	
+}

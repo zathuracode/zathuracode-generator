@@ -235,6 +235,11 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				context.put("variableDto", stringBuilder.getPropertiesDto(list, metaData));
 				context.put("propertiesDto",JenderUtilities.getInstance().dtoProperties);
 				context.put("memberDto",JenderUtilities.getInstance().nameMemberToDto);
+				
+				// generacion de la entidad
+				context.put("properties", metaData.getProperties());
+//				context.put("properties", metaData.getProperties().get(0).getType());
+				
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));
 				context.put("dtoConvert2", stringBuilder.dtoConvert2(list, metaData));
@@ -326,7 +331,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				context.put("connectionUsername", EclipseGeneratorUtil.connectionUsername);
 				context.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
 	
-				
+				doEntityGenerator(metaData, context, hdLocation, dataModel);
 				doDaoSpringHibernate(metaData, context, hdLocation);
 				doBackingBeans(metaData, context, hdLocation, dataModel);
 				doJsp(metaData, context, hdLocation, dataModel);
@@ -971,6 +976,49 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			
 			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Mapper.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
+					
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doEntityGenerator(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "test" + GeneratorUtil.slash;
+			
+			log.info("Begin Entity Generator");
+			
+			Template templateEntity = ve.getTemplate("EntityGenerator.vm");
+			StringWriter swEntity = new StringWriter();
+			templateEntity.merge(context, swEntity);
+			
+			FileWriter fwEntity = new FileWriter(path + "T" + metaData.getRealClassName() + ".java");
+			BufferedWriter bwEntity = new BufferedWriter(fwEntity);
+			bwEntity.write(swEntity.toString());
+			bwEntity.close();
+			fwEntity.close();
+			
+			if (metaData.getComposeKey() != null) {
+				Template templateEntityComposeKey = ve.getTemplate("EntityIdGenerator.vm");
+				StringWriter swEntityComposeKey = new StringWriter();
+				templateEntityComposeKey.merge(context, swEntityComposeKey);
+				
+				FileWriter fwEntityComposeKey = new FileWriter(path + "T" + metaData.getRealClassName() + "Id" + ".java");
+				BufferedWriter bwEntityComposeKey = new BufferedWriter(fwEntityComposeKey);
+				bwEntityComposeKey.write(swEntityComposeKey.toString());
+				bwEntityComposeKey.close();
+				fwEntityComposeKey.close();
+				
+				JalopyCodeFormatter.formatJavaCodeFile(path + "T" + metaData.getRealClassName() + "Id" + ".java");
+			}
+			
+			
+			JalopyCodeFormatter.formatJavaCodeFile(path + "T" + metaData.getRealClassName() + ".java");
+			
 					
 		} catch (Exception e) {
 			log.error(e.toString());

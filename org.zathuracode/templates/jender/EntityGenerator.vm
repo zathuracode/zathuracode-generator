@@ -1,0 +1,42 @@
+package ${virginPackage}.test;
+import $package.${metaData.getRealClassName()};
+
+/**
+* @author Zathura Code Generator http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+public class ${metaData.getRealClassName()} {
+
+	
+	#foreach($member  in $properties)
+       
+        	private ${member.getType().getSimpleName()} ${member.getShowName()};
+			
+			#set( $helper = $helper + ${member.getType().getSimpleName()} ${member.getShowName()} + "," )
+			       
+    #end
+	
+	public ${metaData.getRealClassName()} () {
+	}
+	
+	public ${metaData.getRealClassName()} () {
+	#foreach($member  in $properties)
+			this.${member.getShowName()} = ${member.getShowName()};
+    #end
+	}
+	
+	
+	#foreach($member  in $properties)
+       
+        public ${member.getType().getSimpleName()} get${member.getShowName()}() {
+	        return this.${member.getShowName()};
+	    }
+	    
+	    public void set${member.getShowName()}(${member.getType().getSimpleName()} ${member.getShowName()}) {
+	        this.${member.getShowName()} = ${member.getShowName()};
+	    }
+       
+    #end
+	
+}
