@@ -3,6 +3,7 @@ package org.zcode.generator.robot.jender;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,8 +22,12 @@ import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
+import org.zcode.metadata.model.ManyToOneMember;
+import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.MetaDataModel;
+import org.zcode.metadata.model.OneToManyMember;
+import org.zcode.metadata.model.SimpleMember;
 
 /**
  * Jender
@@ -236,9 +241,36 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				context.put("propertiesDto",JenderUtilities.getInstance().dtoProperties);
 				context.put("memberDto",JenderUtilities.getInstance().nameMemberToDto);
 				
-				// generacion de la entidad
-				context.put("properties", metaData.getProperties());
-//				context.put("properties", metaData.getProperties().get(0).getType());
+				// generacion de la entidad	
+				List<SimpleMember> simpleMembers = new ArrayList<SimpleMember>();
+				List<ManyToOneMember> manyToOneMembers= new ArrayList<ManyToOneMember>();
+				List<OneToManyMember> oneToManyMembers= new ArrayList<OneToManyMember>();
+				SimpleMember primaryKey = (SimpleMember) metaData.getPrimaryKey();
+				//List<SimpleMember> simpleMembersComposeKey= new ArrayList<SimpleMember>();
+				
+				for (Member member : metaData.getProperties()) {
+					
+					if (member.isSimpleMember() && !member.getShowName().equals(primaryKey.getShowName())) {
+						simpleMembers.add((SimpleMember) member);
+					}
+					
+					if (member.isManyToOneMember()) {
+						manyToOneMembers.add((ManyToOneMember) member);
+					}
+					
+					if (member.isOneToManyMember()) {
+						oneToManyMembers.add((OneToManyMember) member);
+					}
+					
+				}
+				
+				context.put("simpleMembers", simpleMembers);
+				context.put("manyToOneMembers", manyToOneMembers);
+				context.put("oneToManyMembers", oneToManyMembers);
+				context.put("primaryKey", primaryKey);
+				//				context.put("properties", metaData.getProperties().get(0).getType().getSimpleName().length());
+				
+				
 				
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));

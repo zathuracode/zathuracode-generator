@@ -340,5 +340,45 @@ public class Member implements Comparable {
 	public void setHashMapIdsProperties(HashMap<String, Member> hashMapIdsProperties) {
 		this.hashMapIdsProperties = hashMapIdsProperties;
 	}
+	
+	/**
+	 * Checks if is many to one member.
+	 *
+	 * @return true, if checks if is many to one member.
+	 */
+	public boolean isManyToOneMember() {
+		boolean ret = false;
 
+		try {
+			if (this instanceof ManyToOneMember)
+				ret = true;
+			else
+				ret = false;
+		} catch (Exception e) {
+			ret = false;
+		}
+
+		return ret;
+	}
+	
+	/**
+	 * Checks if is one to many member.
+	 *
+	 * @return true, if checks if is one to many member.
+	 */
+	public boolean isOneToManyMember() {
+		boolean ret = false;
+
+		try {
+			if (this instanceof OneToManyMember)
+				ret = true;
+			else
+				ret = false;
+		} catch (Exception e) {
+			ret = false;
+		}
+
+		return ret;
+	}
+	
 }

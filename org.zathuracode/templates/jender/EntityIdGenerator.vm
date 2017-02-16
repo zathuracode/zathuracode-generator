@@ -8,10 +8,5 @@ import $package.${metaData.getRealClassName()};
 */
 public class ${metaData.getRealClassName()}Id {
 
-	#foreach($member  in ${metaData.getProperties()})
-        
-        ${member.getShowName()};
-    	
-    #end
-	
+
 }

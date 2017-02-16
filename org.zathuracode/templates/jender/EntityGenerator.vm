@@ -8,35 +8,21 @@ import $package.${metaData.getRealClassName()};
 */
 public class ${metaData.getRealClassName()} {
 
-	
-	#foreach($member  in $properties)
-       
-        	private ${member.getType().getSimpleName()} ${member.getShowName()};
-			
-			#set( $helper = $helper + ${member.getType().getSimpleName()} ${member.getShowName()} + "," )
-			       
+	#if (${primaryKey.isPrimiaryKeyAComposeKey()})
+		private ${primaryKey.getType().getSimpleName()} ${metaData.getRealClassName()}Id;
+	#else
+		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};
+	#end
+	#foreach($mom in $manyToOneMembers)
+		private ${mom.getType().getSimpleName()} ${mom.getShowName()};	
+    #end
+	#foreach($sim in $simpleMembers)
+		private ${sim.getType().getSimpleName()} ${sim.getShowName()};	
+    #end
+	#foreach($omm in $oneToManyMembers)
+		private Set<${omm.getType().getSimpleName()}> ${omm.getShowName()} = new HashSet<${omm.getType().getSimpleName()}>(0);	
     #end
 	
-	public ${metaData.getRealClassName()} () {
-	}
-	
-	public ${metaData.getRealClassName()} () {
-	#foreach($member  in $properties)
-			this.${member.getShowName()} = ${member.getShowName()};
-    #end
-	}
 	
 	
-	#foreach($member  in $properties)
-       
-        public ${member.getType().getSimpleName()} get${member.getShowName()}() {
-	        return this.${member.getShowName()};
-	    }
-	    
-	    public void set${member.getShowName()}(${member.getType().getSimpleName()} ${member.getShowName()}) {
-	        this.${member.getShowName()} = ${member.getShowName()};
-	    }
-       
-    #end
-	
-}
+}	
