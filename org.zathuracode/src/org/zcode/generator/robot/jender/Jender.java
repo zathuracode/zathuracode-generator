@@ -248,26 +248,48 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				SimpleMember primaryKey = (SimpleMember) metaData.getPrimaryKey();
 				//List<SimpleMember> simpleMembersComposeKey= new ArrayList<SimpleMember>();
 				
+				String constructorStr = "";
+				
+				if (primaryKey.isPrimiaryKeyAComposeKey()) {
+					constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
+							+ metaData.getRealClassNameAsVariable() + "Id, ";
+				}else {
+					constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
+							+ primaryKey.getShowName() + ", ";
+				}
+				
 				for (Member member : metaData.getProperties()) {
 					
 					if (member.isSimpleMember() && !member.getShowName().equals(primaryKey.getShowName())) {
 						simpleMembers.add((SimpleMember) member);
+						
+						constructorStr = constructorStr + member.getType().getSimpleName() + " "
+								+ member.getShowName() + ", ";
 					}
 					
 					if (member.isManyToOneMember()) {
 						manyToOneMembers.add((ManyToOneMember) member);
+						
+						constructorStr = constructorStr + member.getType().getSimpleName() + " "
+								+ member.getShowName() + ", ";
 					}
 					
 					if (member.isOneToManyMember()) {
 						oneToManyMembers.add((OneToManyMember) member);
+						
+						constructorStr = constructorStr + "Set<" + member.getType().getSimpleName() + "> "
+								+ member.getShowName() + ", ";
 					}
 					
 				}
+				
+				constructorStr = constructorStr.substring(0, constructorStr.length() - 2);
 				
 				context.put("simpleMembers", simpleMembers);
 				context.put("manyToOneMembers", manyToOneMembers);
 				context.put("oneToManyMembers", oneToManyMembers);
 				context.put("primaryKey", primaryKey);
+				context.put("constructorStr", constructorStr);
 				//				context.put("properties", metaData.getProperties().get(0).getType().getSimpleName().length());
 				
 				

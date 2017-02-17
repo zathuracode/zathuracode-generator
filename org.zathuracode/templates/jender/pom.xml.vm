@@ -20,6 +20,7 @@
 		<mojarra.version>2.2.12</mojarra.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<log4j2.version>2.7</log4j2.version>
+		<jpa.validation.version>1.0.0.GA</jpa.validation.version>
     </properties>
     
     
@@ -237,6 +238,12 @@
 			<groupId>${groupIdConnector}</groupId>
 			<artifactId>${artifactIdConnector}</artifactId>
 			<version>${versionConnector}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>${jpa.validation.version}</version>
 		</dependency>
 		
 	</dependencies>
