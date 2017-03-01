@@ -1,12 +1,58 @@
-package ${virginPackage}.test;
-import $package.${metaData.getRealClassName()};
+package ${virginPackage}.${modelName};
+
+import java.util.Date;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.validation.constraints.*;
 
 /**
 * @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
 * 
 */
-public class ${metaData.getRealClassName()}Id {
+@Entity
+public class ${metaData.getRealClassName()}Id implements java.io.Serializable {
 
-
+	#foreach($sim in $composeKeyAttributes)
+		@Id
+		@NotNull
+		private ${sim.getType().getSimpleName()} ${sim.getShowName()};	
+    #end
+    
+     public ${metaData.getRealClassName()}Id() {
+	}
+    
+	
+	#foreach($sim in $composeKeyAttributes)
+		
+		public ${sim.getType().getSimpleName()} get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}() {
+	        return this.${sim.getShowName()};
+	    }
+	    
+	    public void set${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}(${sim.getType().getSimpleName()} ${sim.getShowName()}) {
+	        this.${sim.getShowName()} = ${sim.getShowName()};
+	    }
+    
+    #end
+    
+    public boolean equals(Object other){
+    	if ( (this == other) ) return true;
+    	if ( (other == null) ) return false;
+    	if ( !(other instanceof ${metaData.getRealClassName()}Id) ) return false;
+ 		${metaData.getRealClassName()}Id castOther = ( ${metaData.getRealClassName()}Id ) other;
+ 		
+ 		return ( #foreach($sim in $composeKeyAttributes) (this.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}() == castOther.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}()) || ( this.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}()!=null && castOther.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}()!=null && this.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}().equals(castOther.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}()) ) ) #if( $foreach.hasNext ) 
+ 		 && ( #end  #end;
+    }
+    
+    public int hashCode() {
+         int result = 17;
+         
+         #foreach($sim in $composeKeyAttributes)
+			 result = 37 * result + ( get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}() == null ? 0 : this.get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}().hashCode() );	
+	     #end
+         
+         return result;
+   } 
+    
 }

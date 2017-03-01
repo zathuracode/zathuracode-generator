@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.zcode.metadata.model.ManyToOneMember;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.SimpleMember;
 
 
 
@@ -741,7 +742,7 @@ public class JenderStringBuilderForId implements IJenderStringBuilderForId {
 			for (Field field2 : field) {
 				String name = field2.getName();
 				finalParam = finalParam + name;
-				 String type = field2.getType().getSimpleName();
+				String type = field2.getType().getSimpleName();
 
 				 
 					String tmp1 = metaData.getRealClassNameAsVariable() + "DTO2.set" + name.substring(0, 1).toUpperCase() + name.substring(1) + "("
@@ -903,4 +904,25 @@ public class JenderStringBuilderForId implements IJenderStringBuilderForId {
 		return finalParam2;
 
 	}
+	
+	public List<SimpleMember> attributesComposeKey(List<MetaData> theMetaData, MetaData metaData) {
+
+		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+			List<SimpleMember> finalParam2 = new ArrayList<SimpleMember>();
+			Field[] field = metaData.getComposeKey().getDeclaredFields();
+			int i=1;
+			for (Field field2 : field) {
+				SimpleMember simpleMember = new SimpleMember(field2.getName(), field2.getName(), field2.getType(), i);
+				i++;
+				finalParam2.add(simpleMember);
+			}
+			return finalParam2;
+		} else {
+			return null;
+		}
+	}
+	
+	
+	
+	
 }

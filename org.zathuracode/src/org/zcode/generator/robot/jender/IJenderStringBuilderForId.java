@@ -3,6 +3,7 @@ package org.zcode.generator.robot.jender;
 import java.util.List;
 
 import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.SimpleMember;
 
 
 /**
@@ -145,5 +146,7 @@ public interface IJenderStringBuilderForId {
 	public List<String> obtainDTOMembersAndSetEntityAttributes(List<MetaData> theMetaData, MetaData metaData);
 	
 	public List<String> obtainEntityMembersAndSetDTOAttributes(List<MetaData> theMetaData, MetaData metaData);
+	
+	public List<SimpleMember> attributesComposeKey(List<MetaData> theMetaData, MetaData metaData);
 
 }

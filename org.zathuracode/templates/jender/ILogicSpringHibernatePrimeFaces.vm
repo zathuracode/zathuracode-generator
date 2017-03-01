@@ -46,4 +46,5 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
 	
 	public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception;
     
+    public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception;
 }

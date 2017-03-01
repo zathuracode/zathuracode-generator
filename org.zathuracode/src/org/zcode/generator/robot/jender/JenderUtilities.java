@@ -554,7 +554,7 @@ public class JenderUtilities {
 		
 		folderBuilder.add(pckge + "rest_controllers");
 		
-		folderBuilder.add(pckge + "test");
+		folderBuilder.add(model);
 		
 		folderBuilder.add(dao);
 		

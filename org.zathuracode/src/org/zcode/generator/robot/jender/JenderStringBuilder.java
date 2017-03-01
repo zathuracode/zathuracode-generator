@@ -1662,6 +1662,7 @@ public class JenderStringBuilder implements IJenderStringBuilder {
 				String realType="";
 				//Cuando son Arreglos
 				if(member.getType().isArray()==false){
+					//TODO Forma alternativa realType = member.getType().getSimpleName();
 					realType = member.getType().toString().substring((member.getType().toString()).lastIndexOf(".") + 1,(member.getType().toString()).length());
 				}else{
 					realType=member.getRealClassName();

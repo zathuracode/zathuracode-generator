@@ -37,41 +37,41 @@ import org.zcode.metadata.model.SimpleMember;
  * @version 1.0
  */
 public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
-	
+
 	private static final Logger log = LoggerFactory.getLogger(Jender.class);
 	//private static String pathTemplates;
 	private Properties properties;
 	private String virginPackageInHd;
 	private VelocityEngine ve;
 	private String webRootPath;
-	
+
 	private final static String mainFolder="jender";
-	
-	
+
+
 	/// final static String pathTemplates;
 	private final static String templatesPath=GeneratorUtil.getGeneratorTemplatesPath()+GeneratorUtil.slash+mainFolder+GeneratorUtil.slash;
 	private final static String librariesPath=GeneratorUtil.getGeneratorLibrariesPath()+GeneratorUtil.slash;
 	private final static String extPath	  =GeneratorUtil.getGeneratorExtPath()+         GeneratorUtil.slash+mainFolder+GeneratorUtil.slash;
-	
-	
+
+
 
 
 	@Override
 	public void toGenerate(MetaDataModel metaDataModel, String projectName,	String folderProjectPath, Properties propiedades) throws Exception{
-	
-		
+
+
 		Thread thread = Thread.currentThread();
 		ClassLoader loader = thread.getContextClassLoader();
 		thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
 		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
-		
+
 		try {
 			String jpaPckgName = propiedades.getProperty("jpaPckgName");
 			String domainName = jpaPckgName.substring(0, jpaPckgName.indexOf("."));
 			Integer specificityLevel = (Integer) propiedades.get("specificityLevel");
 			properties = propiedades;
 			webRootPath=(propiedades.getProperty("webRootFolderPath"));
-			
+
 			log.info("===================== Begin Jender Zathuracode =====================");				
 			doTemplate(folderProjectPath, metaDataModel, jpaPckgName, projectName, specificityLevel, domainName);
 			copyLibraries();				
@@ -85,21 +85,21 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 
 	}
-	
+
 	public void copyLibraries() throws Exception{
 		String pathIndexJsp = extPath+"index.jsp";
 		String pathLogin = extPath+"login.xhtml";
 		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
 		String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
-		
+
 		String pathHibernate= librariesPath+"core-hibernate"+GeneratorUtil.slash;
 		String pathJpaHibernate=librariesPath+"hibernate-jpa"+GeneratorUtil.slash;
-		
+
 		String pathPrimeFaces= librariesPath+"primeFaces"+GeneratorUtil.slash;
-		
+
 		String pathSpring= librariesPath+"spring"+GeneratorUtil.slash;
 		String pathSpringSecurity= librariesPath+"spring-security"+GeneratorUtil.slash;
-		
+
 		String pathSL4J= librariesPath+"slf4j"+GeneratorUtil.slash;
 		String pathJamon= librariesPath+"jamon"+GeneratorUtil.slash;
 		String pathMojarra= librariesPath+"mojarra"+GeneratorUtil.slash;
@@ -107,23 +107,24 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 		String pathAopAlliance= librariesPath+"aopalliance"+GeneratorUtil.slash;
 		String pathLog4j=librariesPath+"log4j"+GeneratorUtil.slash;
 		//String pathServlet=librariesPath+"servlet3.1.1"+GeneratorUtil.slash;
-		
+
 		String pathLib= properties.getProperty("libFolderPath");
-		
+
 		String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
-		
-		
+
+
 		// Copy Css
 		GeneratorUtil.createFolder(webRootPath + "css");
 		GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
+		//TODO RUTA MVC DISPATCHER
 		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);		
-		
+
 		//create folder images and insert .png
 		GeneratorUtil.createFolder(webRootPath + "images");
 		GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages, webRootPath + "images" + GeneratorUtil.slash);
-		
-		
+
+
 		// create login.xhtml
 		GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
 		// create index.jsp
@@ -145,11 +146,11 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			GeneratorUtil.copyFolder(pathLog4j, pathLib);
 			//GeneratorUtil.copyFolder(pathServlet, pathLib);
 		}
-		
+
 		// copy to Log4j
 		String folderProjectPath = properties.getProperty("folderProjectPath");
 		GeneratorUtil.copyFolder(log4j, folderProjectPath + GeneratorUtil.slash);
-		
+
 	}
 
 	@Override
@@ -158,9 +159,9 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			String domainName)throws Exception {		
 
 		try {
-	
-			
-			
+
+
+
 			ve = new VelocityEngine();
 			Properties propiedades = new Properties();
 			propiedades.setProperty("file.resource.loader.description", "Velocity File Resource Loader");
@@ -169,26 +170,26 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			propiedades.setProperty("file.resource.loader.cache", "false");
 			propiedades.setProperty("file.resource.loader.modificationCheckInterval", "2");
 			ve.init(propiedades);
-	
-	
+
+
 			VelocityContext context = new VelocityContext();
 			MetaDataModel dataModel = metaDataModel;
 			List<MetaData> list = dataModel.getTheMetaData();
-	
+
 			IJenderStringBuilderForId stringBuilderForId = new JenderStringBuilderForId(list);
 			IJenderStringBuilder stringBuilder = new JenderStringBuilder(list, (JenderStringBuilderForId) stringBuilderForId);
 			String packageOriginal = null;
 			String virginPackage = null;
 			String modelName = null;
-	
+
 			if (specificityLevel.intValue() == 2) {
 				try {
 					int lastIndexOf = jpaPckgName.lastIndexOf(".");
 					packageOriginal = jpaPckgName.substring(0, lastIndexOf);
-	
+
 					int lastIndexOf2 = packageOriginal.lastIndexOf(".") + 1;
 					modelName = packageOriginal.substring(lastIndexOf2);
-	
+
 					int virginLastIndexOf = packageOriginal.lastIndexOf(".");
 					virginPackage = packageOriginal.substring(0, virginLastIndexOf);
 				} catch (Exception e) {
@@ -197,17 +198,17 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			} else {
 				try {
 					packageOriginal = jpaPckgName;
-	
+
 					int lastIndexOf2 = packageOriginal.lastIndexOf(".") + 1;
 					modelName = jpaPckgName.substring(lastIndexOf2);
-	
+
 					int virginLastIndexOf = packageOriginal.lastIndexOf(".");
 					virginPackage = packageOriginal.substring(0, virginLastIndexOf);
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
 			}
-	
+
 			String projectNameClass = (projectName.substring(0, 1)).toUpperCase() + projectName.substring(1, projectName.length());
 			context.put("packageOriginal", packageOriginal);
 			context.put("virginPackage", virginPackage);
@@ -216,15 +217,15 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			context.put("modelName", modelName);
 			context.put("projectNameClass", projectNameClass);
 			context.put("domainName", domainName);
-			
+
 			this.virginPackageInHd = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
 			JenderUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
 			JenderUtilities.getInstance().biuldHashToGetIdValuesLengths(list);
-	
+
 			for (MetaData metaData : list) {
-	
+
 				List<String> imports = JenderUtilities.getInstance().getRelatedClasses(metaData, dataModel);
-	
+
 				if (imports != null) {
 					if (imports.size() > 0 && !imports.isEmpty()) {
 						context.put("isImports", true);
@@ -235,77 +236,74 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				} else {
 					context.put("isImports", false);
 				}
-	
+
 				// generacion de nuevos dto
 				context.put("variableDto", stringBuilder.getPropertiesDto(list, metaData));
 				context.put("propertiesDto",JenderUtilities.getInstance().dtoProperties);
 				context.put("memberDto",JenderUtilities.getInstance().nameMemberToDto);
-				
+
 				// generacion de la entidad	
 				List<SimpleMember> simpleMembers = new ArrayList<SimpleMember>();
 				List<ManyToOneMember> manyToOneMembers= new ArrayList<ManyToOneMember>();
 				List<OneToManyMember> oneToManyMembers= new ArrayList<OneToManyMember>();
 				SimpleMember primaryKey = (SimpleMember) metaData.getPrimaryKey();
 				//List<SimpleMember> simpleMembersComposeKey= new ArrayList<SimpleMember>();
-				
+
 				String constructorStr = "";
-				
-				if (primaryKey.isPrimiaryKeyAComposeKey()) {
-					constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
-							+ metaData.getRealClassNameAsVariable() + "Id, ";
-				}else {
-					constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
-							+ primaryKey.getShowName() + ", ";
-				}
-				
+
+				constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
+						+ primaryKey.getShowName() + ", ";
+
+
 				for (Member member : metaData.getProperties()) {
-					
+
 					if (member.isSimpleMember() && !member.getShowName().equals(primaryKey.getShowName())) {
 						simpleMembers.add((SimpleMember) member);
-						
+
 						constructorStr = constructorStr + member.getType().getSimpleName() + " "
 								+ member.getShowName() + ", ";
 					}
-					
+
 					if (member.isManyToOneMember()) {
 						manyToOneMembers.add((ManyToOneMember) member);
-						
+
 						constructorStr = constructorStr + member.getType().getSimpleName() + " "
 								+ member.getShowName() + ", ";
 					}
-					
+
 					if (member.isOneToManyMember()) {
 						oneToManyMembers.add((OneToManyMember) member);
-						
+
 						constructorStr = constructorStr + "Set<" + member.getType().getSimpleName() + "> "
 								+ member.getShowName() + ", ";
 					}
-					
+
 				}
-				
+
 				constructorStr = constructorStr.substring(0, constructorStr.length() - 2);
-				
+
 				context.put("simpleMembers", simpleMembers);
 				context.put("manyToOneMembers", manyToOneMembers);
 				context.put("oneToManyMembers", oneToManyMembers);
 				context.put("primaryKey", primaryKey);
 				context.put("constructorStr", constructorStr);
+				context.put("composeKeyAttributes", stringBuilderForId.attributesComposeKey(list,metaData));
 				//				context.put("properties", metaData.getProperties().get(0).getType().getSimpleName().length());
-				
-				
-				
+
+
+
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));
 				context.put("dtoConvert2", stringBuilder.dtoConvert2(list, metaData));
-				
+
 				// generacion de atributos para mapear de Entidad a DTO
 				context.put("dtoAttributes", stringBuilderForId.obtainDTOMembersAndSetEntityAttributes(list, metaData));
 				context.put("dtoAttributes2", stringBuilder.obtainDTOMembersAndSetEntityAttributes2(list, metaData));
-				
+
 				// generacion de los atributos para mapear de DTO a Entidad 
 				context.put("entityAttributes", stringBuilderForId.obtainEntityMembersAndSetDTOAttributes(list, metaData));
 				context.put("entityAttributes2", stringBuilder.obtainEntityMembersAndSetDTOAttributes2(list, metaData));
-				
+
 				context.put("finalParamForView", stringBuilder.finalParamForView(list, metaData));
 				context.put("finalParamForDtoUpdate", stringBuilder.finalParamForDtoUpdate(list, metaData));
 				context.put("finalParamForDtoUpdateOnlyVariables", stringBuilder.finalParamForDtoUpdateOnlyVariables(list, metaData));
@@ -324,68 +322,67 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				context.put("finalParamForDtoInViewForSetsVariablesInList", stringBuilder.finalParamForDtoInViewForSetsVariablesInList(list, metaData));
 				context.put("finalParamForIdForViewForSetsVariablesInList", stringBuilderForId.finalParamForIdForViewForSetsVariablesInList(list, metaData));
 				context.put("finalParamForIdVariablesAsList", stringBuilderForId.finalParamForIdVariablesAsList(list, metaData));
-				
+
 				//listas nuevas para el manejo de tablas maestro detalle AndresPuerta
 				context.put("finalParamForGetIdForViewClass", stringBuilder.finalParamForGetIdForViewClass(list, metaData));				
 				context.put("finalParamForGetIdByDtoForViewClass", stringBuilder.finalParamForGetIdByDtoForViewClass(list, metaData));
 				context.put("finalParamForIdForViewForSetsVariablesDtoInList", stringBuilderForId.finalParamForIdForViewForSetsVariablesDtoInList(list, metaData));
 				context.put("finalParamForViewForSetsVariablesDtoInList", stringBuilder.finalParamForViewForSetsVariablesDtoInList(list, metaData));
 				context.put("finalParamForGetManyToOneForViewClass", stringBuilder.finalParamForGetManyToOneForViewClass(list, metaData));
-				
-	
+
+
 				String finalParam = stringBuilder.finalParam(list, metaData);
 				context.put("finalParam", finalParam);
 				metaData.setFinamParam(finalParam);
-	
+
 				String finalParamVariables = stringBuilder.finalParamVariables(list, metaData);
 				context.put("finalParamVariables", finalParamVariables);
 				metaData.setFinamParamVariables(finalParamVariables);
-	
+
 				String finalParamForId = stringBuilderForId.finalParamForId(list, metaData);
 				context.put("finalParamForId", stringBuilderForId.finalParamForId(list, metaData));
 				metaData.setFinalParamForId(finalParamForId);
-	
+
 				String finalParamForIdVariables = stringBuilderForId.finalParamForIdVariables(list, metaData);
 				context.put("finalParamForIdVariables", stringBuilderForId.finalParamForIdVariables(list, metaData));
 				metaData.setFinalParamForIdVariables(finalParamForIdVariables);
-	
+
 				context.put("finalParamVariablesAsList", stringBuilder.finalParamVariablesAsList(list, metaData));
 				context.put("finalParamVariablesAsList2", stringBuilder.finalParamVariablesAsList2(list, metaData));
 				context.put("finalParamVariablesDatesAsList2", stringBuilder.finalParamVariablesDatesAsList2(list, metaData));
 				context.put("isFinalParamDatesAsList", JenderUtilities.getInstance().isFinalParamDatesAsList());
 				context.put("finalParamDatesAsList", JenderUtilities.getInstance().datesJSP);
-	
+
 				context.put("finalParamForIdClassAsVariables", stringBuilderForId.finalParamForIdClassAsVariables(list, metaData));
 				context.put("finalParamForIdClassAsVariables2", stringBuilderForId.finalParamForIdClassAsVariables2(list, metaData));
 				context.put("isFinalParamForIdClassAsVariablesForDates", JenderUtilities.getInstance().isFinalParamForIdClassAsVariablesForDates());
 				context.put("finalParamForIdClassAsVariablesForDates", JenderUtilities.getInstance().datesIdJSP);
-	
+
 				context.put("finalParamForVariablesDataTablesAsList", stringBuilder.finalParamForVariablesDataTablesAsList(list, metaData));
 				context.put("finalParamForVariablesDataTablesForIdAsList", stringBuilderForId.finalParamForVariablesDataTablesForIdAsList(list, metaData));
-	
+
 				if (metaData.isGetManyToOneProperties()) {
 					context.put("getVariableForManyToOneProperties", stringBuilder.getVariableForManyToOneProperties(metaData.getManyToOneProperties(), list));
 					context.put("getStringsForManyToOneProperties", stringBuilder.getStringsForManyToOneProperties(metaData.getManyToOneProperties(), list));
 				}
-	
+
 				context.put("composedKey", false);
-	
+
 				if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 					context.put("composedKey", true);
 					context.put("finalParamForIdClass", stringBuilderForId.finalParamForIdClass(list, metaData));
 				}
 				context.put("metaData", metaData);
 				context.put("dataModel", dataModel);
-				
-				
-				
+
+
+
 				// generacion datasource.xml
 				context.put("connectionUrl", EclipseGeneratorUtil.connectionUrl);
 				context.put("connectionDriverClass", EclipseGeneratorUtil.connectionDriverClass);
 				context.put("connectionUsername", EclipseGeneratorUtil.connectionUsername);
 				context.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
-	
-				doEntityGenerator(metaData, context, hdLocation, dataModel);
+				
 				doDaoSpringHibernate(metaData, context, hdLocation);
 				doBackingBeans(metaData, context, hdLocation, dataModel);
 				doJsp(metaData, context, hdLocation, dataModel);
@@ -393,13 +390,14 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				doDto(metaData, context, hdLocation, dataModel, modelName);
 				doRestControllers(metaData, context, hdLocation, dataModel);
 				doDTOMapper(metaData, context, hdLocation, dataModel);
-				
+				doEntityGenerator(metaData, context, hdLocation, dataModel);
+
 			}
-	
+
 			if (EclipseGeneratorUtil.isMavenProject) {
 				GeneratorUtil.doPomXml(context, ve);
 			}
-			
+
 			doApiSpringHibernate(context, hdLocation);
 			doUtilites(context, hdLocation, dataModel, modelName);
 			doAuthenticationProvider(context, hdLocation, dataModel, modelName);
@@ -408,13 +406,19 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			doJspInitialMenu(dataModel, context, hdLocation);
 			doFacesConfig(dataModel, context, hdLocation);
 			doJspFacelets(context, hdLocation);
-			doSpringContextConfFiles(context, hdLocation, dataModel, modelName);			
-		
+			doSpringContextConfFiles(context, hdLocation, dataModel, modelName);
+			
+			String restPath = virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers";
+			restPath = restPath.replace(GeneratorUtil.slash, ".");
+			context.put("restPackage", restPath);
+			
+			doMvcDispatcherServlet(dataModel, context, hdLocation);
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
 		}finally{
-			
+
 		}
 	}
 
@@ -423,19 +427,19 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			MetaDataModel dataModel) throws Exception{
 		try {
 			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "presentation"+ GeneratorUtil.slash + "businessDelegate" +GeneratorUtil.slash;
-			
+
 			log.info("Begin IBusinesDelegate ");
 			Template templateIBusinessDelegate = ve.getTemplate("IBusinessDelegatorView.vm");
 			StringWriter swIBusinessDelegate = new StringWriter();
 			templateIBusinessDelegate.merge(context, swIBusinessDelegate);
-			
+
 			FileWriter fwIBusinessDelegate = new FileWriter(path+"IBusinessDelegatorView.java");
 			BufferedWriter bwIBusinessDelegate = new  BufferedWriter(fwIBusinessDelegate);
 			bwIBusinessDelegate.write(swIBusinessDelegate.toString());
 			bwIBusinessDelegate.close();
 			fwIBusinessDelegate.close();
 			log.info("End IBusinesDelegate ");
-			
+
 			log.info("Begin BusinesDelegate ");
 			Template templateBusinessDelegate = ve.getTemplate("BusinessDelegatorView.vm");
 			StringWriter swBusinessDelegate = new StringWriter();
@@ -445,10 +449,10 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwBusinessDelegate.write(swBusinessDelegate.toString());
 			bwBusinessDelegate.close();
 			fwBusinessDelegate.close();
-			
+
 			JalopyCodeFormatter.formatJavaCodeFile(path + "IBusinessDelegatorView.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + "BusinessDelegatorView.java");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -485,17 +489,17 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwDao.close();
 			fwDao.close();
 			log.info("End Dao Spring+PrimeFaces+Hibernate");
-			
+
 			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "DAO.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "DAO.java");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
 		}
 
 	}
-	
+
 	@Override
 	public void doApiSpringHibernate(VelocityContext context, String hdLocation) throws Exception{
 
@@ -504,7 +508,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + "dataaccess" + GeneratorUtil.slash + "api"+ GeneratorUtil.slash;
 
 			log.info("Begin api Spring+PrimeFaces+Hibernate");
-			
+
 			Template apiSpringPrimeHibernateTemplate = ve.getTemplate("Dao.vm");
 			StringWriter stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
@@ -513,7 +517,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
-			
+
 			apiSpringPrimeHibernateTemplate = ve.getTemplate("DaoException.vm");
 			stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
@@ -522,7 +526,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
-			
+
 			apiSpringPrimeHibernateTemplate = ve.getTemplate("HibernateDaoImpl.vm");
 			stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
@@ -531,7 +535,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
-			
+
 			apiSpringPrimeHibernateTemplate = ve.getTemplate("Paginator.vm");
 			stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
@@ -540,14 +544,14 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
-			
+
 			log.info("End api Spring+PrimeFaces+Hibernate");
-			
+
 			JalopyCodeFormatter.formatJavaCodeFile(path + "Dao.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + "DaoException.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + "HibernateDaoImpl.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + "Paginator.java");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -588,14 +592,14 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			Template templateZmessManager = ve.getTemplate("ZMessManager.vm");
 			StringWriter swZmessManager = new StringWriter();
 			templateZmessManager.merge(context, swZmessManager);
-			
+
 			FileWriter fwZmessManager = new FileWriter(path+ "ZMessManager.java");
 			BufferedWriter bwZmessManager = new BufferedWriter(fwZmessManager);
 			bwZmessManager.write(swZmessManager.toString());
 			bwZmessManager.close();
 			fwZmessManager.close();
 			log.info("Begin ZMessManager");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -607,9 +611,9 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doFacesConfig(MetaDataModel dataModel, VelocityContext context,
 			String hdLocation) throws Exception{
 		try {
-			
+
 			String path =properties.getProperty("webRootFolderPath")+"WEB-INF"+ GeneratorUtil.slash;
-			
+
 			log.info("Begin FacesConfig");
 			Template templateFacesConfig = ve.getTemplate("faces-configSpringPrimeHibernate.xml.vm");
 			StringWriter swFacesConfig = new StringWriter();
@@ -620,7 +624,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwFacesConfig.close();
 			fwFacesConfig.close();
 			log.info("End FacesConfig");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -632,7 +636,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doJsp(MetaData metaData, VelocityContext context,
 			String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
-			
+
 			String path=properties.getProperty("webRootFolderPath") + "XHTML" + GeneratorUtil.slash;
 			log.info("Begin Crud XHTML");
 			Template templateXhtml = ve.getTemplate("XHTMLSpringHibernatePrime.vm");
@@ -644,7 +648,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwXhtml.close();
 			fwXhtml.close();
 			log.info("End Crud XHTML");
-			
+
 			log.info("Begin DataTable XHTML");
 			Template templateDataTable = ve.getTemplate("XHTMLdataTablesHibernatePrime.vm");
 			StringWriter swDataTable = new StringWriter();
@@ -657,7 +661,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JenderUtilities.getInstance().datesJSP = null;
 			JenderUtilities.getInstance().datesIdJSP = null;
 			log.info("End DataTable XHTML");
-			
+
 			log.info("Begin DataTableEditable XHTML");
 			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditablePrime.vm");
 			StringWriter swDataTableEditable = new StringWriter();
@@ -668,10 +672,10 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwDataTableEditable.close();
 			fwDataTableEditable.close();
 			log.info("Begin DataTableEditable XHTML");
-			
+
 			JenderUtilities.getInstance().datesJSP = null;
 			JenderUtilities.getInstance().datesIdJSP = null;
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -693,7 +697,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwHeader.close();
 			fwHeader.close();
 			log.info("End Header");
-			
+
 			log.info("Begin Footer");
 			Template templateFooter = ve.getTemplate("JSPfooter.vm");
 			StringWriter swFooter = new StringWriter();
@@ -704,7 +708,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwFooter.close();
 			fwFooter.close();
 			log.info("End Footer");
-			
+
 
 			log.info("Begin menu");
 			Template templateCommonsColumns = ve.getTemplate("menu.vm");
@@ -716,7 +720,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwCommonColumns.close();
 			swCommonColumns.close();
 			log.info("End menu");
-			
+
 			log.info("Begin template");
 			Template templateCommonLayout = ve.getTemplate("template.vm");
 			StringWriter swCommonLayout = new StringWriter();
@@ -727,7 +731,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwCommonLayout.close();
 			fwCommonLayout.close();
 			log.info("End template");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -750,7 +754,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwInitialMenu.close();
 			fwInitialMenu.close();
 			log.info("End Initial  XHTML");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -764,7 +768,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			MetaDataModel dataModel, String modelName) throws Exception{
 		try {
 			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + modelName + GeneratorUtil.slash +"control" + GeneratorUtil.slash;
-			
+
 			log.info("Begin Ilogic PrimeFaces+Spring+Hibernate");
 			Template iLogicPrimeFaces = ve.getTemplate("ILogicSpringHibernatePrimeFaces.vm");
 			StringWriter swIlogic = new StringWriter();
@@ -775,22 +779,22 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwIlogic.close();
 			fwIlogic.close();
 			log.info("End Ilogic PrimeFaces+Spring+Hibernate");
-			
+
 			log.info("Begin Logic PrimeFaces+Spring+Hibernate");
 			Template LogicTemplate = ve.getTemplate("LogicSpringHibernatePrimeFaces.vm");
 			StringWriter swLogic = new StringWriter();
 			LogicTemplate.merge(context, swLogic);
-			
+
 			FileWriter fwLogic = new FileWriter(path+ metaData.getRealClassName() + "Logic.java");
 			BufferedWriter bwLogic = new BufferedWriter(fwLogic);
 			bwLogic.write(swLogic.toString());
 			bwLogic.close();
 			fwLogic.close();
 			log.info("End Logic PrimeFaces+Spring+Hibernate");
-			
+
 			JalopyCodeFormatter.formatJavaCodeFile(path+"I" + metaData.getRealClassName() + "Logic.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path+metaData.getRealClassName() + "Logic.java");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -802,7 +806,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doSpringContextConfFiles(VelocityContext context,
 			String hdLocation, MetaDataModel dataModel, String modelName) throws Exception{
 		try {
-			
+
 			log.info("Begin ApplicationContext.xml");
 			Template applicationContext = ve.getTemplate("applicationContext.xml.vm");
 			StringWriter swApplicationContext = new StringWriter();
@@ -813,7 +817,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwApplicationContext.close();
 			fwApplicationContext.close();
 			log.info("End ApplicationContext.xml");
-			
+
 			log.info("Begin aopContext.xml");
 			Template aopContext= ve.getTemplate("aopContext.xml.vm");
 			StringWriter swAopContext = new StringWriter();
@@ -824,8 +828,8 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwAopContext.close();
 			fwAopContext.close();
 			log.info("End aopContext.xml");
-			
-			
+
+
 			log.info("Begin securityContext.xml");
 			Template secContext= ve.getTemplate("securityContext.xml.vm");
 			StringWriter swSecContext = new StringWriter();
@@ -836,8 +840,8 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwSecContext.close();
 			fwSecContext.close();
 			log.info("End securityContext.xml");
-			
-			
+
+
 			log.info("Begin dataSourceContext.xml");
 			Template dataSourceContext= ve.getTemplate("dataSourceContext.xml.vm");
 			StringWriter swDataSourceContext = new StringWriter();
@@ -848,7 +852,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwDataSourceContext.close();
 			fwDataSourceContext.close();
 			log.info("End dataSourceContext.xml");
-			
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -862,7 +866,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doUtilites(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception{
 		try {
 			String path =hdLocation+virginPackageInHd+GeneratorUtil.slash+"utilities"+GeneratorUtil.slash;
-			
+
 			log.info("Begin Utilities Spring+Hibernate+PrimeFaces");
 			Template utilitiesTemplate = ve.getTemplate("Utilities.vm");
 			StringWriter swUtilities = new StringWriter();
@@ -873,7 +877,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwUtilities.close();
 			fwUtilities.close();
 			log.info("End Utilities Spring+Hibernate+PrimeFaces");
-			
+
 			log.info("Begin FacesUtils Spring+Hibernate+PrimeFaces");
 			Template templateFacesUtils = ve.getTemplate("FacesUtils.vm");
 			StringWriter swFacesUtils = new StringWriter();
@@ -884,8 +888,8 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bfFacesUtils.close();
 			fwFacesUtils.close();
 			log.info("End FacesUtils Spring+Hibernate+PrimeFaces");
-			
-			
+
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -897,14 +901,14 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	@Override
 	public void doBackingBeans(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
-			
+
 			String path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "presentation" + GeneratorUtil.slash + "backingBeans" + GeneratorUtil.slash;
-			
+
 			log.info("Begin BackEndBean");
 			Template templateBakcEndBean= ve.getTemplate("BackingBeansSpringHibernatePrime.vm");
 			StringWriter swBackEndBean = new StringWriter();
 			templateBakcEndBean.merge(context, swBackEndBean);
-			
+
 			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "View.java");
 			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
 			bwBackEndBean.write(swBackEndBean.toString());
@@ -914,8 +918,8 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "View.java");
 			JenderUtilities.getInstance().dates = null;
 			JenderUtilities.getInstance().datesId = null;
-			
-			
+
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -925,16 +929,16 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 	@Override
 	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception{
-		
+
 		try {
-			
+
 			String path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "security" + GeneratorUtil.slash;
-			
+
 			log.info("Begin ZathuraCodeAuthenticationProvider");
 			Template templateBakcEndBean= ve.getTemplate("ZathuraCodeAuthenticationProvider.vm");
 			StringWriter swBackEndBean = new StringWriter();
 			templateBakcEndBean.merge(context, swBackEndBean);
-			
+
 			FileWriter fwBackEndBean = new FileWriter(path+ "ZathuraCodeAuthenticationProvider.java");
 			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
 			bwBackEndBean.write(swBackEndBean.toString());
@@ -944,16 +948,16 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JalopyCodeFormatter.formatJavaCodeFile(path+ "ZathuraCodeAuthenticationProvider.java");
 			JenderUtilities.getInstance().dates = null;
 			JenderUtilities.getInstance().datesId = null;
-			
-			
+
+
 			//ManageBean for LoginView
 			path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "presentation" + GeneratorUtil.slash + "backingBeans" + GeneratorUtil.slash;
-			
+
 			log.info("Begin LoginView");
 			templateBakcEndBean= ve.getTemplate("LoginView.vm");
 			swBackEndBean = new StringWriter();
 			templateBakcEndBean.merge(context, swBackEndBean);
-			
+
 			fwBackEndBean = new FileWriter(path+ "LoginView.java");
 			bwBackEndBean = new BufferedWriter(fwBackEndBean);
 			bwBackEndBean.write(swBackEndBean.toString());
@@ -963,25 +967,25 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JalopyCodeFormatter.formatJavaCodeFile(path+ "LoginView.java");
 			JenderUtilities.getInstance().dates = null;
 			JenderUtilities.getInstance().datesId = null;
-			
-			
+
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
 		}
 	}		
-	
+
 	@Override
 	public void doRestControllers(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
-			
+
 			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers" + GeneratorUtil.slash;
-			
+
 			log.info("Begin RestControllers");
 			Template templateBakcEndBean= ve.getTemplate("RestController.vm");
 			StringWriter swBackEndBean = new StringWriter();
 			templateBakcEndBean.merge(context, swBackEndBean);
-			
+
 			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "RestController.java");
 			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
 			bwBackEndBean.write(swBackEndBean.toString());
@@ -991,46 +995,94 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
 			JenderUtilities.getInstance().dates = null;
 			JenderUtilities.getInstance().datesId = null;
-					
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
 		}
 
 	}
-	
+
 	@Override
 	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
-			
+
 			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "dto" + GeneratorUtil.slash + "mapper" + GeneratorUtil.slash;
-			
+
 			log.info("Begin I DTO Mapper");
 			Template templateIMapperDTO = ve.getTemplate("IMapperDTOHbm.vm");
 			StringWriter swIMapperDTO = new StringWriter();
 			templateIMapperDTO.merge(context, swIMapperDTO);
-			
+
 			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "Mapper.java");
 			BufferedWriter bwIMapperDTO = new BufferedWriter(fwIMapperDTO);
 			bwIMapperDTO.write(swIMapperDTO.toString());
 			bwIMapperDTO.close();
 			fwIMapperDTO.close();
-			
+
 			log.info("Begin DTO Mapper");
-			
+
 			Template templateMapperDTO = ve.getTemplate("MapperDTOHbm.vm");
 			StringWriter swMapperDTO = new StringWriter();
 			templateMapperDTO.merge(context, swMapperDTO);
-			
+
 			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "Mapper.java");
 			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
 			bwMapperDTO.write(swMapperDTO.toString());
 			bwMapperDTO.close();
 			fwMapperDTO.close();
-			
+
 			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Mapper.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
-					
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+
+	@Override
+	public void doEntityGenerator(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try { 
+
+			String path = hdLocation + metaData.getMainClass().toString().substring(6, metaData.getMainClass().toString().lastIndexOf(".")) + GeneratorUtil.slash;
+
+			path = path.replace(".", GeneratorUtil.slash);
+
+
+			//String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "test" + GeneratorUtil.slash;
+
+			log.info("Begin Entity Generator");
+
+			Template templateEntity = ve.getTemplate("EntityGenerator.vm");
+			StringWriter swEntity = new StringWriter();
+			templateEntity.merge(context, swEntity);
+
+			FileWriter fwEntity = new FileWriter(path + metaData.getRealClassName() + ".java");
+			BufferedWriter bwEntity = new BufferedWriter(fwEntity);
+			bwEntity.write(swEntity.toString());
+			bwEntity.close();
+			fwEntity.close();
+
+			if (metaData.getComposeKey() != null) {
+				Template templateEntityComposeKey = ve.getTemplate("EntityIdGenerator.vm");
+				StringWriter swEntityComposeKey = new StringWriter();
+				templateEntityComposeKey.merge(context, swEntityComposeKey);
+
+				FileWriter fwEntityComposeKey = new FileWriter(path + metaData.getRealClassName() + "Id" + ".java");
+				BufferedWriter bwEntityComposeKey = new BufferedWriter(fwEntityComposeKey);
+				bwEntityComposeKey.write(swEntityComposeKey.toString());
+				bwEntityComposeKey.close();
+				fwEntityComposeKey.close();
+
+				JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Id" + ".java");
+			}
+
+
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + ".java");
+
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -1039,46 +1091,26 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	}
 	
 	@Override
-	public void doEntityGenerator(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+	public void doMvcDispatcherServlet(MetaDataModel dataModel,
+			VelocityContext context, String hdLocation) throws Exception{
 		try {
-			
-			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "test" + GeneratorUtil.slash;
-			
-			log.info("Begin Entity Generator");
-			
-			Template templateEntity = ve.getTemplate("EntityGenerator.vm");
-			StringWriter swEntity = new StringWriter();
-			templateEntity.merge(context, swEntity);
-			
-			FileWriter fwEntity = new FileWriter(path + "T" + metaData.getRealClassName() + ".java");
-			BufferedWriter bwEntity = new BufferedWriter(fwEntity);
-			bwEntity.write(swEntity.toString());
-			bwEntity.close();
-			fwEntity.close();
-			
-			if (metaData.getComposeKey() != null) {
-				Template templateEntityComposeKey = ve.getTemplate("EntityIdGenerator.vm");
-				StringWriter swEntityComposeKey = new StringWriter();
-				templateEntityComposeKey.merge(context, swEntityComposeKey);
-				
-				FileWriter fwEntityComposeKey = new FileWriter(path + "T" + metaData.getRealClassName() + "Id" + ".java");
-				BufferedWriter bwEntityComposeKey = new BufferedWriter(fwEntityComposeKey);
-				bwEntityComposeKey.write(swEntityComposeKey.toString());
-				bwEntityComposeKey.close();
-				fwEntityComposeKey.close();
-				
-				JalopyCodeFormatter.formatJavaCodeFile(path + "T" + metaData.getRealClassName() + "Id" + ".java");
-			}
-			
-			
-			JalopyCodeFormatter.formatJavaCodeFile(path + "T" + metaData.getRealClassName() + ".java");
-			
-					
+			String path=properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash;
+			log.info("Begin Initial MVC Dispatcher");
+			Template templateInitialMenu = ve.getTemplate("mvcDispatcherServletJender.vm");
+			StringWriter swInitialMenu = new StringWriter();
+			templateInitialMenu.merge(context, swInitialMenu);
+			FileWriter fwInitialMenu = new FileWriter(path+"mvc-dispatcher-servlet.xml");
+			BufferedWriter bwInitialMenu = new BufferedWriter(fwInitialMenu);
+			bwInitialMenu.write(swInitialMenu.toString());
+			bwInitialMenu.close();
+			fwInitialMenu.close();
+			log.info("End Initial  XHTML");
+
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
 		}
 
 	}
-		
+	
 }

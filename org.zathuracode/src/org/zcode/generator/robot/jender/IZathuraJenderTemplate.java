@@ -160,5 +160,7 @@ public interface IZathuraJenderTemplate {
 
 	void doEntityGenerator(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
 			throws Exception;
+
+	void doMvcDispatcherServlet(MetaDataModel dataModel, VelocityContext context, String hdLocation) throws Exception;
 	
 }

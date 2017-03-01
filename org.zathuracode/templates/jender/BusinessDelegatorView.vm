@@ -114,5 +114,9 @@ private static final Logger log = LoggerFactory.getLogger(BusinessDelegatorView.
 		return ${metaData.getRealClassNameAsVariable()}Logic.getData${metaData.getRealClassName()}();
 		}
 		
+		public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}) throws Exception{
+		 ${metaData.getRealClassNameAsVariable()}Logic.validate${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+		}
+		
 #end
 }
