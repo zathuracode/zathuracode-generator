@@ -117,7 +117,6 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 		// Copy Css
 		GeneratorUtil.createFolder(webRootPath + "css");
 		GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-		//TODO RUTA MVC DISPATCHER
 		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);		
 
 		//create folder images and insert .png
@@ -160,8 +159,6 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 		try {
 
-
-
 			ve = new VelocityEngine();
 			Properties propiedades = new Properties();
 			propiedades.setProperty("file.resource.loader.description", "Velocity File Resource Loader");
@@ -170,8 +167,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			propiedades.setProperty("file.resource.loader.cache", "false");
 			propiedades.setProperty("file.resource.loader.modificationCheckInterval", "2");
 			ve.init(propiedades);
-
-
+			
 			VelocityContext context = new VelocityContext();
 			MetaDataModel dataModel = metaDataModel;
 			List<MetaData> list = dataModel.getTheMetaData();
@@ -217,6 +213,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			context.put("modelName", modelName);
 			context.put("projectNameClass", projectNameClass);
 			context.put("domainName", domainName);
+			context.put("schema", EclipseGeneratorUtil.schema);
 
 			this.virginPackageInHd = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
 			JenderUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);

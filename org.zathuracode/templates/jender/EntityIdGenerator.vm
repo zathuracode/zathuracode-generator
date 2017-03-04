@@ -1,8 +1,8 @@
 package ${virginPackage}.${modelName};
 
 import java.util.Date;
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
-import javax.persistence.Entity;
 import javax.validation.constraints.*;
 
 /**
@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 * www.zathuracode.org
 * 
 */
-@Entity
+@Embeddable
 public class ${metaData.getRealClassName()}Id implements java.io.Serializable {
 
 	#foreach($sim in $composeKeyAttributes)
