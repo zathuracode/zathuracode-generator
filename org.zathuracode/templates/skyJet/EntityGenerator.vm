@@ -1,0 +1,123 @@
+package ${virginPackage}.${modelName};
+
+#if($oneToManyMembers.isEmpty() == false)
+import java.util.HashSet;
+import java.util.Set;
+#end
+
+import java.util.Date;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.*;
+
+/**
+* @author Zathura Code Generator http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+@Entity
+@Table ( name="${databaseName}", schema="${schema}" )
+public class ${metaData.getRealClassName()} implements java.io.Serializable {
+
+	#if (${primaryKey.isPrimiaryKeyAComposeKey()})
+		@NotNull
+		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};
+	#else
+		@NotNull
+		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};
+	#end
+	#foreach($mom in $manyToOneMembers)
+		@NotNull
+		private ${mom.getType().getSimpleName()} ${mom.getShowName()};	
+    #end
+	#foreach($sim in $simpleMembers)
+		#if(${sim.getNullable()} == false)
+			@NotNull
+			#if(${sim.getType().getSimpleName()} == "String")
+			@NotEmpty
+			@Size(max=${sim.getLength()})
+			#end
+		#end
+		private ${sim.getType().getSimpleName()} ${sim.getShowName()};	
+    #end
+	#foreach($omm in $oneToManyMembers)
+		private Set<${omm.getType().getSimpleName()}> ${omm.getShowName()} = new HashSet<${omm.getType().getSimpleName()}>(0);	
+    #end
+    
+    public ${metaData.getRealClassName()}() {
+	}
+	
+	public ${metaData.getRealClassName()} ($constructorStr){
+		#if (${primaryKey.isPrimiaryKeyAComposeKey()})
+			this.${primaryKey.getShowName()} = ${primaryKey.getShowName()};
+		#else
+			this.${primaryKey.getShowName()} = ${primaryKey.getShowName()};
+		#end
+		#foreach($mom in $manyToOneMembers)
+			this.${mom.getShowName()} = ${mom.getShowName()};	
+	    #end
+		#foreach($sim in $simpleMembers)
+			this.${sim.getShowName()} = ${sim.getShowName()};	
+	    #end
+		#foreach($omm in $oneToManyMembers)
+			this.${omm.getShowName()} = ${omm.getShowName()};	
+	    #end
+	}
+
+	#if (${primaryKey.isPrimiaryKeyAComposeKey()})
+		    @EmbeddedId
+    @AttributeOverrides( {	
+						    #foreach($sim in $composeKeyAttributes)
+								@AttributeOverride(name="${sim.getShowName()}", column=@Column(name="${sim.getDatabaseName()}", nullable=false) )  #if( $foreach.hasNext ) , #end 
+							#end
+       					 } )
+	#else
+		@Id
+	    @Column(name="${primaryKey.getDatabaseName()}", unique=true, nullable=false)
+	#end
+	public ${primaryKey.getType().getSimpleName()} get${primaryKey.getShowName().substring(0,1).toUpperCase()}${primaryKey.getShowName().substring(1,${primaryKey.getShowName().length()})}() {
+	    return this.${primaryKey.getShowName()};
+	}
+	    
+	public void set${primaryKey.getShowName().substring(0,1).toUpperCase()}${primaryKey.getShowName().substring(1,${primaryKey.getShowName().length()})}(${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}) {
+	    this.${primaryKey.getShowName()} = ${primaryKey.getShowName()};
+	}
+		
+
+	#foreach($mom in $manyToOneMembers)
+		@ManyToOne(fetch=FetchType.LAZY)
+   		@JoinColumn(name="${primaryKeyByClass.get(${mom.getType().getSimpleName().toLowerCase()}).toString()}" #if(${sim.getNullable()} == false), nullable=false #end 	#foreach($sim in $composeKeyAttributes) #if( ${primaryKeyByClass.get(${mom.getType().getSimpleName().toLowerCase()}).toString()} ==  ${sim.getDatabaseName()}) , insertable=false, updatable=false #end #end )
+		public ${mom.getType().getSimpleName()} get${mom.getShowName().substring(0,1).toUpperCase()}${mom.getShowName().substring(1,${mom.getShowName().length()})}() {
+	        return this.${mom.getShowName()};
+	    }
+	    
+	    public void set${mom.getShowName().substring(0,1).toUpperCase()}${mom.getShowName().substring(1,${mom.getShowName().length()})}(${mom.getType().getSimpleName()} ${mom.getShowName()}) {
+	        this.${mom.getShowName()} = ${mom.getShowName()};
+	    }
+    
+    #end
+	#foreach($sim in $simpleMembers)
+	
+		@Column(name="${sim.getDatabaseName()}"  #if(${sim.getNullable()} == false), nullable=false #end )
+		public ${sim.getType().getSimpleName()} get${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}() {
+	        return this.${sim.getShowName()};
+	    }
+	    
+	    public void set${sim.getShowName().substring(0,1).toUpperCase()}${sim.getShowName().substring(1,${sim.getShowName().length()})}(${sim.getType().getSimpleName()} ${sim.getShowName()}) {
+	        this.${sim.getShowName()} = ${sim.getShowName()};
+	    }
+			
+    #end
+	#foreach($omm in $oneToManyMembers)
+		@OneToMany(fetch=FetchType.LAZY, mappedBy="${metaData.getRealClassNameAsVariable()}")
+		public Set<${omm.getType().getSimpleName()}> get${omm.getShowName().substring(0,1).toUpperCase()}${omm.getShowName().substring(1,${omm.getShowName().length()})}() {
+	        return this.${omm.getShowName()};
+	    }
+	    
+	    public void set${omm.getShowName().substring(0,1).toUpperCase()}${omm.getShowName().substring(1,${omm.getShowName().length()})}(Set<${omm.getType().getSimpleName()}> ${omm.getShowName()}) {
+	        this.${omm.getShowName()} = ${omm.getShowName()};
+	    }
+			
+    #end
+	
+}	
