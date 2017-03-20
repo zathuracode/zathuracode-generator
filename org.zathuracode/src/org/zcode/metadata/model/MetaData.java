@@ -38,7 +38,7 @@ public class MetaData {
 	
 	/** The final param for id variables. */
 	private String finalParamForIdVariables;
-
+	
 	/**
 	 * Gets the id.
 	 *

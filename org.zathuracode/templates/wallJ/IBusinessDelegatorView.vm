@@ -35,6 +35,7 @@ public interface IBusinessDelegatorView {
     int startRow, int maxResults) throws Exception ;
     public Long findTotalNumber${metaData.getRealClassName()}() throws Exception ;
 	public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception;
+	public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}) throws Exception;
 	
 #end
 }

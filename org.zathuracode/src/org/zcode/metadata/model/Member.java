@@ -34,6 +34,9 @@ public class Member implements Comparable {
 	
 	/** The length. */
 	private Long length;
+	
+	/** Database name attribute */
+	private String databaseName;
 
 	/** The hash map ids properties. */
 	private HashMap<String, Member> hashMapIdsProperties = new HashMap<String, Member>();
@@ -379,6 +382,35 @@ public class Member implements Comparable {
 		}
 
 		return ret;
+	}
+	
+	/**
+	 * Checks if is one to on member.
+	 *
+	 * @return true, if checks if is one to one member.
+	 */
+	public boolean isOneToOneMember() {
+		boolean ret = false;
+
+		try {
+			if (this instanceof OneToOneMember)
+				ret = true;
+			else
+				ret = false;
+		} catch (Exception e) {
+			ret = false;
+		}
+
+		return ret;
+	}
+
+
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
 	}
 	
 }

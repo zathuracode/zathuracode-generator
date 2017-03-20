@@ -27,6 +27,7 @@ import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.MetaDataModel;
 import org.zcode.metadata.model.OneToManyMember;
+import org.zcode.metadata.model.OneToOneMember;
 import org.zcode.metadata.model.SimpleMember;
 
 /**
@@ -243,20 +244,26 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				List<SimpleMember> simpleMembers = new ArrayList<SimpleMember>();
 				List<ManyToOneMember> manyToOneMembers= new ArrayList<ManyToOneMember>();
 				List<OneToManyMember> oneToManyMembers= new ArrayList<OneToManyMember>();
+				List<OneToOneMember> oneMembers = new ArrayList<OneToOneMember>();
 				SimpleMember primaryKey = (SimpleMember) metaData.getPrimaryKey();
-				//List<SimpleMember> simpleMembersComposeKey= new ArrayList<SimpleMember>();
 
 				String constructorStr = "";
 
 				constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
 						+ primaryKey.getShowName() + ", ";
 
-
 				for (Member member : metaData.getProperties()) {
 
 					if (member.isSimpleMember() && !member.getShowName().equals(primaryKey.getShowName())) {
 						simpleMembers.add((SimpleMember) member);
 
+						constructorStr = constructorStr + member.getType().getSimpleName() + " "
+								+ member.getShowName() + ", ";
+					}
+					
+					if (member.isOneToOneMember()) {
+						oneMembers.add((OneToOneMember) member);
+						
 						constructorStr = constructorStr + member.getType().getSimpleName() + " "
 								+ member.getShowName() + ", ";
 					}
@@ -282,12 +289,10 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				context.put("simpleMembers", simpleMembers);
 				context.put("manyToOneMembers", manyToOneMembers);
 				context.put("oneToManyMembers", oneToManyMembers);
+				context.put("oneToOneMembers", oneMembers);
 				context.put("primaryKey", primaryKey);
 				context.put("constructorStr", constructorStr);
 				context.put("composeKeyAttributes", stringBuilderForId.attributesComposeKey(list,metaData));
-				//				context.put("properties", metaData.getProperties().get(0).getType().getSimpleName().length());
-
-
 
 				// generacion de la nueva logica 
 				context.put("dtoConvert", stringBuilderForId.dtoConvert(list,metaData));
@@ -380,6 +385,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				context.put("connectionUsername", EclipseGeneratorUtil.connectionUsername);
 				context.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
 				
+				doEntityGenerator(metaData, context, hdLocation, dataModel);
 				doDaoSpringHibernate(metaData, context, hdLocation);
 				doBackingBeans(metaData, context, hdLocation, dataModel);
 				doJsp(metaData, context, hdLocation, dataModel);
@@ -387,7 +393,6 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				doDto(metaData, context, hdLocation, dataModel, modelName);
 				doRestControllers(metaData, context, hdLocation, dataModel);
 				doDTOMapper(metaData, context, hdLocation, dataModel);
-				doEntityGenerator(metaData, context, hdLocation, dataModel);
 
 			}
 
@@ -1046,9 +1051,6 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			String path = hdLocation + metaData.getMainClass().toString().substring(6, metaData.getMainClass().toString().lastIndexOf(".")) + GeneratorUtil.slash;
 
 			path = path.replace(".", GeneratorUtil.slash);
-
-
-			//String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "test" + GeneratorUtil.slash;
 
 			log.info("Begin Entity Generator");
 

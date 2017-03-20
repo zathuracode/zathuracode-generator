@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.zcode.metadata.model.ManyToOneMember;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.SimpleMember;
 
 
 /**
@@ -902,6 +903,24 @@ public class SkyJetStringBuilderForId implements ISkyJetStringBuilderForId {
 		log.info(finalParam);
 		return finalParam2;
 
+	}
+
+	public List<SimpleMember> attributesComposeKey(List<MetaData> theMetaData, MetaData metaData) {
+
+		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+			List<SimpleMember> finalParam2 = new ArrayList<SimpleMember>();
+			Field[] field = metaData.getComposeKey().getDeclaredFields();
+			int i=1;
+			for (Field field2 : field) {
+				SimpleMember simpleMember = new SimpleMember(field2.getName(), field2.getName(), field2.getType(), i);
+				simpleMember.setDatabaseName(SkyJetUtilities.getInstance().camelCaseToUnderScore(simpleMember.getName()));
+				i++;
+				finalParam2.add(simpleMember);
+			}
+			return finalParam2;
+		} else {
+			return null;
+		}
 	}
 
 }

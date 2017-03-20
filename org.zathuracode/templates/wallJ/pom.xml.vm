@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <ejb.version>3.1.1</ejb.version>
+        <hibernate.validator.version>5.4.0.Final</hibernate.validator.version>
         <primefaces.version>6.0</primefaces.version>
        	<mojarra.version>2.2.12</mojarra.version>
        	<slf4j.version>1.7.21</slf4j.version>
@@ -52,7 +53,11 @@
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validator.version}</version>
+		</dependency>		
 		<dependency>
 		  <groupId>org.slf4j</groupId>
 		  <artifactId>slf4j-api</artifactId>

@@ -3,6 +3,8 @@ package org.zcode.generator.robot.wallj;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -14,10 +16,16 @@ import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
 import org.zcode.generator.robot.jender.JenderUtilities;
+import org.zcode.generator.robot.skyjet.SkyJetUtilities;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
+import org.zcode.metadata.model.ManyToOneMember;
+import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.MetaDataModel;
+import org.zcode.metadata.model.OneToManyMember;
+import org.zcode.metadata.model.OneToOneMember;
+import org.zcode.metadata.model.SimpleMember;
 
 /**
  * Zathuracode Generator
@@ -160,7 +168,13 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			String packageOriginal = null;
 			String virginPackage = null;
 			String modelName = null;
-	
+			
+			HashMap<String, String> primaryKeyByClass = new HashMap<String, String>();
+			
+			for (MetaData metaData : list) {
+				primaryKeyByClass.put(metaData.getRealClassName().toLowerCase(), SkyJetUtilities.getInstance().camelCaseToUnderScore(metaData.getPrimaryKey().getName()));
+			}
+			
 			if (specificityLevel.intValue() == 2) {
 				try {
 					int lastIndexOf = jpaPckgName.lastIndexOf(".");
@@ -216,6 +230,81 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 					context.put("isImports", false);
 				}
 	
+				context.put("databaseName", SkyJetUtilities.getInstance().camelCaseToUnderScore(metaData.getRealClassNameAsVariable()));
+				context.put("primaryKeyByClass", primaryKeyByClass);
+				context.put("composedKey", false);
+
+				if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+					context.put("composedKey", true);
+					context.put("finalParamForIdClass", stringBuilderForId.finalParamForIdClass(list, metaData));
+				}
+
+				if (metaData.isGetManyToOneProperties()) {
+					context.put("getVariableForManyToOneProperties", stringBuilder.getVariableForManyToOneProperties(metaData.getManyToOneProperties(), list));
+					context.put("getStringsForManyToOneProperties", stringBuilder.getStringsForManyToOneProperties(metaData.getManyToOneProperties(), list));
+				}
+
+				// generacion de nuevos dto
+				context.put("variableDto", stringBuilder.getPropertiesDto(list, metaData));
+				context.put("propertiesDto",SkyJetUtilities.getInstance().dtoProperties);
+				context.put("memberDto",SkyJetUtilities.getInstance().nameMemberToDto);
+
+				// generacion de la entidad	
+				List<SimpleMember> simpleMembers = new ArrayList<SimpleMember>();
+				List<ManyToOneMember> manyToOneMembers= new ArrayList<ManyToOneMember>();
+				List<OneToManyMember> oneToManyMembers= new ArrayList<OneToManyMember>();
+				List<OneToOneMember> oneMembers = new ArrayList<OneToOneMember>();
+				SimpleMember primaryKey = (SimpleMember) metaData.getPrimaryKey();
+
+				String constructorStr = "";
+
+				constructorStr = constructorStr + primaryKey.getType().getSimpleName() + " "
+						+ primaryKey.getShowName() + ", ";
+
+				for (Member member : metaData.getProperties()) {
+					
+					member.setDatabaseName(SkyJetUtilities.getInstance().camelCaseToUnderScore(member.getName()));
+					
+					if (member.isSimpleMember() && !member.getShowName().equals(primaryKey.getShowName())) {
+						simpleMembers.add((SimpleMember) member);
+
+						constructorStr = constructorStr + member.getType().getSimpleName() + " "
+								+ member.getShowName() + ", ";
+					}
+					
+					if (member.isOneToOneMember()) {
+						oneMembers.add((OneToOneMember) member);
+						
+						constructorStr = constructorStr + member.getType().getSimpleName() + " "
+								+ member.getShowName() + ", ";
+					}
+
+
+					if (member.isManyToOneMember()) {
+						manyToOneMembers.add((ManyToOneMember) member);
+						
+						constructorStr = constructorStr + member.getType().getSimpleName() + " "
+								+ member.getShowName() + ", ";
+					}
+
+					if (member.isOneToManyMember()) {
+						oneToManyMembers.add((OneToManyMember) member);
+
+						constructorStr = constructorStr + "Set<" + member.getType().getSimpleName() + "> "
+								+ member.getShowName() + ", ";
+					}
+
+				}
+
+				constructorStr = constructorStr.substring(0, constructorStr.length() - 2);
+
+				context.put("simpleMembers", simpleMembers);
+				context.put("manyToOneMembers", manyToOneMembers);
+				context.put("oneToManyMembers", oneToManyMembers);
+				context.put("primaryKey", primaryKey);
+				context.put("constructorStr", constructorStr);
+				context.put("composeKeyAttributes", stringBuilderForId.attributesComposeKey(list,metaData));
+				
 				// generacion de nuevos dto
 				context.put("variableDto", stringBuilder.getPropertiesDto(list, metaData));
 				context.put("propertiesDto",WallJUtilities.getInstance().dtoProperties);
@@ -302,7 +391,7 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 				context.put("dataModel", dataModel);
 				
 				
-						
+				doEntityGenerator(metaData, context, hdLocation, dataModel);		
 				doDaoEjbJpa(metaData, context, hdLocation);
 				doBackingBeans(metaData, context, hdLocation, dataModel);
 				doJsp(metaData, context, hdLocation, dataModel);
@@ -871,5 +960,47 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			throw e;
 		}
 
+	}
+	
+	@Override
+	public void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,
+			MetaDataModel metaDataModel) throws Exception {
+
+		try{
+			String path = hdLocation + metaData.getMainClass().toString().substring(6, metaData.getMainClass().toString().lastIndexOf(".")) + GeneratorUtil.slash;
+
+			path = path.replace(".", GeneratorUtil.slash);
+
+			log.info("Begin Entity Generator");
+
+			Template templateEntity = ve.getTemplate("EntityGenerator.vm");
+			StringWriter swEntity = new StringWriter();
+			templateEntity.merge(velocityContext, swEntity);
+
+			FileWriter fwEntity = new FileWriter(path + metaData.getRealClassName() + ".java");
+			BufferedWriter bwEntity = new BufferedWriter(fwEntity);
+			bwEntity.write(swEntity.toString());
+			bwEntity.close();
+			fwEntity.close();
+
+			if (metaData.getComposeKey() != null) {
+				Template templateEntityComposeKey = ve.getTemplate("EntityIdGenerator.vm");
+				StringWriter swEntityComposeKey = new StringWriter();
+				templateEntityComposeKey.merge(velocityContext, swEntityComposeKey);
+
+				FileWriter fwEntityComposeKey = new FileWriter(path + metaData.getRealClassName() + "Id" + ".java");
+				BufferedWriter bwEntityComposeKey = new BufferedWriter(fwEntityComposeKey);
+				bwEntityComposeKey.write(swEntityComposeKey.toString());
+				bwEntityComposeKey.close();
+				fwEntityComposeKey.close();
+
+				JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Id" + ".java");
+			}
+
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + ".java");
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
 	}
 }

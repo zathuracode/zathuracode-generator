@@ -146,5 +146,7 @@ public interface IWallJStringBuilderForId {
 	
 	public List<String> obtainEntityMembersAndSetDTOAttributes(List<MetaData> theMetaData, MetaData metaData);
 
+	public Object attributesComposeKey(List<MetaData> list, MetaData metaData);
+
 
 }

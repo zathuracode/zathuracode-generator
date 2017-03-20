@@ -147,10 +147,13 @@ public interface IZathuraWallJTemplate {
 	 */
 	public void doPersitenceXml(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
 	
-	void doDTOMapper(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
+	public void doDTOMapper(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
 			throws Exception;
 
-	void doRestControllers(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
+	public void doRestControllers(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)
 			throws Exception;
+
+	public void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,
+			MetaDataModel metaDataModel) throws Exception;
 
 }

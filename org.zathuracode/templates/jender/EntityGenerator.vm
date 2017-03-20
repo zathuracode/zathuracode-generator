@@ -30,6 +30,10 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
 		@NotNull
 		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};
 	#end
+	#foreach($ono in $oneToOneMembers)
+		@NotNull
+		private ${ono.getType().getSimpleName()} ${ono.getShowName()};	
+    #end
 	#foreach($mom in $manyToOneMembers)
 		@NotNull
 		private ${mom.getType().getSimpleName()} ${mom.getShowName()};	
@@ -77,7 +81,15 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
 	    this.${primaryKey.getShowName()} = ${primaryKey.getShowName()};
 	}
 		
-
+	#foreach($ono in $oneToOneMembers)
+		public ${ono.getType().getSimpleName()} get${ono.getShowName().substring(0,1).toUpperCase()}${ono.getShowName().substring(1,${ono.getShowName().length()})}() {
+	        return this.${ono.getShowName()};
+	    }
+	    
+	    public void set${ono.getShowName().substring(0,1).toUpperCase()}${ono.getShowName().substring(1,${ono.getShowName().length()})}(${ono.getType().getSimpleName()} ${ono.getShowName()}) {
+	        this.${ono.getShowName()} = ${ono.getShowName()};
+	    }
+    #end
 	#foreach($mom in $manyToOneMembers)
 		
 		public ${mom.getType().getSimpleName()} get${mom.getShowName().substring(0,1).toUpperCase()}${mom.getShowName().substring(1,${mom.getShowName().length()})}() {

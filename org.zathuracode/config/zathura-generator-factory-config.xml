@@ -9,7 +9,7 @@
 		<gui-name>Jender</gui-name>
 		<class>org.zcode.generator.robot.jender.Jender</class>
 		<persistence>hibernateCore</persistence>
-		<zathuraVersion>4.0</zathuraVersion>
+		<zathuraVersion>6.0</zathuraVersion>
 		<description>
 		<![CDATA[
 			<html>
@@ -67,7 +67,7 @@
 		<gui-name>SkyJet</gui-name>
 		<class>org.zcode.generator.robot.skyjet.SkyJet</class>
 		<persistence>jpa</persistence>
-		<zathuraVersion>4.0</zathuraVersion>
+		<zathuraVersion>6.0</zathuraVersion>
 		<description>
 		<![CDATA[
 				<html>
@@ -127,7 +127,7 @@
 		<gui-name>Wall-J</gui-name>
 		<class>org.zcode.generator.robot.wallj.WallJ</class>
 		<persistence>jpa</persistence>
-		<zathuraVersion>4.0</zathuraVersion>
+		<zathuraVersion>6.0</zathuraVersion>
 		<description>
 		<![CDATA[
                 <head>

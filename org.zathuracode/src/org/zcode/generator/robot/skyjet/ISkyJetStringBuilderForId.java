@@ -146,4 +146,6 @@ public interface ISkyJetStringBuilderForId {
 	
 	public List<String> obtainEntityMembersAndSetDTOAttributes(List<MetaData> theMetaData, MetaData metaData);
 
+	public Object attributesComposeKey(List<MetaData> listMetaData, MetaData metaData);
+
 }

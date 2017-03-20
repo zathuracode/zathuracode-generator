@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -20,6 +22,8 @@ import  ${virginPackage}.utilities.Utilities;
 import  ${virginPackage}.dto.mapper.I${metaData.getRealClassName()}Mapper;
 import ${package}.*;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 /**
 * @author Zathura Code Generator http://zathuracode.org/
@@ -40,6 +44,9 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
 	
 	@EJB
 	private I${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
+	
+	@Resource
+    private Validator validator;
 	
     #if(${metaData.isGetOneToManyProperties()})
 		#foreach($member  in ${metaData.getOneToManyProperties()})
@@ -66,7 +73,23 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
     #end
                 
                 		
-	
+	public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{		
+		 try {
+			Set<ConstraintViolation<${metaData.getRealClassName()}>> constraintViolations =validator.validate(${metaData.getRealClassNameAsVariable()});
+			 if(constraintViolations.size()>0){
+				 StringBuilder strMessage=new StringBuilder();
+				 for (ConstraintViolation<${metaData.getRealClassName()}> constraintViolation : constraintViolations) {
+					strMessage.append(constraintViolation.getPropertyPath().toString());
+					strMessage.append(" - ");
+					strMessage.append(constraintViolation.getMessage());
+					strMessage.append(",");
+				}
+				 throw new Exception(strMessage.toString());
+			 }
+		 }catch (Exception e) {
+			throw e;
+		}
+	}
 	
 
 	@TransactionAttribute
@@ -92,18 +115,11 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
 				log.debug("saving ${metaData.getRealClassName()} instance");
             try {
             
-            #if(${metaData.isGetManyToOneProperties()})
-                #foreach($member  in ${metaData.getManyToOneProperties()})
-                    if(entity.${member.getMethodGetterName()}==null){
-                    throw new ZMessManager().new ForeignException("${member.getShowName()}");
-                    }
-                #end
-            #end
-            
-            #foreach($member2  in ${finalParamForIdVariablesAsList})
-                ${member2}
-            #end
-
+            if(entity==null){
+	    		throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
+	    	}
+			
+			validate${metaData.getRealClassName()}(entity);
 
             if(get${metaData.getRealClassName()}(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()) != null){
             throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
@@ -180,17 +196,11 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
 	    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
 	    		}
 	    		
-            #if(${metaData.isGetManyToOneProperties()})
-                #foreach($member  in ${metaData.getManyToOneProperties()})
-                    if(entity.${member.getMethodGetterName()}==null){
-                    throw new ZMessManager().new ForeignException("${member.getShowName()}");
-                    }
-                #end
-            #end
-            	    		
-            #foreach($member2  in ${finalParamForIdVariablesAsList})
-                ${member2}
-            #end
+            if(entity==null){
+	    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
+	    	}
+	    		
+            validate${metaData.getRealClassName()}(entity);
 
             ${metaData.getRealClassNameAsVariable()}DAO.update(entity);
             

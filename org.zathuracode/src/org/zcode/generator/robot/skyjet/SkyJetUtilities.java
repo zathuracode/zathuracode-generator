@@ -622,4 +622,11 @@ public class SkyJetUtilities {
 		return realName;
 	}
 
+	public String camelCaseToUnderScore(String name) {
+
+		String replaceString=name.replaceAll("([A-Z]+)","\\_$1").toLowerCase(); 
+
+		return replaceString;
+	}
+	
 }
