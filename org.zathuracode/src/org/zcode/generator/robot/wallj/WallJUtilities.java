@@ -11,6 +11,7 @@ import java.util.Properties;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 
+import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
@@ -565,9 +566,13 @@ public class WallJUtilities {
 		}
 
 		folderBuilder.add(model + "dto");
+		
+		if (EclipseGeneratorUtil.isFrontend) {
 
-		folderBuilder.add(presentation + "backingBeans");
-
+			folderBuilder.add(presentation + "backingBeans");
+		
+		}
+		
 		folderBuilder.add(presentation + "businessDelegate");
 
 		folderBuilder.add(properties.getProperty("webRootFolderPath"));
@@ -583,7 +588,9 @@ public class WallJUtilities {
 
 		try {
 			//GeneratorUtil.validateDirectory("JSPX", properties.getProperty("webRootFolderPath"));
-			GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
+			if (EclipseGeneratorUtil.isFrontend) {
+				GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
+			}
 			GeneratorUtil.validateDirectory("WEB-INF", properties.getProperty("webRootFolderPath"));
 			GeneratorUtil.validateDirectory("facelets", properties.getProperty("webRootFolderPath") + GeneratorUtil.slash + "WEB-INF");
 			// WEB-INF

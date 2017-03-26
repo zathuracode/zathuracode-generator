@@ -4,55 +4,57 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
-  
-    #foreach($metaData  in $dataModel.theMetaData)
-        <navigation-rule>
-            <from-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}.xhtml</from-view-id>
-            <navigation-case>
-                <from-outcome>goInitialMenu</from-outcome>
-                <to-view-id>/XHTML/initialMenu.xhtml</to-view-id>
-                <redirect />
-            </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-            <from-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTable.xhtml</from-view-id>
-            <navigation-case>
-                <from-outcome>goInitialMenu</from-outcome>
-                <to-view-id>/XHTML/initialMenu.xhtml</to-view-id>
-                <redirect />
-            </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-            <from-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTableEditable.xhtml</from-view-id>
-            <navigation-case>
-                <from-outcome>goInitialMenu</from-outcome>
-                <to-view-id>/XHTML/initialMenu.xhtml</to-view-id>
-                <redirect />
-            </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-            <from-view-id>/XHTML/initialMenu.xhtml</from-view-id>
-            <navigation-case>
-                <from-outcome>go${metaData.getRealClassName()}</from-outcome>
-                <to-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}.xhtml</to-view-id>
-                <redirect />
-            </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-            <from-view-id>/XHTML/initialMenu.xhtml</from-view-id>
-            <navigation-case>
-                <from-outcome>go${metaData.getRealClassName()}ListDataTable</from-outcome>
-                <to-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTable.xhtml</to-view-id>
-                <redirect />
-            </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-            <from-view-id>/XHTML/initialMenu.xhtml</from-view-id>
-            <navigation-case>
-                <from-outcome>go${metaData.getRealClassName()}ListDataTableEditable</from-outcome>
-                <to-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTableEditable.xhtml</to-view-id>
-                <redirect />
-            </navigation-case>
-        </navigation-rule>
+
+  	#if($frontend)
+	    #foreach($metaData  in $dataModel.theMetaData)
+	        <navigation-rule>
+	            <from-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}.xhtml</from-view-id>
+	            <navigation-case>
+	                <from-outcome>goInitialMenu</from-outcome>
+	                <to-view-id>/XHTML/initialMenu.xhtml</to-view-id>
+	                <redirect />
+	            </navigation-case>
+	        </navigation-rule>
+	        <navigation-rule>
+	            <from-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTable.xhtml</from-view-id>
+	            <navigation-case>
+	                <from-outcome>goInitialMenu</from-outcome>
+	                <to-view-id>/XHTML/initialMenu.xhtml</to-view-id>
+	                <redirect />
+	            </navigation-case>
+	        </navigation-rule>
+	        <navigation-rule>
+	            <from-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTableEditable.xhtml</from-view-id>
+	            <navigation-case>
+	                <from-outcome>goInitialMenu</from-outcome>
+	                <to-view-id>/XHTML/initialMenu.xhtml</to-view-id>
+	                <redirect />
+	            </navigation-case>
+	        </navigation-rule>
+	        <navigation-rule>
+	            <from-view-id>/XHTML/initialMenu.xhtml</from-view-id>
+	            <navigation-case>
+	                <from-outcome>go${metaData.getRealClassName()}</from-outcome>
+	                <to-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}.xhtml</to-view-id>
+	                <redirect />
+	            </navigation-case>
+	        </navigation-rule>
+	        <navigation-rule>
+	            <from-view-id>/XHTML/initialMenu.xhtml</from-view-id>
+	            <navigation-case>
+	                <from-outcome>go${metaData.getRealClassName()}ListDataTable</from-outcome>
+	                <to-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTable.xhtml</to-view-id>
+	                <redirect />
+	            </navigation-case>
+	        </navigation-rule>
+	        <navigation-rule>
+	            <from-view-id>/XHTML/initialMenu.xhtml</from-view-id>
+	            <navigation-case>
+	                <from-outcome>go${metaData.getRealClassName()}ListDataTableEditable</from-outcome>
+	                <to-view-id>/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTableEditable.xhtml</to-view-id>
+	                <redirect />
+	            </navigation-case>
+	        </navigation-rule>
+	    #end
     #end
 </faces-config>

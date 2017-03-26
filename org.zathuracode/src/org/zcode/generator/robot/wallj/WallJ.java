@@ -83,10 +83,9 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 	}
 	
 	public void copyLibraries()throws Exception{
-		String pathIndexJsp = extPath+"index.jsp";
+		
 		
 		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
-		String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
 		
 		String pathEjb= librariesPath+"ejb-3.1"+GeneratorUtil.slash;
 		String pathJpa= librariesPath+"hibernate-jpa"+GeneratorUtil.slash;
@@ -102,21 +101,29 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 		
 		String pathLib= properties.getProperty("libFolderPath");
 		
-		String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
 		
+		if (EclipseGeneratorUtil.isFrontend) {
+			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
+			String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
+			String pathIndexJsp = extPath+"index.jsp";
+			
+			// Copy Css
+			GeneratorUtil.createFolder(webRootPath + "css");
+			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
+				
+			
+			//create folder images and insert .png
+			GeneratorUtil.createFolder(webRootPath + "images");
+			GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages, webRootPath + "images" + GeneratorUtil.slash);
+			
+			// create index.jsp
+			GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
+			
+		}
 		
-		// Copy Css
-		GeneratorUtil.createFolder(webRootPath + "css");
-		GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);		
+		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);	
 		
-		//create folder images and insert .png
-		GeneratorUtil.createFolder(webRootPath + "images");
-		GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages, webRootPath + "images" + GeneratorUtil.slash);
-
-		// create index.jsp
-		GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
 		//Se valida si el proyecto no es maven, para empezar a copiar las librerias
 		if(!EclipseGeneratorUtil.isMavenProject){
 			//copy libraries
@@ -210,6 +217,8 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			context.put("modelName", modelName);
 			context.put("projectNameClass", projectNameClass);
 			context.put("domainName", domainName);
+			context.put("schema", EclipseGeneratorUtil.schema);
+			context.put("frontend", EclipseGeneratorUtil.isFrontend);
 			
 			this.virginPackageInHd = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
 			WallJUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
@@ -393,8 +402,10 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 				
 				doEntityGenerator(metaData, context, hdLocation, dataModel);		
 				doDaoEjbJpa(metaData, context, hdLocation);
-				doBackingBeans(metaData, context, hdLocation, dataModel);
-				doJsp(metaData, context, hdLocation, dataModel);
+				if (EclipseGeneratorUtil.isFrontend) {
+					doBackingBeans(metaData, context, hdLocation, dataModel);
+					doJsp(metaData, context, hdLocation, dataModel);
+				}
 				doLogicEjbJpa(metaData, context, hdLocation, dataModel, modelName);
 				doDto(metaData, context, hdLocation, dataModel, modelName);
 				doPersitenceXml(dataModel, context, hdLocation);
@@ -411,10 +422,11 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			doUtilites(context, hdLocation, dataModel, modelName);
 			doExceptions(context, hdLocation);
 			doBusinessDelegator(context, hdLocation, dataModel);
-			doJspInitialMenu(dataModel, context, hdLocation);
 			doFacesConfig(dataModel, context, hdLocation);
-			doJspFacelets(context, hdLocation);
-		
+			if (EclipseGeneratorUtil.isFrontend) {
+				doJspInitialMenu(dataModel, context, hdLocation);
+				doJspFacelets(context, hdLocation);
+			}
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;

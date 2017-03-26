@@ -85,6 +85,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 	/** The lbl lib.*/
 	private Label lblLibraries;
 	
+	private Boolean isFrontend = false;
 	
 	/**
 	 * Create the wizard.
@@ -277,6 +278,22 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		});
 		bRadioHibernateReverseEngineering.setBounds(10, 218, 232, 22);
 		bRadioHibernateReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_25);
+		
+		Label label = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label.setText(Messages.WizardPageChooseSourceFolderAndPackage_label_text);
+		label.setBounds(10, 282, 552, 2);
+		
+		Button btnFrontendCheckButton = new Button(container, SWT.CHECK);
+		btnFrontendCheckButton.addSelectionListener(new SelectionAdapter() {
+		@Override
+			public void widgetSelected(SelectionEvent e) {
+				isFrontend = (!isFrontend ? true : false);
+				System.out.println(isFrontend);
+				EclipseGeneratorUtil.isFrontend = isFrontend;
+			}
+		});
+		btnFrontendCheckButton.setBounds(10, 294, 189, 20);
+		btnFrontendCheckButton.setText(Messages.WizardPageChooseSourceFolderAndPackage_btnCheckButton_text);
 		
 		
 	}

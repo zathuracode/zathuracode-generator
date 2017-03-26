@@ -146,6 +146,8 @@ public class EclipseGeneratorUtil {
 	public static String groupIdMavenPoject;
 	
 	public static String artifactIdMavenProject;
+	
+	public static boolean isFrontend;
 
 	/**
 	 * Reset.

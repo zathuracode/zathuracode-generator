@@ -88,11 +88,9 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	}
 
 	public void copyLibraries() throws Exception{
-		String pathIndexJsp = extPath+"index.jsp";
-		String pathLogin = extPath+"login.xhtml";
+		
 		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
-		String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
-
+		
 		String pathHibernate= librariesPath+"core-hibernate"+GeneratorUtil.slash;
 		String pathJpaHibernate=librariesPath+"hibernate-jpa"+GeneratorUtil.slash;
 
@@ -111,24 +109,31 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 		String pathLib= properties.getProperty("libFolderPath");
 
-		String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
 
+		// create login.xhtml
+		if (EclipseGeneratorUtil.isFrontend) {
+			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
+			String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
+			String pathIndexJsp = extPath+"index.jsp";
+			String pathLogin = extPath+"login.xhtml";
+			
+			// Copy Css
+			GeneratorUtil.createFolder(webRootPath + "css");
+			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
 
-		// Copy Css
-		GeneratorUtil.createFolder(webRootPath + "css");
-		GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
+			//create folder images and insert .png
+			GeneratorUtil.createFolder(webRootPath + "images");
+			GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages, webRootPath + "images" + GeneratorUtil.slash);
+			
+			GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
+			// create index.jsp
+			GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
+		
+		}
+
 		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);		
 
-		//create folder images and insert .png
-		GeneratorUtil.createFolder(webRootPath + "images");
-		GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages, webRootPath + "images" + GeneratorUtil.slash);
-
-
-		// create login.xhtml
-		GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
-		// create index.jsp
-		GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
 		//Se valida si el proyecto no es maven, para empezar a copiar las librerias
 		if(!EclipseGeneratorUtil.isMavenProject){
 			//copy libraries
@@ -215,6 +220,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			context.put("projectNameClass", projectNameClass);
 			context.put("domainName", domainName);
 			context.put("schema", EclipseGeneratorUtil.schema);
+			context.put("frontend", EclipseGeneratorUtil.isFrontend);
 
 			this.virginPackageInHd = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
 			JenderUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
@@ -387,8 +393,10 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 				
 				doEntityGenerator(metaData, context, hdLocation, dataModel);
 				doDaoSpringHibernate(metaData, context, hdLocation);
-				doBackingBeans(metaData, context, hdLocation, dataModel);
-				doJsp(metaData, context, hdLocation, dataModel);
+				if (EclipseGeneratorUtil.isFrontend) {
+					doBackingBeans(metaData, context, hdLocation, dataModel);
+					doJsp(metaData, context, hdLocation, dataModel);
+				}
 				doLogicSpringXMLHibernate(metaData, context, hdLocation, dataModel, modelName);
 				doDto(metaData, context, hdLocation, dataModel, modelName);
 				doRestControllers(metaData, context, hdLocation, dataModel);
@@ -402,12 +410,14 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 			doApiSpringHibernate(context, hdLocation);
 			doUtilites(context, hdLocation, dataModel, modelName);
-			doAuthenticationProvider(context, hdLocation, dataModel, modelName);
+			if (EclipseGeneratorUtil.isFrontend) {
+				doAuthenticationProvider(context, hdLocation, dataModel, modelName);
+				doJspInitialMenu(dataModel, context, hdLocation);
+				doJspFacelets(context, hdLocation);
+			}
 			doExceptions(context, hdLocation);
 			doBusinessDelegator(context, hdLocation, dataModel);
-			doJspInitialMenu(dataModel, context, hdLocation);
 			doFacesConfig(dataModel, context, hdLocation);
-			doJspFacelets(context, hdLocation);
 			doSpringContextConfFiles(context, hdLocation, dataModel, modelName);
 			
 			String restPath = virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers";
@@ -710,7 +720,6 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwFooter.close();
 			fwFooter.close();
 			log.info("End Footer");
-
 
 			log.info("Begin menu");
 			Template templateCommonsColumns = ve.getTemplate("menu.vm");
@@ -1103,7 +1112,18 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			bwInitialMenu.write(swInitialMenu.toString());
 			bwInitialMenu.close();
 			fwInitialMenu.close();
-			log.info("End Initial  XHTML");
+			log.info("End MVC Dispatcher");
+			
+			log.info("Begin Initial web.xml");
+			Template templateWeb = ve.getTemplate("web.vm");
+			StringWriter swWeb = new StringWriter();
+			templateWeb.merge(context, swWeb);
+			FileWriter fwWeb = new FileWriter(path+"web.xml");
+			BufferedWriter bwWeb = new BufferedWriter(fwWeb);
+			bwWeb.write(swWeb.toString());
+			bwWeb.close();
+			bwWeb.close();
+			log.info("End web.xml");
 
 		} catch (Exception e) {
 			log.error(e.toString());

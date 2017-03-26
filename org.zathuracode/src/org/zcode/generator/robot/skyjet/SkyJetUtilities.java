@@ -11,6 +11,7 @@ import java.util.Properties;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 
+import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
@@ -542,16 +543,14 @@ public class SkyJetUtilities {
 		List<String> folderBuilder = new ArrayList<String>();
 
 		folderBuilder.add(pckge);
-
+		
 		folderBuilder.add(pckge + "exceptions");
 
 		folderBuilder.add(pckge + "utilities");
 		
-		folderBuilder.add(pckge + "security");
-		
-		folderBuilder.add(pckge + "dto_mapper");
-		
 		folderBuilder.add(pckge + "rest_controllers");
+		
+		folderBuilder.add(model);
 		
 		folderBuilder.add(dao);
 		
@@ -565,10 +564,17 @@ public class SkyJetUtilities {
 		if (specificityLevel.intValue() == 2) {
 			folderBuilder.add(model + "pojos");
 		}
+		
+		folderBuilder.add(pckge + "dto_mapper");
 
 		folderBuilder.add(model + "dto");
+		
+		if (EclipseGeneratorUtil.isFrontend) {
 
-		folderBuilder.add(presentation + "backingBeans");
+			folderBuilder.add(pckge + "security");
+			
+			folderBuilder.add(presentation + "backingBeans");	
+		}
 
 		folderBuilder.add(presentation + "businessDelegate");
 
@@ -585,9 +591,13 @@ public class SkyJetUtilities {
 
 		try {
 			//GeneratorUtil.validateDirectory("JSPX", properties.getProperty("webRootFolderPath"));
-			GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
+			if (EclipseGeneratorUtil.isFrontend) {
+				GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
+				GeneratorUtil.validateDirectory("facelets", properties.getProperty("webRootFolderPath") + GeneratorUtil.slash + "WEB-INF");
+			}
+
 			GeneratorUtil.validateDirectory("WEB-INF", properties.getProperty("webRootFolderPath"));
-			GeneratorUtil.validateDirectory("facelets", properties.getProperty("webRootFolderPath") + GeneratorUtil.slash + "WEB-INF");
+			
 			// WEB-INF
 			GeneratorUtil.validateDirectory("META-INF", hardDiskLocation);
 		} catch (IOException e) {
@@ -596,7 +606,6 @@ public class SkyJetUtilities {
 		}
 
 	}
-
 	/**
 	 * Gets the get name of primary name.
 	 *

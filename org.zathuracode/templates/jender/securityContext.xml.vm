@@ -8,18 +8,23 @@
       
     <http auto-config="true" >
         <intercept-url pattern="/" access="permitAll" />
+       #if($frontend)
         <intercept-url pattern="/login.xhtml" access="permitAll" />
         <intercept-url pattern="/XHTML/*" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
-        
-        <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?authfailed=true" default-target-url="/XHTML/initialMenu.xhtml" always-use-default-target="false"  />
-			
+	    <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?authfailed=true" default-target-url="/XHTML/initialMenu.xhtml" always-use-default-target="false"  />
+				
 		<logout invalidate-session="true" logout-success-url="/login.xhtml?loggedout=true" logout-url="/j_spring_security_logout" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
-
+	   #end
+		
  		<csrf disabled="true"/>
     </http>
-  
-    <authentication-manager alias="authenticationManager">
-		<authentication-provider ref="zathuraCodeAuthenticationProvider" />
+	
+	<authentication-manager alias="authenticationManager">
+			
+			#if($frontend)<authentication-provider ref="zathuraCodeAuthenticationProvider" />#end
+			
 	</authentication-manager>
+	    
+    
           
 </beans:beans>

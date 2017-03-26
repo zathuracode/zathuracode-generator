@@ -83,15 +83,12 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 
 	public void copyLibraries(){		
-		String pathIndexJsp = extPath+"index.jsp";
-		String pathLogin = extPath+"login.xhtml";
-		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
-		String generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
 
+		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
+	
 		String pathHibernate= librariesPath+"core-hibernate"+GeneratorUtil.slash;
 		String pathJPA=librariesPath+"jpa-hibernate"+GeneratorUtil.slash;
 		String pathHibernateJpa = librariesPath+"hibernate-jpa"+GeneratorUtil.slash;
-
 
 		String pathPrimeFaces= librariesPath+"primeFaces"+GeneratorUtil.slash;
 
@@ -109,26 +106,34 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 		String pathLib= properties.getProperty("libFolderPath");
 
-		String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
 
+		if (EclipseGeneratorUtil.isFrontend) {
+			
+			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
+			String generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
+			String pathIndexJsp = extPath+"index.jsp";
+			String pathLogin = extPath+"login.xhtml";
+			
+			// Copy Css
+			GeneratorUtil.createFolder(webRootPath + "css");
+			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
+			GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
 
-		// Copy Css
-		GeneratorUtil.createFolder(webRootPath + "css");
-		GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
-
-		//create folder images and insert .png
-		GeneratorUtil.createFolder(webRootPath + "images");
-		GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages, webRootPath + "images" + GeneratorUtil.slash);
+			//create folder images and insert .png
+			GeneratorUtil.createFolder(webRootPath + "images");
+			GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages, webRootPath + "images" + GeneratorUtil.slash);
 
 
 
-		// create login.xhtml
-		GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
-		// create index.jsp
-		GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
+			// create login.xhtml
+			GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
+			// create index.jsp
+			GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
 
+		}
+
+		
 		if (!EclipseGeneratorUtil.isMavenProject) {
 			//copy libraries
 			log.info("Copy Libraries files Zathuracode");
@@ -222,6 +227,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			velocityContext.put("domainName", domainName);
 			velocityContext.put("modelName", modelName);
 			velocityContext.put("schema", EclipseGeneratorUtil.schema);
+			velocityContext.put("frontend", EclipseGeneratorUtil.isFrontend);
 
 			//Variables para generar el persistence.xml
 			velocityContext.put("connectionUrl", EclipseGeneratorUtil.connectionUrl);
@@ -397,8 +403,10 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 				doEntityGenerator(metaData, velocityContext, hdLocation, metaDataModel);
 				doDaoSpringXMLHibernate(metaData, velocityContext, hdLocation);
-				doBackingBeans(metaData, velocityContext, hdLocation, metaDataModel);
-				doJsp(metaData, velocityContext, hdLocation, metaDataModel);
+				if (EclipseGeneratorUtil.isFrontend) {
+					doBackingBeans(metaData, velocityContext, hdLocation, metaDataModel);
+					doJsp(metaData, velocityContext, hdLocation, metaDataModel);
+				}
 				doLogicSpringXMLHibernate(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
@@ -413,12 +421,14 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doApiSpringHibernate(velocityContext, hdLocation);
 			doExceptions(velocityContext, hdLocation);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
-			doAuthenticationProvider(velocityContext, hdLocation, metaDataModel, modelName);
+			if (EclipseGeneratorUtil.isFrontend) {
+				doAuthenticationProvider(velocityContext, hdLocation, metaDataModel, modelName);
+				doJspFacelets(velocityContext, hdLocation);
+				doJspInitialMenu(metaDataModel, velocityContext, hdLocation);
+			}
 			doPersitenceXml(metaDataModel, velocityContext, hdLocation);						
 			doBusinessDelegator(velocityContext, hdLocation, metaDataModel);
 			doFacesConfig(metaDataModel, velocityContext, hdLocation);
-			doJspFacelets(velocityContext, hdLocation);
-			doJspInitialMenu(metaDataModel, velocityContext, hdLocation);
 			doSpringContextConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers";
@@ -1093,7 +1103,18 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bwInitialMenu.close();
 			fwInitialMenu.close();
 			log.info("End Initial  XHTML");
-
+			
+			log.info("Begin Initial web.xml");
+			Template templateWeb = ve.getTemplate("web.vm");
+			StringWriter swWeb = new StringWriter();
+			templateWeb.merge(context, swWeb);
+			FileWriter fwWeb = new FileWriter(path+"web.xml");
+			BufferedWriter bwWeb = new BufferedWriter(fwWeb);
+			bwWeb.write(swWeb.toString());
+			bwWeb.close();
+			bwWeb.close();
+			log.info("End web.xml");
+			
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
