@@ -38,6 +38,8 @@
                             <li>Spring Security 4.2.0.RELEASE</li>                    
                             <li>Hibernate 5.2.5.Final</li>
                             <li>log4J2 2.7</li>
+                            <li>Jackson Core 2.8.7</li>
+                            <li>Hibernate Validator 5.4.0.Final</li>
                         </ul>
                 
                         <table border="0" >
@@ -97,6 +99,8 @@
                             <li>Hibernate 5.2.5.Final</li>
 				            <li>JPA 2.1</li>
 				            <li>log4J2 2.7</li>
+                            <li>Jackson Core 2.8.7</li>
+                            <li>Hibernate Validator 5.4.0.Final</li>
 				        </ul>
 				        
 				         
@@ -154,6 +158,8 @@
 				            <li>EJB 3.1</li>
 				            <li>JPA 2.1</li>
 				            <li>log4J2 2.7</li>
+                            <li>Jackson Core 2.8.7</li>
+                            <li>Hibernate Validator 5.4.0.Final</li>
 				        </ul>
 				        
 				       
