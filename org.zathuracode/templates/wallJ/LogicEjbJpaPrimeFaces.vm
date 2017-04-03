@@ -82,7 +82,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
 					strMessage.append(constraintViolation.getPropertyPath().toString());
 					strMessage.append(" - ");
 					strMessage.append(constraintViolation.getMessage());
-					strMessage.append(",");
+					strMessage.append(". \n");
 				}
 				 throw new Exception(strMessage.toString());
 			 }

@@ -590,13 +590,13 @@ public class SkyJetUtilities {
 		}
 
 		try {
+			GeneratorUtil.validateDirectory("WEB-INF", properties.getProperty("webRootFolderPath"));
+			
 			//GeneratorUtil.validateDirectory("JSPX", properties.getProperty("webRootFolderPath"));
 			if (EclipseGeneratorUtil.isFrontend) {
 				GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
 				GeneratorUtil.validateDirectory("facelets", properties.getProperty("webRootFolderPath") + GeneratorUtil.slash + "WEB-INF");
 			}
-
-			GeneratorUtil.validateDirectory("WEB-INF", properties.getProperty("webRootFolderPath"));
 			
 			// WEB-INF
 			GeneratorUtil.validateDirectory("META-INF", hardDiskLocation);
