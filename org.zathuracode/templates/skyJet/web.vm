@@ -77,10 +77,9 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-
 	<context-param>  
     	<param-name>primefaces.THEME</param-name>  
-    	<param-value>bootstrap</param-value>  
+    	<param-value>omega</param-value>  
 	</context-param> 
 
 

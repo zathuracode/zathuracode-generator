@@ -417,10 +417,10 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
                                                                     throw e;
                                                                     }
                                                                     tempWhere = (tempWhere.length() == 0) ? ("(model."
-                                                                    + variable + " between \'" + value + "\' and \'"
-                                                                    + value2 + "\')") : (tempWhere + " AND (model."
-                                                                    + variable + " between \'" + value + "\' and \'"
-                                                                    + value2 + "\')");
+                                                                    + variable + " between " + value + " and "
+                                                                    + value2 + ")") : (tempWhere + " AND (model."
+                                                                    + variable + " between " + value + " and "
+                                                                    + value2 + ")");
                                                                     }
                                                                     k = k + 2;
                                                                     }

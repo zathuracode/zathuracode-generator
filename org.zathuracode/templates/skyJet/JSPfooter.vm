@@ -1,18 +1,22 @@
-<jsp:root jsfc="f:view" xmlns:jsp="http://java.sun.com/JSP/Page"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jstl/core"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-	<html>
-		<body>
-			<f:view>
-				<ui:composition>
-					<div id="footer">
-						<a href="http://www.zathuracode.org">Powered by Zathuracode 5.2.0</a>
-					</div>
-				</ui:composition>
-			</f:view>
-		</body>
-	</html>
-</jsp:root>
+<ui:composition 
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- FOOTER  -->
+
+      <footer>
+         <div class="container">
+
+            <div class="copy text-center">
+               Copyright 2017 <a href='http://zathuracode.org/'>Zathuracode</a>
+            </div>
+
+         </div>
+      </footer>
+
+</ui:composition>
