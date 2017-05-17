@@ -73,66 +73,6 @@ private boolean showDialog;
 @ManagedProperty(value="#{BusinessDelegatorView}")
 private IBusinessDelegatorView businessDelegatorView;
 
-
-	      public void rowEventListener(RowEditEvent e){
-			try {
-			
-			${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO = (${metaData.getRealClassName()}DTO) e.getObject(); 
-			
-			#foreach($member2  in $finalParamForViewVariablesInList)
-				#set( $str = $member2 ) 
-				#set( $upper = $str.toString().substring(0,1).toUpperCase())
-				#set($str2 = $str.toString().substring(1))
-				if(txt${upper}${str2} == null){
-					txt${upper}${str2} = new InputText ();
-				}
-				txt${upper}${str2}.setValue(${metaData.getRealClassNameAsVariable()}DTO.get${upper}${str2}());
-				#end
-			#foreach($member2  in $finalParamForIdForViewVariablesInList)
-				#set( $str = $member2 ) 
-				#set( $upper = $str.toString().substring(0,1).toUpperCase())
-				#set($str2 = $str.toString().substring(1))
-				if(txt${upper}${str2} == null){
-					txt${upper}${str2} = new InputText ();
-				}
-				txt${upper}${str2}.setValue(${metaData.getRealClassNameAsVariable()}DTO.get${upper}${str2}());
-			#end
-			#if(${isFinalParamForViewDatesInList})
-				#foreach($member2  in $finalParamForViewDatesInList)
-				#set( $str = $member2 ) 
-				#set( $upper = $str.toString().substring(0,1).toUpperCase())
-				#set($str2 = $str.toString().substring(1))
-				if(txt${upper}${str2} == null){
-					txt${upper}${str2} = new Calendar ();
-				}
-				txt${upper}${str2}.setValue(${metaData.getRealClassNameAsVariable()}DTO.get${upper}${str2}());
-				#end
-			#end
-			
-			#if(${isFinalParamForIdForViewDatesInList})
-				#foreach($member2  in $finalParamForIdForViewDatesInList)
-				#set( $str = $member2 ) 
-				#set( $upper = $str.toString().substring(0,1).toUpperCase())
-				#set($str2 = $str.toString().substring(1))
-				if(txt${upper}${str2} == null){
-					txt${upper}${str2} = new Calendar ();
-				}
-				txt${upper}${str2}.setValue(${metaData.getRealClassNameAsVariable()}DTO.get${upper}${str2}());
-				#end
-			#end	
-			
-			#foreach($member2  in $finalParamForIdForViewClass)
-		        $member2
-		    #end
-			entity = businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getName()});
-			
-			action_modify();
-			
-			}catch (Exception ex) {
-			
-			}
-		
-		}
 		
 	public String action_new(){
 		action_clear();
@@ -397,27 +337,6 @@ private IBusinessDelegatorView businessDelegatorView;
     	return "";
     }	
 		
-		
-		## Action to modify DataTableEditable
-		
-	public String actionDeleteDataTableEditable(ActionEvent evt){
-		
-		try{
-			selected${metaData.getRealClassName()} = (${metaData.getRealClassName()}DTO)(evt.getComponent().getAttributes().get("selected${metaData.getRealClassName()}"));		
-	    #foreach($member2  in $finalParamForGetIdByDtoForViewClass)
-	        $member2
-	    #end
-    		entity = businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getName()});
-			businessDelegatorView.delete${metaData.getRealClassName()}(entity);
-			data.remove(selected${metaData.getRealClassName()});
-    		FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYDELETED);
-			action_clear();
-		}catch(Exception e ){
-		 FacesUtils.addErrorMessage(e.getMessage());
-		}  
-		
-		return "";
-	}
 		
         public String action_modifyWitDTO(${finalParam}) throws Exception {
         try {

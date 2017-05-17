@@ -1,31 +1,11 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	</h:head>		
-	
-	<h:body>
-		<ui:composition template="/WEB-INF/facelets/template.xhtml">	
-		<ui:define name="body">	
-		<f:view>
-			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>               
-			<p:dialog modal="true" widgetVar="statusDialog" header="Loading"  draggable="false" closable="false">  
-   				<p:graphicImage value="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/images/ajaxloadingbar.gif" />   
-			</p:dialog>
-			
-			<!-- Expired session -->
-					<p:idleMonitor onactive="PF('sessionTimeOutDialog').show();" timeout="#{session.maxInactiveInterval * 1000}" />
-					<p:dialog modal="true" widgetVar="sessionTimeOutDialog" header="Expired session"  draggable="false" closable="false">  
-	   					<h:outputText value="The session is finished" />
-	                 	<input id="confirmBackToLogin" 
-	                 		type="button" 
-	                 		value="Sign in"
-	                    	onclick="window.location='#{facesContext.externalContext.requestContextPath}/index.jsp';" />   
-					</p:dialog>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
 			
 			
 			<h:form id="formDialog">
@@ -81,14 +61,12 @@
 				</p:panel>
 	   			<p:panel id="panelBotones">
 					<div align="center">					
-						<p:commandButton id="btnSave" binding="#{${metaData.getRealClassNameAsVariable()}View.btnSave}" disabled="true" value="Save" action="#{${metaData.getRealClassNameAsVariable()}View.action_save()}" update="panel${metaData.getRealClassName()},msg,panelBotones" />
-						<p:commandButton id="btnDelete" binding="#{${metaData.getRealClassNameAsVariable()}View.btnDelete}" disabled="true" value="Delete" action="#{${metaData.getRealClassNameAsVariable()}View.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panel${metaData.getRealClassName()},msg,panelBotones" />
-						<p:commandButton id="btnClear" value="Clear" action="#{${metaData.getRealClassNameAsVariable()}View.action_clear()}" update="panel${metaData.getRealClassName()},msg,panelBotones" />
+						<p:commandButton id="btnSave" binding="#{${metaData.getRealClassNameAsVariable()}View.btnSave}" disabled="true" value="Save" action="#{${metaData.getRealClassNameAsVariable()}View.action_save()}" update="panel${metaData.getRealClassName()}, msg, panelBotones, men" />
+						<p:commandButton id="btnDelete" binding="#{${metaData.getRealClassNameAsVariable()}View.btnDelete}" disabled="true" value="Delete" action="#{${metaData.getRealClassNameAsVariable()}View.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panel${metaData.getRealClassName()}, msg, panelBotones, men" />
+						<p:commandButton id="btnClear" value="Clear" action="#{${metaData.getRealClassNameAsVariable()}View.action_clear()}" update="panel${metaData.getRealClassName()}, msg, panelBotones, men" />
 					</div>
 				</p:panel>			
 			</h:form>
-		</f:view>
-			</ui:define>		
-		</ui:composition>	
-	</h:body>	
-</html>	
+			
+  </ui:define>
+</ui:composition>

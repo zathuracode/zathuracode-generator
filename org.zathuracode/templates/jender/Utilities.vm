@@ -3,6 +3,7 @@ package ${virginPackage}.utilities;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -118,11 +119,10 @@ public class Utilities {
 
 	public static String formatDateWithoutTimeInAStringForBetweenWhere(
 			Date fecha) {
-		int year = fecha.getYear() + 1900;
-		int month = fecha.getMonth() + 1;
-		int day = fecha.getDate();
-		String date = "" + year + "-" + month + "-" + day;
-		return date;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String strDate = sdf.format(fecha);
+		String str = "TO_DATE('"+strDate+"','dd/MM/yyyy')";
+		return str;
 	}
 
 	public static boolean validationsList(List list) {

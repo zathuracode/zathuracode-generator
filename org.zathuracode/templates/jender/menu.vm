@@ -1,64 +1,36 @@
-<jsp:root jsfc="f:view" xmlns:jsp="http://java.sun.com/JSP/Page"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:c="http://java.sun.com/jstl/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-   
-   <html>
-		<body>
-			<f:view>
-				<ui:composition>
-					<!-- Beging Menu -->
-				
-							<h:form>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ps="http://primefaces.org/sentinel"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	
+
+		<h:form id="menuform">
 							
-								<p:megaMenu style="width:989px">  
+								<p:menubar toggleable="true">
+								
 									<p:submenu label="Master" icon="ui-icon-pencil">  
-							            <p:column>
 							            
 							            	 #foreach($metaData  in $dataModel.theMetaData)
-								            	 <p:submenu label="${metaData.getRealClassName()}">  
 								                    <p:menuitem value="Master ${metaData.getRealClassName()}" url="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/XHTML/${metaData.getRealClassNameAsVariable()}.xhtml" />  
-								               	 </p:submenu>
 											 #end   
-							            </p:column>
 							        </p:submenu>  
 															
 															
 							  
 							        <p:submenu label="Data Table" icon="ui-icon-document">
-							           <p:column>  
 							                #foreach($metaData  in $dataModel.theMetaData)
-								            	 <p:submenu label="${metaData.getRealClassName()}">  
 								                    <p:menuitem value="${metaData.getRealClassName()}" url="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTable.xhtml" />  
-								               	 </p:submenu>
 											 #end     
-							            </p:column>
 							        </p:submenu>  
 							  
-							        
-							  
-							  
-							        <p:submenu label="Edit Data Table" icon="ui-icon-contact">  
-							            <p:column>  
-							                #foreach($metaData  in $dataModel.theMetaData)
-								            	 <p:submenu label="${metaData.getRealClassName()}">  
-								                    <p:menuitem value="${metaData.getRealClassName()}" url="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/XHTML/${metaData.getRealClassNameAsVariable()}ListDataTableEditable.xhtml" />  
-								               	 </p:submenu>
-											 #end   
-							            </p:column>  
-							        </p:submenu>  
-						  
-						        	<p:menuitem value="Quit" url="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/index.jsp" icon="ui-icon-close" />  
+						        	<p:menuitem value="Logout"
+										url="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/j_spring_security_logout"
+										icon="ui-icon-close" /> 
 						    
-						    </p:megaMenu>  
-						</h:form>
-					
-					<!-- end menu -->
-				</ui:composition>
-			</f:view>
-		</body>
-	</html>
-</jsp:root>
+			</p:menubar>
+		</h:form>
+</ui:composition>
