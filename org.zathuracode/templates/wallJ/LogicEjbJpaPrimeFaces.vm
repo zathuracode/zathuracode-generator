@@ -192,12 +192,8 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
 				log.debug("updating ${metaData.getRealClassName()} instance");
             try {
             
-            	if(entity==null){
-	    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
-	    		}
-	    		
             if(entity==null){
-	    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
+	    		throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
 	    	}
 	    		
             validate${metaData.getRealClassName()}(entity);
@@ -417,10 +413,10 @@ public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() 
                                                                     throw e;
                                                                     }
                                                                     tempWhere = (tempWhere.length() == 0) ? ("(model."
-                                                                    + variable + " between \'" + value + "\' and \'"
-                                                                    + value2 + "\')") : (tempWhere + " AND (model."
-                                                                    + variable + " between \'" + value + "\' and \'"
-                                                                    + value2 + "\')");
+                                                                    + variable + " between " + value + " and "
+                                                                    + value2 + ")") : (tempWhere + " AND (model."
+                                                                    + variable + " between " + value + " and "
+                                                                    + value2 + ")");
                                                                     }
                                                                     k = k + 2;
                                                                     }

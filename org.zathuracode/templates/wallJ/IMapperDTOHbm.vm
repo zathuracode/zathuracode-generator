@@ -2,10 +2,6 @@ package ${virginPackage}.dto.mapper;
 import $package.${metaData.getRealClassName()};
 import ${package}.dto.${metaData.getRealClassName()}DTO;
 
-#if($composedKey)
-    import $package.${metaData.primaryKey.getRealClassName()};
-#end
-
 import java.util.List;
 
 /**
