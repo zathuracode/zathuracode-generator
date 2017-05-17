@@ -1,0 +1,10 @@
+package ${virginPackage}.rest.controllers;
+
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+ 
+@ApplicationPath("/rest/controllers/")
+public class JAXActivator extends Application {
+    
+}
