@@ -114,14 +114,24 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 		// create login.xhtml
 		if (EclipseGeneratorUtil.isFrontend) {
 			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
+			String pathJs = extPath + GeneratorUtil.slash + "js"+ GeneratorUtil.slash;
+			String pathBootstrap = extPath + GeneratorUtil.slash + "bootstrap"+ GeneratorUtil.slash;
 			String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
 			String pathIndexJsp = extPath+"index.jsp";
 			String pathLogin = extPath+"login.xhtml";
 			
 			// Copy Css
 			GeneratorUtil.createFolder(webRootPath + "css");
-			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-
+			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);
+			
+			// Copy JS
+			GeneratorUtil.createFolder(webRootPath + "js");
+			GeneratorUtil.copyFolder(pathJs, webRootPath + "js" + GeneratorUtil.slash);
+			
+			// Copy BOOTSRAP
+			GeneratorUtil.createFolder(webRootPath + "bootstrap");
+			GeneratorUtil.copyFolder(pathBootstrap, webRootPath + "bootstrap" + GeneratorUtil.slash);
+			
 			//create folder images and insert .png
 			GeneratorUtil.createFolder(webRootPath + "images");
 			GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages, webRootPath + "images" + GeneratorUtil.slash);
@@ -129,7 +139,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
 			// create index.jsp
 			GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
-		
+			
 		}
 
 		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);		
@@ -674,16 +684,16 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			JenderUtilities.getInstance().datesIdJSP = null;
 			log.info("End DataTable XHTML");
 
-			log.info("Begin DataTableEditable XHTML");
-			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditablePrime.vm");
-			StringWriter swDataTableEditable = new StringWriter();
-			templateDataTableEditable.merge(context, swDataTableEditable);
-			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
-			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
-			bwDataTableEditable.write(swDataTableEditable.toString());
-			bwDataTableEditable.close();
-			fwDataTableEditable.close();
-			log.info("Begin DataTableEditable XHTML");
+//			log.info("Begin DataTableEditable XHTML");
+//			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditablePrime.vm");
+//			StringWriter swDataTableEditable = new StringWriter();
+//			templateDataTableEditable.merge(context, swDataTableEditable);
+//			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
+//			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
+//			bwDataTableEditable.write(swDataTableEditable.toString());
+//			bwDataTableEditable.close();
+//			fwDataTableEditable.close();
+//			log.info("Begin DataTableEditable XHTML");
 
 			JenderUtilities.getInstance().datesJSP = null;
 			JenderUtilities.getInstance().datesIdJSP = null;
@@ -699,11 +709,11 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doJspFacelets(VelocityContext context, String hdLocation) throws Exception{
 		try {
 			log.info("Begin Header");
-			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash + "facelets" + GeneratorUtil.slash;
+			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash;
 			Template templateHeader = ve.getTemplate("JSPheader.vm");
 			StringWriter swHeader = new StringWriter();
 			templateHeader.merge(context, swHeader);
-			FileWriter fwHeader = new FileWriter(pathFacelets+"header.jspx");
+			FileWriter fwHeader = new FileWriter(pathFacelets+"topbar.xhtml");
 			BufferedWriter bwHeader = new BufferedWriter(fwHeader);
 			bwHeader.write(swHeader.toString());
 			bwHeader.close();
@@ -714,7 +724,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			Template templateFooter = ve.getTemplate("JSPfooter.vm");
 			StringWriter swFooter = new StringWriter();
 			templateFooter.merge(context, swFooter);
-			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.jspx");
+			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.xhtml");
 			BufferedWriter bwFooter = new BufferedWriter(fwFooter);
 			bwFooter.write(swFooter.toString());
 			bwFooter.close();
@@ -725,7 +735,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			Template templateCommonsColumns = ve.getTemplate("menu.vm");
 			StringWriter swCommonColumns = new StringWriter();
 			templateCommonsColumns.merge(context, swCommonColumns);
-			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.jspx");
+			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.xhtml");
 			BufferedWriter bwCommonColumns = new BufferedWriter(fwCommonColumns);
 			bwCommonColumns.write(swCommonColumns.toString());
 			bwCommonColumns.close();

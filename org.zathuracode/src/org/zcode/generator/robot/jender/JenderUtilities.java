@@ -599,7 +599,7 @@ public class JenderUtilities {
 			//GeneratorUtil.validateDirectory("JSPX", properties.getProperty("webRootFolderPath"));
 			if (EclipseGeneratorUtil.isFrontend) {
 				GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
-				GeneratorUtil.validateDirectory("facelets", properties.getProperty("webRootFolderPath") + GeneratorUtil.slash + "WEB-INF");
+//				GeneratorUtil.validateDirectory("facelets", properties.getProperty("webRootFolderPath") + GeneratorUtil.slash + "WEB-INF");
 			}
 
 			// WEB-INF

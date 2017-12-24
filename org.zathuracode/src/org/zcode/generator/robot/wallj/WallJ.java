@@ -105,13 +105,22 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 		
 		if (EclipseGeneratorUtil.isFrontend) {
 			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
+			String pathJs = extPath + GeneratorUtil.slash + "js"+ GeneratorUtil.slash;
+			String pathBootstrap = extPath + GeneratorUtil.slash + "bootstrap"+ GeneratorUtil.slash;
 			String generatorExtZathuraJavaEEWebSpringPrimeHibernateCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
 			String pathIndexJsp = extPath+"index.jsp";
 			
 			// Copy Css
 			GeneratorUtil.createFolder(webRootPath + "css");
 			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-				
+			
+			// Copy JS
+			GeneratorUtil.createFolder(webRootPath + "js");
+			GeneratorUtil.copyFolder(pathJs, webRootPath + "js" + GeneratorUtil.slash);
+			
+			// Copy BOOTSRAP
+			GeneratorUtil.createFolder(webRootPath + "bootstrap");
+			GeneratorUtil.copyFolder(pathBootstrap, webRootPath + "bootstrap" + GeneratorUtil.slash);
 			
 			//create folder images and insert .png
 			GeneratorUtil.createFolder(webRootPath + "images");
@@ -423,6 +432,7 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			doExceptions(context, hdLocation);
 			doBusinessDelegator(context, hdLocation, dataModel);
 			doFacesConfig(dataModel, context, hdLocation);
+			doJaxActivator(context, hdLocation, dataModel);
 			if (EclipseGeneratorUtil.isFrontend) {
 				doJspInitialMenu(dataModel, context, hdLocation);
 				doJspFacelets(context, hdLocation);
@@ -699,16 +709,16 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			WallJUtilities.getInstance().datesIdJSP = null;
 			log.info("End DataTable XHTML");
 			
-			log.info("Begin DataTableEditable XHTML");
-			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditablePrime.vm");
-			StringWriter swDataTableEditable = new StringWriter();
-			templateDataTableEditable.merge(context, swDataTableEditable);
-			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
-			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
-			bwDataTableEditable.write(swDataTableEditable.toString());
-			bwDataTableEditable.close();
-			fwDataTableEditable.close();
-			log.info("Begin DataTableEditable XHTML");
+//			log.info("Begin DataTableEditable XHTML");
+//			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditablePrime.vm");
+//			StringWriter swDataTableEditable = new StringWriter();
+//			templateDataTableEditable.merge(context, swDataTableEditable);
+//			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
+//			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
+//			bwDataTableEditable.write(swDataTableEditable.toString());
+//			bwDataTableEditable.close();
+//			fwDataTableEditable.close();
+//			log.info("Begin DataTableEditable XHTML");
 			
 			WallJUtilities.getInstance().datesJSP = null;
 			WallJUtilities.getInstance().datesIdJSP = null;
@@ -724,11 +734,11 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 	public void doJspFacelets(VelocityContext context, String hdLocation)throws Exception {
 		try {
 			log.info("Begin Header");
-			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash + "facelets" + GeneratorUtil.slash;
+			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash;
 			Template templateHeader = ve.getTemplate("JSPheader.vm");
 			StringWriter swHeader = new StringWriter();
 			templateHeader.merge(context, swHeader);
-			FileWriter fwHeader = new FileWriter(pathFacelets+"header.jspx");
+			FileWriter fwHeader = new FileWriter(pathFacelets+"topbar.xhtml");
 			BufferedWriter bwHeader = new BufferedWriter(fwHeader);
 			bwHeader.write(swHeader.toString());
 			bwHeader.close();
@@ -739,7 +749,7 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			Template templateFooter = ve.getTemplate("JSPfooter.vm");
 			StringWriter swFooter = new StringWriter();
 			templateFooter.merge(context, swFooter);
-			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.jspx");
+			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.xhtml");
 			BufferedWriter bwFooter = new BufferedWriter(fwFooter);
 			bwFooter.write(swFooter.toString());
 			bwFooter.close();
@@ -751,7 +761,7 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			Template templateCommonsColumns = ve.getTemplate("menu.vm");
 			StringWriter swCommonColumns = new StringWriter();
 			templateCommonsColumns.merge(context, swCommonColumns);
-			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.jspx");
+			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.xhtml");
 			BufferedWriter bwCommonColumns = new BufferedWriter(fwCommonColumns);
 			bwCommonColumns.write(swCommonColumns.toString());
 			bwCommonColumns.close();
@@ -1015,4 +1025,31 @@ public class WallJ implements IZathuraWallJTemplate,IZathuraGenerator{
 			throw e;
 		}
 	}
+	
+	@Override
+	public void doJaxActivator(VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
+		try {
+			
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers" + GeneratorUtil.slash;
+			
+			log.info("Begin AjaxActivator");
+			Template utilitiesTemplate = ve.getTemplate("JAXActivator.vm");
+			StringWriter swUtilities = new StringWriter();
+			utilitiesTemplate.merge(context, swUtilities);
+			FileWriter fwUtilities = new FileWriter(path+"JAXActivator.java");
+			BufferedWriter bwUtilities = new BufferedWriter(fwUtilities);
+			bwUtilities.write(swUtilities.toString());
+			bwUtilities.close();
+			fwUtilities.close();
+			log.info("End AjaxActivator");
+			
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+
+
+
 }

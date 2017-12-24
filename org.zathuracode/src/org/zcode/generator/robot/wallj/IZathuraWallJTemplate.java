@@ -156,4 +156,6 @@ public interface IZathuraWallJTemplate {
 	public void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,
 			MetaDataModel metaDataModel) throws Exception;
 
+	void doJaxActivator(VelocityContext context, String hdLocation, MetaDataModel dataModel) throws Exception;
+
 }

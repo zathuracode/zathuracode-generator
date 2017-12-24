@@ -111,6 +111,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		if (EclipseGeneratorUtil.isFrontend) {
 			
 			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
+			String pathJs = extPath + GeneratorUtil.slash + "js"+ GeneratorUtil.slash;
+			String pathBootstrap = extPath + GeneratorUtil.slash + "bootstrap"+ GeneratorUtil.slash;
 			String generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
 			String pathIndexJsp = extPath+"index.jsp";
 			String pathLogin = extPath+"login.xhtml";
@@ -118,13 +120,18 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			// Copy Css
 			GeneratorUtil.createFolder(webRootPath + "css");
 			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-			GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
+			
+			// Copy JS
+			GeneratorUtil.createFolder(webRootPath + "js");
+			GeneratorUtil.copyFolder(pathJs, webRootPath + "js" + GeneratorUtil.slash);
+			
+			// Copy BOOTSRAP
+			GeneratorUtil.createFolder(webRootPath + "bootstrap");
+			GeneratorUtil.copyFolder(pathBootstrap, webRootPath + "bootstrap" + GeneratorUtil.slash);
 
 			//create folder images and insert .png
 			GeneratorUtil.createFolder(webRootPath + "images");
 			GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages, webRootPath + "images" + GeneratorUtil.slash);
-
-
 
 			// create login.xhtml
 			GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
@@ -132,7 +139,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
 
 		}
-
+		
+		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
 		
 		if (!EclipseGeneratorUtil.isMavenProject) {
 			//copy libraries
@@ -656,16 +664,16 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwDataTable.close();
 			log.info("End DataTable");
 
-			log.info("Begin DataTableEditable");
-			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditableJpaPrime.vm");
-			StringWriter swDataTableEditable = new StringWriter();
-			templateDataTableEditable.merge(context, swDataTableEditable);
-			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
-			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
-			bwDataTableEditable.write(swDataTableEditable.toString());
-			bwDataTableEditable.close();
-			fwDataTableEditable.close();
-			log.info("End DataTableEditable");
+//			log.info("Begin DataTableEditable");
+//			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditableJpaPrime.vm");
+//			StringWriter swDataTableEditable = new StringWriter();
+//			templateDataTableEditable.merge(context, swDataTableEditable);
+//			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
+//			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
+//			bwDataTableEditable.write(swDataTableEditable.toString());
+//			bwDataTableEditable.close();
+//			fwDataTableEditable.close();
+//			log.info("End DataTableEditable");
 
 			SkyJetUtilities.getInstance().datesJSP = null;
 			SkyJetUtilities.getInstance().datesIdJSP = null;
@@ -815,11 +823,11 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	public void doJspFacelets(VelocityContext context, String hdLocation)throws Exception {
 		try {
 			log.info("Begin Header");
-			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash + "facelets" + GeneratorUtil.slash;
+			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash;
 			Template templateHeader = ve.getTemplate("JSPheader.vm");
 			StringWriter swHeader = new StringWriter();
 			templateHeader.merge(context, swHeader);
-			FileWriter fwHeader = new FileWriter(pathFacelets+"header.jspx");
+			FileWriter fwHeader = new FileWriter(pathFacelets+"topbar.xhtml");
 			BufferedWriter bwHeader = new BufferedWriter(fwHeader);
 			bwHeader.write(swHeader.toString());
 			bwHeader.close();
@@ -830,7 +838,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			Template templateFooter = ve.getTemplate("JSPfooter.vm");
 			StringWriter swFooter = new StringWriter();
 			templateFooter.merge(context, swFooter);
-			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.jspx");
+			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.xhtml");
 			BufferedWriter bwFooter = new BufferedWriter(fwFooter);
 			bwFooter.write(swFooter.toString());
 			bwFooter.close();
@@ -842,7 +850,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			Template templateCommonsColumns = ve.getTemplate("menu.vm");
 			StringWriter swCommonColumns = new StringWriter();
 			templateCommonsColumns.merge(context, swCommonColumns);
-			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.jspx");
+			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.xhtml");
 			BufferedWriter bwCommonColumns = new BufferedWriter(fwCommonColumns);
 			bwCommonColumns.write(swCommonColumns.toString());
 			bwCommonColumns.close();
@@ -905,16 +913,16 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			log.info("End securityContext.xml");
 
 
-			log.info("Begin dataSourceContext.xml");
-			Template dataSourceContext= ve.getTemplate("dataSourceContext.xml.vm");
-			StringWriter swDataSourceContext = new StringWriter();
-			dataSourceContext.merge(context, swDataSourceContext);
-			FileWriter fwDataSourceContext = new FileWriter(hdLocation+"dataSourceContext.xml");
-			BufferedWriter bwDataSourceContext = new BufferedWriter(fwDataSourceContext);
-			bwDataSourceContext.write(swDataSourceContext.toString());
-			bwDataSourceContext.close();
-			fwDataSourceContext.close();
-			log.info("End dataSourceContext.xml");
+//			log.info("Begin dataSourceContext.xml");
+//			Template dataSourceContext= ve.getTemplate("dataSourceContext.xml.vm");
+//			StringWriter swDataSourceContext = new StringWriter();
+//			dataSourceContext.merge(context, swDataSourceContext);
+//			FileWriter fwDataSourceContext = new FileWriter(hdLocation+"dataSourceContext.xml");
+//			BufferedWriter bwDataSourceContext = new BufferedWriter(fwDataSourceContext);
+//			bwDataSourceContext.write(swDataSourceContext.toString());
+//			bwDataSourceContext.close();
+//			fwDataSourceContext.close();
+//			log.info("End dataSourceContext.xml");
 
 		} catch (Exception e) {
 			log.error(e.toString());

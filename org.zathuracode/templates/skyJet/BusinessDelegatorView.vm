@@ -15,7 +15,6 @@ import ${virginPackage}.presentation.businessDelegate.IBusinessDelegatorView;
 
 
 #foreach($metaData  in $dataModel.theMetaData)
-    import ${packageOriginal}.control.${metaData.getRealClassName()}Logic;
     import ${packageOriginal}.control.I${metaData.getRealClassName()}Logic;
 	import ${package}.dto.${metaData.getRealClassName()}DTO;
     import ${package}.${metaData.getRealClassName()};

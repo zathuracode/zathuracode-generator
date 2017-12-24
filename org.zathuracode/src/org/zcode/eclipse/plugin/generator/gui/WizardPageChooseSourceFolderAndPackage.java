@@ -85,7 +85,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 	/** The lbl lib.*/
 	private Label lblLibraries;
 	
-	private Boolean isFrontend = false;
+	private Boolean isFrontend = true;
 	
 	/**
 	 * Create the wizard.
@@ -98,7 +98,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		//setImageDescriptor(ResourceManager.getPluginImageDescriptor(ZathuraGeneratorActivator.getDefault(), "icons/balvardi-Robotic7070.png"));
 		setPageComplete(false);
 		EclipseGeneratorUtil.makeItXml=true;
-		
+		EclipseGeneratorUtil.isFrontend=true;
 		
 	}
 
@@ -118,11 +118,11 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 
 		final Label lblJavaSourceFolder = new Label(choosePathGroup, SWT.NONE);
 		lblJavaSourceFolder.setText(Messages.WizardPageChooseSourceFolderAndPackage_4);
-		lblJavaSourceFolder.setBounds(10, 59, 99, 17);
+		lblJavaSourceFolder.setBounds(10, 55, 99, 21);
 
 		txtJavaSourceFolder = new Text(choosePathGroup, SWT.BORDER);
 		txtJavaSourceFolder.setEditable(false);
-		txtJavaSourceFolder.setBounds(115, 52, 363, 24);
+		txtJavaSourceFolder.setBounds(140, 52, 338, 24);
 
 		final Button btnJavaSourceFolder = new Button(choosePathGroup, SWT.NONE);
 		btnJavaSourceFolder.setEnabled(false);
@@ -140,11 +140,11 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 
 		final Label lblJavaPackage = new Label(choosePathGroup, SWT.NONE);
 		lblJavaPackage.setText(Messages.WizardPageChooseSourceFolderAndPackage_7);
-		lblJavaPackage.setBounds(10, 97, 99, 17);
+		lblJavaPackage.setBounds(10, 93, 124, 21);
 
 		txtPackage = new Text(choosePathGroup, SWT.BORDER);
 		txtPackage.setEditable(false);
-		txtPackage.setBounds(115, 90, 272, 24);
+		txtPackage.setBounds(140, 90, 247, 24);
 
 		btnPackage = new Button(choosePathGroup, SWT.NONE);
 		btnPackage.setEnabled(false);
@@ -160,19 +160,19 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		
 		Label lblWebRoot = new Label(choosePathGroup, SWT.NONE);
 		lblWebRoot.setText(Messages.WizardPageChooseSourceFolderAndPackage_9);
-		lblWebRoot.setBounds(10, 135, 99, 17);
+		lblWebRoot.setBounds(10, 132, 124, 21);
 		
 		lblLibraries = new Label(choosePathGroup, SWT.NONE);
 		lblLibraries.setText(Messages.WizardPageChooseSourceFolderAndPackage_10);
-		lblLibraries.setBounds(10, 173, 99, 17);
+		lblLibraries.setBounds(10, 171, 124, 31);
 		
 		txtWebRoot = new Text(choosePathGroup, SWT.BORDER);
 		txtWebRoot.setEditable(false);
-		txtWebRoot.setBounds(115, 129, 363, 24);
+		txtWebRoot.setBounds(140, 129, 338, 24);
 		
 		txtLib = new Text(choosePathGroup, SWT.BORDER);
 		txtLib.setEditable(false);
-		txtLib.setBounds(115, 168, 363, 24);
+		txtLib.setBounds(140, 168, 338, 24);
 		
 		btnWebRoot = new Button(choosePathGroup, SWT.NONE);
 		btnWebRoot.setEnabled(false);
@@ -208,7 +208,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 				}			
 			}
 		});
-		cmbProject.setBounds(115, 15, 363, 36);
+		cmbProject.setBounds(140, 15, 338, 28);
 		IProject projectArray[]=ResourcesPlugin.getWorkspace().getRoot().getProjects();
 			for (IProject iProject : projectArray) {
 				
@@ -284,6 +284,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		label.setBounds(10, 282, 552, 2);
 		
 		Button btnFrontendCheckButton = new Button(container, SWT.CHECK);
+		btnFrontendCheckButton.setSelection(true);
 		btnFrontendCheckButton.addSelectionListener(new SelectionAdapter() {
 		@Override
 			public void widgetSelected(SelectionEvent e) {
