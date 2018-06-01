@@ -22,7 +22,6 @@ import org.zcode.generator.model.IZathuraGenerator;
 import org.zcode.generator.utilities.GeneratorUtil;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *
