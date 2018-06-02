@@ -20,18 +20,18 @@ public class JenderTest {
 	
 	private static MetaDataModel metaDataModel = null;
 	
+	static String fullPathProject="/Users/dgomez/runtime-EclipseApplication/demo-banco-jender-web";
 	
 	//La ruta donde estan los .class de las clases con anotaciones JPA
-	static String jpaPath = "/Users/dgomez/Workspaces/runtime-EclipseApplication/demoBancoWebJPA/src/main/java/";
+	static String jpaPath = fullPathProject+"/src/main/java/";
 	
-	static String fullPathProject="/Users/dgomez/Workspaces/runtime-EclipseApplication/demoBancoWeb";
-	static String jpaPckgName = "com.vobi.demo.modelo";
-	static String projectName = "demoBancoWeb";
-	static String folderProjectPath = "/Users/dgomez/Workspaces/runtime-EclipseApplication/demoBancoWeb/src/main/java/";
 	
-	static String webRootFolderPath = "/Users/dgomez/Workspaces/runtime-EclipseApplication/demoBancoWeb/src/main/webapp/";
-	static String libFolderPath = "/Users/dgomez/Workspaces/runtime-EclipseApplication/demoBancoWeb/src/main/webapp/WEB-INF/lib";
-	static File pomFile =new File("/Users/dgomez/Workspaces/runtime-EclipseApplication/demoBancoWeb/pom.xml");
+	static String jpaPckgName = "com.vobi.banco.jender.modelo";
+	static String projectName = "demo-banco-jender-web";
+	static String folderProjectPath = fullPathProject+"/src/main/java/";
+	
+	static String webRootFolderPath = fullPathProject="/src/main/webapp/";
+	static File pomFile =new File(fullPathProject+"/pom.xml");
 	
 	public static void main(String[] args) {
 		try {
@@ -49,7 +49,7 @@ public class JenderTest {
 			EclipseGeneratorUtil.projectName=projectName;
 			EclipseGeneratorUtil.javaSourceFolderPath=folderProjectPath;
 			EclipseGeneratorUtil.webRootFolderPath=webRootFolderPath;
-			EclipseGeneratorUtil.libFolderPath=libFolderPath;
+			EclipseGeneratorUtil.libFolderPath="";
 			EclipseGeneratorUtil.companyDomainName=jpaPckgName;
 			
 			//Maven POM JDBC Connector
@@ -76,11 +76,7 @@ public class JenderTest {
 			EclipseGeneratorUtil.catalog=null;
 			EclipseGeneratorUtil.tablesList=new ArrayList<String>();
 	
-			
 
-			
-			
-			
 			// Genera los entity originales
 			EclipseGeneratorUtil.generateJPAReverseEngineering();
 
@@ -100,7 +96,7 @@ public class JenderTest {
 			properties.put("jpaPckgName", jpaPckgName);
 			properties.put("specificityLevel", new Integer(specificityLevel));
 			properties.put("webRootFolderPath", webRootFolderPath);
-			properties.put("libFolderPath", libFolderPath);
+			properties.put("libFolderPath", "");
 			properties.put("folderProjectPath", folderProjectPath);
 			properties.put("isMavenProject", true);
 			properties.put("pomFile", pomFile);

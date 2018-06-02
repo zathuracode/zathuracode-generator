@@ -1,22 +1,14 @@
 package ${virginPackage}.dataaccess.dao;
-import java.util.List;
-import java.util.Set;
-import java.util.Date;
-import java.math.BigDecimal;
 
-import org.hibernate.Query;
-import org.hibernate.criterion.Example;
+import javax.annotation.Resource;
+
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import ${virginPackage}.dataaccess.api.HibernateDaoImpl;
 
 import $package.${metaData.getRealClassName()};
