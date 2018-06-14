@@ -1,4 +1,4 @@
-<!--Author Zathuracode Generator -->
+<!--Author Zathuracode Generator SkyJet -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   
 	<modelVersion>4.0.0</modelVersion>	
@@ -10,21 +10,19 @@
 	<description>${description}</description>	
 
 
-	<properties>
+    <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<hibernate.version>5.2.10.Final</hibernate.version>
-		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
-        <primefaces.version>6.1</primefaces.version>
-		<spring.version>4.3.8.RELEASE</spring.version>
-		<spring.security.version>4.2.2.RELEASE</spring.security.version>
-		<mojarra.version>2.2.8-21</mojarra.version>
-		<slf4j.version>1.7.25</slf4j.version>
-		<log4j2.version>2.8.2</log4j2.version>
-		<jackson.core.version>2.8.8</jackson.core.version>
-		<jackson.mapper.version>1.9.13</jackson.mapper.version>
+		<hibernate.version>5.3.1.Final</hibernate.version>
+		<hibernate.validator.version>6.0.10.Final</hibernate.validator.version>
+		<primefaces.version>6.2</primefaces.version>
+		<spring.version>5.0.7.RELEASE</spring.version>
+		<spring.security.version>5.0.6.RELEASE</spring.security.version>
+		<mojarra.version>2.2.17</mojarra.version>
+		<log4j2.version>2.11.0</log4j2.version>
+		<jackson.core.version>2.9.5</jackson.core.version>
 		<jamonapi.version>2.81</jamonapi.version>
-    </properties>
+	</properties>
     
     
     <repositories>
@@ -42,13 +40,14 @@
 			<artifactId>javax.faces</artifactId>
 			<version>${mojarra.version}</version>
 		</dependency>
-		
+
 		<!-- Primefaces -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>all-themes</artifactId>
+			<artifactId>bootstrap</artifactId>
 			<version>1.0.10</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -57,6 +56,11 @@
 		<!-- Primefaces -->
 
 		<!-- Spring Framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -69,52 +73,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -127,6 +91,9 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- Spring Framework -->
+
+		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -137,69 +104,39 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
+		<!-- Spring Security -->
 
-		<!-- Spring Framework -->
 
-		<!-- Hibernate Framework -->
-	
+		<!-- Hibernate ORM -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
+		<!-- Hibernate ORM -->
+		
+		<!-- Hibernate validator -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validator.version}</version>
 		</dependency>
-		<!-- Hibernate Framework -->
+		<!-- Hibernate validator -->
+
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.core.version}</version>
+		</dependency>
+		<!-- Jackson JSON Mapper -->
 		
-		<!-- Jackson JSON Mapper -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.mapper.version}</version>
-		</dependency>
-
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		    <version>${jackson.core.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>${jackson.core.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-annotations</artifactId>
-		    <version>${jackson.core.version}</version>
-		</dependency>
-		<!-- Jackson JSON Mapper -->
-
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.servlet.jsp.jstl</artifactId>
-			<version>3.1.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.servlet.jsp</artifactId>
-			<version>3.1.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.servlet</artifactId>
-			<version>3.1.1</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Logger -->
 		<!-- LOGS log4j2 y SLF4J -->
-
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -215,75 +152,65 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>${log4j2.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
 		<!-- LOGS log4j2 y SLF4J -->
-		<!-- Logger -->
 
-
-	     <dependency>
-	            <groupId>com.jamonapi</groupId>
-	            <artifactId>jamon</artifactId>
-	            <version>${jamonapi.version}</version>
-	     </dependency>
-		
-
-
-		<!-- Apache commons -->		
 		<dependency>
-		  <groupId>commons-validator</groupId>
-		  <artifactId>commons-validator</artifactId>
-		  <version>1.4.0</version>
-		  <exclusions>
-		  	<exclusion>
-		  		<artifactId>commons-digester</artifactId>
-		  		<groupId>commons-digester</groupId>
-		  	</exclusion>
-		  	<exclusion>
-		  		<artifactId>commons-logging</artifactId>
-		  		<groupId>commons-logging</groupId>
-		  	</exclusion>		  	
-		  	<exclusion>
-		  		<artifactId>commons-beanutils</artifactId>
-		  		<groupId>commons-beanutils</groupId>
-		  	</exclusion>  	
-		  </exclusions>
+			<groupId>com.jamonapi</groupId>
+			<artifactId>jamon</artifactId>
+			<version>${jamonapi.version}</version>
 		</dependency>
+
 		<!-- Apache commons -->
-		
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.4.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-digester</artifactId>
+					<groupId>commons-digester</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-beanutils</artifactId>
+					<groupId>commons-beanutils</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Apache commons -->		
+
 		<dependency>
 			<groupId>${groupIdConnector}</groupId>
 			<artifactId>${artifactIdConnector}</artifactId>
 			<version>${versionConnector}</version>
-		</dependency>	
+		</dependency>
+		
 	</dependencies>
 	
 	<build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-         <version>3.6.1</version>
-        <configuration>
-        	<encoding>UTF-8</encoding>
-          	<source>1.7</source>
-          	<target>1.7</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-       	<!-- Si es una version anterior a Neon.1 Release (4.6.1) se debe modificar de version 3.1.0 a 2.6 -->
-       	<version>3.1.0</version>
-        <configuration>
-        	<encoding>UTF-8</encoding>
-          	<version>3.1</version>
-          	<failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  	
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<version>3.1</version>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  
 </project>

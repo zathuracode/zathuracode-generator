@@ -6,9 +6,10 @@ import java.util.Set;
 #end
 
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.*;
+
 
 /**
 * @author Zathura Code Generator http://zathuracode.org/

@@ -9,8 +9,9 @@ import java.util.Date;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.*;
+
 
 /**
 * @author Zathura Code Generator http://zathuracode.org/
