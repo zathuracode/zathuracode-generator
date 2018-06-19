@@ -11,6 +11,8 @@ import java.util.Properties;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;
@@ -26,6 +28,8 @@ import org.zcode.metadata.model.SimpleMember;
  * @version 1.0
  */
 public class SkyJetUtilities {
+	
+	private static final Logger log = LoggerFactory.getLogger(SkyJetUtilities.class);
 
 	/** The instance. */
 	private static SkyJetUtilities instance = null;
@@ -534,58 +538,42 @@ public class SkyJetUtilities {
 		String pckge = packageName.replace('.', '_') + "_";
 		String modelPckg = packageOriginal.replace('.', '_') + "_";
 
-		String dataAcces = pckge + "dataaccess_";
 		String model = modelPckg;
-		String presentation = pckge + "presentation_";
-		String dao = dataAcces + "dao_";
-		String api = dataAcces + "api_";
-
+	
 		List<String> folderBuilder = new ArrayList<String>();
 
 		folderBuilder.add(pckge);
 		
-		folderBuilder.add(pckge + "exceptions");
+		folderBuilder.add(pckge + "exception");
 
-		folderBuilder.add(pckge + "utilities");
+		folderBuilder.add(pckge + "utility");
 		
-		folderBuilder.add(pckge + "rest_controllers");
+		folderBuilder.add(pckge + "controller");
 		
 		folderBuilder.add(model);
 		
-		folderBuilder.add(dao);
+		folderBuilder.add(pckge + "repository");
+
+		folderBuilder.add(pckge + "service");
 		
-		folderBuilder.add(api);
+		folderBuilder.add(pckge + "mapper");
 
-		//folderBuilder.add(dataAcces + "daoFactory");
-		//folderBuilder.add(dataAcces + "sessionFactory");
-
-		folderBuilder.add(model + "control");
-
-		if (specificityLevel.intValue() == 2) {
-			folderBuilder.add(model + "pojos");
-		}
-		
-		folderBuilder.add(pckge + "dto_mapper");
-
-		folderBuilder.add(model + "dto");
+		folderBuilder.add(pckge + "dto");
 		
 		if (EclipseGeneratorUtil.isFrontend) {
-
 			folderBuilder.add(pckge + "security");
-			
-			folderBuilder.add(presentation + "backingBeans");	
 		}
 
-		folderBuilder.add(presentation + "businessDelegate");
+		folderBuilder.add(pckge + "view");
 
 		folderBuilder.add(properties.getProperty("webRootFolderPath"));
+
 
 		for (String string : folderBuilder) {
 			try {
 				GeneratorUtil.validateDirectory(string, hardDiskLocation);
 			} catch (IOException e) {
-				// TODO Poner log4j por si lanza error
-				e.printStackTrace();
+				log.error(e.getMessage());
 			}
 		}
 
@@ -601,8 +589,7 @@ public class SkyJetUtilities {
 			// WEB-INF
 			GeneratorUtil.validateDirectory("META-INF", hardDiskLocation);
 		} catch (IOException e) {
-			// TODO Poner log4j por si lanza error
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 
 	}

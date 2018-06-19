@@ -1,4 +1,4 @@
-package ${virginPackage}.dataaccess.dao;
+package ${virginPackage}.repository;
 
 import javax.annotation.Resource;
 
@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
-import ${virginPackage}.dataaccess.api.HibernateDaoImpl;
+import ${virginPackage}.repository.HibernateDaoImpl;
 
 import $package.${metaData.getRealClassName()};
 

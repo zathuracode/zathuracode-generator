@@ -28,7 +28,5 @@
 	
 	<import resource="classpath:dataSourceContext.xml" />
 	
-	<import resource="classpath:securityContext.xml" />
-	
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 </beans>

@@ -36,12 +36,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
-import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 
-
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *
@@ -94,8 +91,6 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		super("wizardPage"); //$NON-NLS-1$
 		setTitle(Messages.WizardPageChooseSourceFolderAndPackage_1);
 		setDescription(Messages.WizardPageChooseSourceFolderAndPackage_2);
-		//setImageDescriptor(ResourceManager.getPluginImageDescriptor(ZathuraGeneratorActivator.getDefault(), "icons/NewRDBDatabaseWiz.gif"));
-		//setImageDescriptor(ResourceManager.getPluginImageDescriptor(ZathuraGeneratorActivator.getDefault(), "icons/balvardi-Robotic7070.png"));
 		setPageComplete(false);
 		EclipseGeneratorUtil.makeItXml=true;
 		EclipseGeneratorUtil.isFrontend=true;

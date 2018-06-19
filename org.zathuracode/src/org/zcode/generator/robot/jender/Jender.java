@@ -90,25 +90,6 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void copyLibraries() throws Exception{
 		
 		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
-		
-		String pathHibernate= librariesPath+"core-hibernate"+GeneratorUtil.slash;
-		String pathJpaHibernate=librariesPath+"hibernate-jpa"+GeneratorUtil.slash;
-
-		String pathPrimeFaces= librariesPath+"primeFaces"+GeneratorUtil.slash;
-
-		String pathSpring= librariesPath+"spring"+GeneratorUtil.slash;
-		String pathSpringSecurity= librariesPath+"spring-security"+GeneratorUtil.slash;
-
-		String pathSL4J= librariesPath+"slf4j"+GeneratorUtil.slash;
-		String pathJamon= librariesPath+"jamon"+GeneratorUtil.slash;
-		String pathMojarra= librariesPath+"mojarra"+GeneratorUtil.slash;
-		String pathApacheCommons= librariesPath+"apache-commons"+GeneratorUtil.slash;
-		String pathAopAlliance= librariesPath+"aopalliance"+GeneratorUtil.slash;
-		String pathLog4j=librariesPath+"log4j"+GeneratorUtil.slash;
-		//String pathServlet=librariesPath+"servlet3.1.1"+GeneratorUtil.slash;
-
-		String pathLib= properties.getProperty("libFolderPath");
-
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
 
 		// create login.xhtml
@@ -142,25 +123,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			
 		}
 
-		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);		
-
-		//Se valida si el proyecto no es maven, para empezar a copiar las librerias
-		if(!EclipseGeneratorUtil.isMavenProject){
-			//copy libraries
-			log.info("Copy Libraries files Zathuracode");
-			GeneratorUtil.copyFolder(pathHibernate, pathLib);
-			GeneratorUtil.copyFolder(pathJpaHibernate, pathLib);
-			GeneratorUtil.copyFolder(pathPrimeFaces, pathLib);
-			GeneratorUtil.copyFolder(pathSpring, pathLib);
-			GeneratorUtil.copyFolder(pathSpringSecurity, pathLib);
-			GeneratorUtil.copyFolder(pathSL4J, pathLib);
-			GeneratorUtil.copyFolder(pathJamon, pathLib);
-			GeneratorUtil.copyFolder(pathMojarra, pathLib);
-			GeneratorUtil.copyFolder(pathApacheCommons, pathLib);
-			GeneratorUtil.copyFolder(pathAopAlliance, pathLib);
-			GeneratorUtil.copyFolder(pathLog4j, pathLib);
-			//GeneratorUtil.copyFolder(pathServlet, pathLib);
-		}
+		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
 
 		// copy to Log4j
 		String folderProjectPath = properties.getProperty("folderProjectPath");
@@ -448,7 +411,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doBusinessDelegator(VelocityContext context, String hdLocation,
 			MetaDataModel dataModel) throws Exception{
 		try {
-			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "presentation"+ GeneratorUtil.slash + "businessDelegate" +GeneratorUtil.slash;
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "view"+ GeneratorUtil.slash;
 
 			log.info("Begin IBusinesDelegate ");
 			Template templateIBusinessDelegate = ve.getTemplate("IBusinessDelegatorView.vm");
@@ -488,7 +451,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 		try {
 
-			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + "dataaccess" + GeneratorUtil.slash + "dao"+ GeneratorUtil.slash;
+			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + "repository" + GeneratorUtil.slash;
 
 			log.info("Begin Idao Spring+PrimeFaces+Hibernate");
 			Template idaoSpringPrimeTemplate = ve.getTemplate("IDAOSpringHibernatePrime.vm");
@@ -527,7 +490,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 		try {
 
-			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + "dataaccess" + GeneratorUtil.slash + "api"+ GeneratorUtil.slash;
+			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + "repository" + GeneratorUtil.slash;
 
 			log.info("Begin api Spring+PrimeFaces+Hibernate");
 
@@ -590,7 +553,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			StringWriter swDto = new StringWriter();
 			dtoTemplate.merge(context, swDto);
 
-			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + modelName + GeneratorUtil.slash + "dto"+ GeneratorUtil.slash;
+			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + "dto"+ GeneratorUtil.slash;
 			FileWriter fwDto = new FileWriter(path+metaData.getRealClassName()+"DTO.java");
 			BufferedWriter bwDto = new BufferedWriter(fwDto);
 			bwDto.write(swDto.toString());
@@ -609,7 +572,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	@Override
 	public void doExceptions(VelocityContext context, String hdLocation) throws Exception{
 		try {
-			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "exceptions" + GeneratorUtil.slash;
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "exception" + GeneratorUtil.slash;
 			log.info("Begin ZMessManager");
 			Template templateZmessManager = ve.getTemplate("ZMessManager.vm");
 			StringWriter swZmessManager = new StringWriter();
@@ -788,7 +751,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 			VelocityContext context, String hdLocation,
 			MetaDataModel dataModel, String modelName) throws Exception{
 		try {
-			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash + modelName + GeneratorUtil.slash +"control" + GeneratorUtil.slash;
+			String path=hdLocation + virginPackageInHd + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
 
 			log.info("Begin Ilogic PrimeFaces+Spring+Hibernate");
 			Template iLogicPrimeFaces = ve.getTemplate("ILogicSpringHibernatePrimeFaces.vm");
@@ -886,7 +849,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	@Override
 	public void doUtilites(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception{
 		try {
-			String path =hdLocation+virginPackageInHd+GeneratorUtil.slash+"utilities"+GeneratorUtil.slash;
+			String path =hdLocation+virginPackageInHd+GeneratorUtil.slash+"utility"+GeneratorUtil.slash;
 
 			log.info("Begin Utilities Spring+Hibernate+PrimeFaces");
 			Template utilitiesTemplate = ve.getTemplate("Utilities.vm");
@@ -923,7 +886,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doBackingBeans(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
 
-			String path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "presentation" + GeneratorUtil.slash + "backingBeans" + GeneratorUtil.slash;
+			String path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "view" + GeneratorUtil.slash;
 
 			log.info("Begin BackEndBean");
 			Template templateBakcEndBean= ve.getTemplate("BackingBeansSpringHibernatePrime.vm");
@@ -972,7 +935,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 
 
 			//ManageBean for LoginView
-			path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "presentation" + GeneratorUtil.slash + "backingBeans" + GeneratorUtil.slash;
+			path =hdLocation + virginPackageInHd + GeneratorUtil.slash + "view" + GeneratorUtil.slash;
 
 			log.info("Begin LoginView");
 			templateBakcEndBean= ve.getTemplate("LoginView.vm");
@@ -1000,7 +963,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doRestControllers(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
 
-			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers" + GeneratorUtil.slash;
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "controller" + GeneratorUtil.slash;
 
 			log.info("Begin RestControllers");
 			Template templateBakcEndBean= ve.getTemplate("RestController.vm");
@@ -1028,7 +991,7 @@ public class Jender implements IZathuraJenderTemplate,IZathuraGenerator{
 	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
 		try {
 
-			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash + "dto" + GeneratorUtil.slash + "mapper" + GeneratorUtil.slash;
+			String path = hdLocation + virginPackageInHd + GeneratorUtil.slash  + "mapper" + GeneratorUtil.slash;
 
 			log.info("Begin I DTO Mapper");
 			Template templateIMapperDTO = ve.getTemplate("IMapperDTOHbm.vm");

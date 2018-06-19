@@ -1,6 +1,6 @@
-package  ${virginPackage}.dataaccess.dao;
+package  ${virginPackage}.repository;
 
-import ${virginPackage}.dataaccess.api.Dao;
+import ${virginPackage}.repository.Dao;
 import $package.${metaData.getRealClassName()};
 #if($composedKey)
     import $package.${metaData.primaryKey.getRealClassName()};
