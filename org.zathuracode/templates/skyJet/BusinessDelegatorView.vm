@@ -1,4 +1,4 @@
-package ${virginPackage}.presentation.businessDelegate;
+package ${virginPackage}.view;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ${virginPackage}.presentation.businessDelegate.IBusinessDelegatorView;
+
 
 
 #foreach($metaData  in $dataModel.theMetaData)
-    import ${packageOriginal}.control.I${metaData.getRealClassName()}Logic;
-	import ${package}.dto.${metaData.getRealClassName()}DTO;
+    import ${virginPackage}.service.I${metaData.getRealClassName()}Logic;
+	import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
     import ${package}.${metaData.getRealClassName()};
     #if(${metaData.primaryKey.isPrimiaryKeyAComposeKey()})
         import ${package}.${metaData.primaryKey.getRealClassName()};

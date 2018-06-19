@@ -1,4 +1,4 @@
-package  ${virginPackage}.presentation.backingBeans;
+package  ${virginPackage}.view;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.DateFormat;
@@ -22,11 +22,10 @@ import javax.faces.event.ActionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import  ${virginPackage}.exceptions.*;
+import  ${virginPackage}.exception.*;
 import ${package}.*;
-import ${packageOriginal}.dto.${metaData.getRealClassName()}DTO;
-import ${virginPackage}.presentation.businessDelegate.*;
-import ${virginPackage}.utilities.*;
+import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
+import ${virginPackage}.utility.*;
 /**
  * @author Zathura Code Generator http://zathuracode.org/
  * www.zathuracode.org

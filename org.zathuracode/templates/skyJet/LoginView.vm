@@ -1,4 +1,4 @@
-package  ${virginPackage}.presentation.backingBeans;
+package  ${virginPackage}.view;
 
 
 import javax.faces.bean.ManagedBean;
@@ -12,7 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import ${virginPackage}.utilities.*;
+import ${virginPackage}.utility.*;
 
 @ViewScoped
 @ManagedBean(name="loginView")

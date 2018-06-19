@@ -1,9 +1,10 @@
-package  ${virginPackage}.dataaccess.dao;
+package  ${virginPackage}.repository;
+
 import java.util.List;
 import java.util.Set;
 import java.util.Date;
 import java.math.BigDecimal;
-import ${virginPackage}.dataaccess.api.Dao;
+
 import $package.${metaData.getRealClassName()};
 #if($composedKey == true)
     import $package.${metaData.primaryKey.getRealClassName()};

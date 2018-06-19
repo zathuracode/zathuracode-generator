@@ -1,6 +1,6 @@
-package ${virginPackage}.dto.mapper;
+package ${virginPackage}.mapper;
 import $package.${metaData.getRealClassName()};
-import ${package}.dto.${metaData.getRealClassName()}DTO;
+import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 
 import java.util.List;

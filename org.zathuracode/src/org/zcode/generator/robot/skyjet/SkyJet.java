@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
-import org.zcode.generator.robot.jender.JenderUtilities;
+
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.ManyToOneMember;
@@ -1055,8 +1055,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwBackEndBean.close();
 			log.info("Begin RestControllers 2");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
-			JenderUtilities.getInstance().dates = null;
-			JenderUtilities.getInstance().datesId = null;
+			//JenderUtilities.getInstance().dates = null;
+			//JenderUtilities.getInstance().datesId = null;
 
 		} catch (Exception e) {
 			log.error(e.toString());

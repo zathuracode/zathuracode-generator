@@ -1,4 +1,4 @@
-package ${virginPackage}. ${modelName}.dto;
+package ${virginPackage}.dto;
 import java.util.Date;
 import java.io.Serializable;
 import java.sql.*;

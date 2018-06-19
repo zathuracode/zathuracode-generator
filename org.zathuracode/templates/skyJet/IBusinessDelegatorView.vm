@@ -1,4 +1,4 @@
-package ${virginPackage}.presentation.businessDelegate;
+package ${virginPackage}.view;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 
 #foreach($metaData  in $dataModel.theMetaData)
-    import ${packageOriginal}.control.${metaData.getRealClassName()}Logic;
-    import ${packageOriginal}.control.I${metaData.getRealClassName()}Logic;
-	import ${package}.dto.${metaData.getRealClassName()}DTO;
+    import ${virginPackage}.service.${metaData.getRealClassName()}Logic;
+    import ${virginPackage}.service.I${metaData.getRealClassName()}Logic;
+	import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
     import ${package}.${metaData.getRealClassName()};
     #if(${metaData.primaryKey.isPrimiaryKeyAComposeKey()})
         import ${package}.${metaData.primaryKey.getRealClassName()};

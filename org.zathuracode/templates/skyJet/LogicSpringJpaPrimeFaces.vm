@@ -1,5 +1,5 @@
-package  ${packageOriginal}.control;
-import ${package}.dto.${metaData.getRealClassName()}DTO;
+package  ${virginPackage}.service;
+import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import  ${virginPackage}.exceptions.*;
-import 	${virginPackage}.dataaccess.dao.*;
-import  ${virginPackage}.utilities.Utilities;
-import  ${virginPackage}.dto.mapper.I${metaData.getRealClassName()}Mapper;
+import  ${virginPackage}.exception.*;
+import 	${virginPackage}.repository.*;
+import  ${virginPackage}.utility.Utilities;
+import  ${virginPackage}.mapper.I${metaData.getRealClassName()}Mapper;
 import ${package}.*;
 
 import javax.validation.ConstraintViolation;
