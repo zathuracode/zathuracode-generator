@@ -12,21 +12,21 @@ import java.util.List;
  * @date Nov 01, 2013
  * 
  */
-public interface Dao<T, PK extends 	Serializable> {
-		void save(T newEntity) throws DaoException;
+public interface Repository<T, PK extends 	Serializable> {
+		void save(T newEntity) throws RepositoryException;
 
 	T findById(PK id);
 
-	void update(T entity) throws DaoException;
+	void update(T entity) throws RepositoryException;
 
-	void delete(T entity) throws DaoException;
+	void delete(T entity) throws RepositoryException;
 
-	void deleteById(PK id) throws DaoException;
+	void deleteById(PK id) throws RepositoryException;
 
 	void deleteByProperty(String tableName, String propertyName,
-			Object value) throws DaoException;
+			Object value) throws RepositoryException;
 
-	void deleteAll() throws DaoException ;
+	void deleteAll() throws RepositoryException ;
 
 	Long count();
 

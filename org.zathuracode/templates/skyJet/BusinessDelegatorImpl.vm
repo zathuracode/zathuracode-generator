@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 
 
 #foreach($metaData  in $dataModel.theMetaData)
-    import ${virginPackage}.service.I${metaData.getRealClassName()}Logic;
+    import ${virginPackage}.service.${metaData.getRealClassName()}Service;
 	import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
     import ${package}.${metaData.getRealClassName()};
     #if(${metaData.primaryKey.isPrimiaryKeyAComposeKey()})
@@ -64,32 +64,32 @@ import org.springframework.stereotype.Service;
 * 
 */
 @Scope("singleton")
-@Service("BusinessDelegatorView")
-public class BusinessDelegatorView implements IBusinessDelegatorView{
+@Component("businessDelegator")
+public class BusinessDelegatorImpl implements BusinessDelegator{
 
-private static final Logger log = LoggerFactory.getLogger(BusinessDelegatorView.class);
+private static final Logger log = LoggerFactory.getLogger(BusinessDelegatorImpl.class);
 
 #foreach($metaData  in $dataModel.theMetaData)
 	
 	@Autowired
-	private I${metaData.getRealClassName()}Logic ${metaData.getRealClassNameAsVariable()}Logic;
+	private ${metaData.getRealClassName()}Service ${metaData.getRealClassNameAsVariable()}Service;
 	
     public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() throws Exception{
-        return ${metaData.getRealClassNameAsVariable()}Logic.get${metaData.getRealClassName()}();
+        return ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}();
         }
         public void save${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception{
-        ${metaData.getRealClassNameAsVariable()}Logic.save${metaData.getRealClassName()}(entity);
+        ${metaData.getRealClassNameAsVariable()}Service.save${metaData.getRealClassName()}(entity);
         }
         public void delete${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception{
-        ${metaData.getRealClassNameAsVariable()}Logic.delete${metaData.getRealClassName()}(entity);		
+        ${metaData.getRealClassNameAsVariable()}Service.delete${metaData.getRealClassName()}(entity);		
         }
         public void update${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception{
-        ${metaData.getRealClassNameAsVariable()}Logic.update${metaData.getRealClassName()}(entity);
+        ${metaData.getRealClassNameAsVariable()}Service.update${metaData.getRealClassName()}(entity);
         }
         public ${metaData.getRealClassName()} get${metaData.getRealClassName()}(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception{
         ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = null;
         try {
-        ${metaData.getRealClassNameAsVariable()} =  ${metaData.getRealClassNameAsVariable()}Logic.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+        ${metaData.getRealClassNameAsVariable()} =  ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
         } catch (Exception e) {
         throw e;
         }
@@ -97,23 +97,23 @@ private static final Logger log = LoggerFactory.getLogger(BusinessDelegatorView.
         }
         public List<${metaData.getRealClassName()}> findByCriteriaIn${metaData.getRealClassName()}(Object[] variables,
         Object[] variablesBetween, Object[] variablesBetweenDates) throws Exception{
-        return ${metaData.getRealClassNameAsVariable()}Logic.findByCriteria(variables, variablesBetween, variablesBetweenDates);
+        return ${metaData.getRealClassNameAsVariable()}Service.findByCriteria(variables, variablesBetween, variablesBetweenDates);
         }
         public List<${metaData.getRealClassName()}> findPage${metaData.getRealClassName()}(String sortColumnName, boolean sortAscending,
         int startRow, int maxResults) throws Exception {
-        return  ${metaData.getRealClassNameAsVariable()}Logic.findPage${metaData.getRealClassName()}(sortColumnName, sortAscending,
+        return  ${metaData.getRealClassNameAsVariable()}Service.findPage${metaData.getRealClassName()}(sortColumnName, sortAscending,
         startRow, maxResults);
         }
         public Long findTotalNumber${metaData.getRealClassName()}() throws Exception {
-        return ${metaData.getRealClassNameAsVariable()}Logic.findTotalNumber${metaData.getRealClassName()}();
+        return ${metaData.getRealClassNameAsVariable()}Service.findTotalNumber${metaData.getRealClassName()}();
         }
 		
 		public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception{
-		return ${metaData.getRealClassNameAsVariable()}Logic.getData${metaData.getRealClassName()}();
+		return ${metaData.getRealClassNameAsVariable()}Service.getData${metaData.getRealClassName()}();
 		}
 		
 		public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}) throws Exception{
-		 ${metaData.getRealClassNameAsVariable()}Logic.validate${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+		 ${metaData.getRealClassNameAsVariable()}Service.validate${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
 		}
 		
 #end

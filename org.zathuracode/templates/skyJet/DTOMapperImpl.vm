@@ -23,18 +23,18 @@ import ${package}.*;
 */
 @Component
 @Scope("singleton")
-public class ${metaData.getRealClassName()}Mapper implements I${metaData.getRealClassName()}Mapper {
+public class ${metaData.getRealClassName()}MapperImpl implements ${metaData.getRealClassName()}Mapper {
 	
-	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}Mapper.class);
+	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}MapperImpl.class);
 
     #if(${metaData.isGetManyToOneProperties()})
 		#foreach($member  in ${metaData.getManyToOneProperties()})
             /**
-		 	* Logic injected by Spring that manages ${member.getRealClassName()} entities
+		 	* Service injected by Spring that manages ${member.getRealClassName()} entities
 		 	* 
 		 	*/
 			@Autowired
-			I${member.getRealClassName()}Logic logic${member.getRealClassName()}$velocityCount;
+			${member.getRealClassName()}Service service${member.getRealClassName()}$velocityCount;
 		#end
     #end
 	

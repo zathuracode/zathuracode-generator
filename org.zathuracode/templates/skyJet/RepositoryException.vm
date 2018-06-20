@@ -9,23 +9,23 @@ package ${virginPackage}.repository;
  * @date Nov 01, 2013
  *
  */
-public class DaoException extends Exception {
+public class RepositoryException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public DaoException() {
+    public RepositoryException() {
         super();
     }
 
-    public DaoException(String message, Throwable cause) {
+    public RepositoryException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public DaoException(String message) {
+    public RepositoryException(String message) {
         super(message);
     }
 
-    public DaoException(Throwable cause) {
+    public RepositoryException(Throwable cause) {
         super(cause);
     }
 }

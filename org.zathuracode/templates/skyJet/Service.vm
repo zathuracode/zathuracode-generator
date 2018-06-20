@@ -14,7 +14,7 @@ import $package.${metaData.getRealClassName()};
 * www.zathuracode.org
 * 
 */
-public interface I${metaData.getRealClassName()}Logic {
+public interface ${metaData.getRealClassName()}Service {
 public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() throws Exception;
 	
     

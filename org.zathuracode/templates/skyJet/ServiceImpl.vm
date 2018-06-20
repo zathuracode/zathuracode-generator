@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import  ${virginPackage}.exception.*;
 import 	${virginPackage}.repository.*;
 import  ${virginPackage}.utility.Utilities;
-import  ${virginPackage}.mapper.I${metaData.getRealClassName()}Mapper;
+import  ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
 import ${package}.*;
 
 import javax.validation.ConstraintViolation;
@@ -30,20 +30,20 @@ import javax.validation.Validator;
 */
 
 @Scope("singleton")
-@Service("${metaData.getRealClassName()}Logic")
-public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealClassName()}Logic{
+@Service
+public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.getRealClassName()}Service{
 
-	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}Logic.class);
+	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}ServiceImpl.class);
 
 	/**
-	 * DAO injected by Spring that manages ${metaData.getRealClassName()} entities
+	 * Repository injected by Spring that manages ${metaData.getRealClassName()} entities
 	 * 
 	 */
 	@Autowired
-	private I${metaData.getRealClassName()}DAO ${metaData.getRealClassNameAsVariable()}DAO;
+	private ${metaData.getRealClassName()}Repository ${metaData.getRealClassNameAsVariable()}Repository;
 	
 	@Autowired
-	private I${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
+	private ${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
 	
 	@Autowired
 	private Validator validator;
@@ -51,11 +51,11 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
     #if(${metaData.isGetOneToManyProperties()})
 		#foreach($member  in ${metaData.getOneToManyProperties()})
 			/**
-	 		 * DAO injected by Spring that manages ${member.getRealClassName()} entities
+	 		 * Repository injected by Spring that manages ${member.getRealClassName()} entities
 	 		 * 
 	 		 */
 			@Autowired
-			private I${member.getRealClassName()}DAO ${member.getRealClassVariableName()}DAO;
+			private ${member.getRealClassName()}Repository ${member.getRealClassVariableName()}Repository;
 			
 			
 		#end
@@ -64,11 +64,11 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
     #if(${metaData.isGetManyToOneProperties()})
 		#foreach($member  in ${metaData.getManyToOneProperties()})
             /**
-		 	* Logic injected by Spring that manages ${member.getRealClassName()} entities
+		 	* Service injected by Spring that manages ${member.getRealClassName()} entities
 		 	* 
 		 	*/
 			@Autowired
-			I${member.getRealClassName()}Logic logic${member.getRealClassName()}$velocityCount;
+			${member.getRealClassName()}Service service${member.getRealClassName()}$velocityCount;
 		#end
     #end
                 
@@ -98,7 +98,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
 
     List<${metaData.getRealClassName()}> list = new ArrayList<${metaData.getRealClassName()}>();
             try {
-            list = ${metaData.getRealClassNameAsVariable()}DAO.findAll();
+            list = ${metaData.getRealClassNameAsVariable()}Repository.findAll();
             } catch (Exception e) {
             log.error("finding all ${metaData.getRealClassName()} failed", e);
             throw new ZMessManager().new GettingException(ZMessManager.ALL+"${metaData.getRealClassName()}");
@@ -125,7 +125,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
             throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
             }
 
-            ${metaData.getRealClassNameAsVariable()}DAO.save(entity);
+            ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
             log.debug("save ${metaData.getRealClassName()} successful");
             } catch (Exception e) {
             	log.error("save ${metaData.getRealClassName()} failed", e);
@@ -163,19 +163,19 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
             #if(${metaData.isGetOneToManyProperties()})
                 #foreach($member  in ${metaData.getOneToManyProperties()})
                     #if(${metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()})
-                        ${member.name}= ${member.getRealClassVariableName()}DAO.findByProperty("${metaData.getRealClassNameAsVariable()}.${metaData.primaryKey.getShowName()}", entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
+                        ${member.name}= ${member.getRealClassVariableName()}Repository.findByProperty("${metaData.getRealClassNameAsVariable()}.${metaData.primaryKey.getShowName()}", entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
                         if(Utilities.validationsList(${member.name})==true){
                         throw new ZMessManager().new DeletingException("${member.name}");
                         }
                         #else
-                            ${member.name}= ${member.getRealClassVariableName()}DAO.findByProperty("${metaData.getRealClassNameAsVariable()}.${metaData.primaryKey.getShowName()}", entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
+                            ${member.name}= ${member.getRealClassVariableName()}Repository.findByProperty("${metaData.getRealClassNameAsVariable()}.${metaData.primaryKey.getShowName()}", entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
                             if(Utilities.validationsList(${member.name})==true){
                             throw new ZMessManager().new DeletingException("${member.name}");
                             }
                     #end
 				#end
 			#end
-            ${metaData.getRealClassNameAsVariable()}DAO.deleteById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
+            ${metaData.getRealClassNameAsVariable()}Repository.deleteById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
             log.debug("delete ${metaData.getRealClassName()} successful");
             
             } catch (Exception e) {
@@ -201,7 +201,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
 	    		
             validate${metaData.getRealClassName()}(entity);
 
-            ${metaData.getRealClassNameAsVariable()}DAO.update(entity);
+            ${metaData.getRealClassNameAsVariable()}Repository.update(entity);
             
             log.debug("update ${metaData.getRealClassName()} successful");
             
@@ -217,7 +217,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
 			public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception{
 				try{
 				List<${metaData.getRealClassName()}> ${metaData.getRealClassNameAsVariable()} = 
-				${metaData.getRealClassNameAsVariable()}DAO.findAll();
+				${metaData.getRealClassNameAsVariable()}Repository.findAll();
 					
 					List<${metaData.getRealClassName()}DTO > ${metaData.getRealClassNameAsVariable()}DTO = new ArrayList<${metaData.getRealClassName()}DTO>();
 						for (${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}Tmp : ${metaData.getRealClassNameAsVariable()}) {
@@ -243,7 +243,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
             
             ${metaData.getRealClassName()} entity = null;
             try {
-            entity = ${metaData.getRealClassNameAsVariable()}DAO.findById(${metaData.primaryKey.getShowName()});
+            entity = ${metaData.getRealClassNameAsVariable()}Repository.findById(${metaData.primaryKey.getShowName()});
             } catch (Exception e) {
             	log.error("get ${metaData.getRealClassName()} failed", e);
              throw new ZMessManager().new FindingException("${metaData.getRealClassName()}");
@@ -258,7 +258,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
                 int startRow, int maxResults) throws Exception {
                 List<${metaData.getRealClassName()}> entity = null;
                     try {
-                    entity = ${metaData.getRealClassNameAsVariable()}DAO
+                    entity = ${metaData.getRealClassNameAsVariable()}Repository
                     .findPage(sortColumnName, sortAscending, startRow,
                     maxResults);
                     } catch (Exception e) {
@@ -274,7 +274,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
                     public Long findTotalNumber${metaData.getRealClassName()}() throws Exception {
                     Long entity = null;
                     try {
-                    entity = ${metaData.getRealClassNameAsVariable()}DAO.count();
+                    entity = ${metaData.getRealClassNameAsVariable()}Repository.count();
                     } catch (Exception e) {
                      throw new ZMessManager().new FindingException("${metaData.getRealClassName()} Count");
                     } finally {
@@ -431,7 +431,7 @@ public class ${metaData.getRealClassName()}Logic implements I${metaData.getRealC
                                                                     where = "(" + tempWhere + ")";
                                                                     }
                                                                     try {
-                                                                    list = ${metaData.getRealClassNameAsVariable()}DAO
+                                                                    list = ${metaData.getRealClassNameAsVariable()}Repository
                                                                     .findByCriteria(where);
                                                                     } catch (Exception e) {
                                                                     throw new Exception(e.getMessage());

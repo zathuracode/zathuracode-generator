@@ -391,12 +391,12 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				velocityContext.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
 
 				doEntityGenerator(metaData, velocityContext, hdLocation, metaDataModel);
-				doDaoSpringXMLHibernate(metaData, velocityContext, hdLocation);
+				doRepository(metaData, velocityContext, hdLocation);
 				if (EclipseGeneratorUtil.isFrontend) {
 					doBackingBeans(metaData, velocityContext, hdLocation, metaDataModel);
 					doJsp(metaData, velocityContext, hdLocation, metaDataModel);
 				}
-				doLogicSpringXMLHibernate(metaData, velocityContext, hdLocation, metaDataModel, modelName);
+				doService(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
 				doRestControllers(metaData, velocityContext, hdLocation, metaDataModel);
@@ -407,7 +407,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				GeneratorUtil.doPomXml(velocityContext, ve);
 			}
 
-			doApiSpringHibernate(velocityContext, hdLocation);
+			doRepositoryAPI(velocityContext, hdLocation);
 			doExceptions(velocityContext, hdLocation);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			if (EclipseGeneratorUtil.isFrontend) {
@@ -437,34 +437,34 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doDaoSpringXMLHibernate(MetaData metaData,
+	public void doRepository(MetaData metaData,
 			VelocityContext context, String hdLocation)throws Exception {
 		try {
 
 			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "repository" + GeneratorUtil.slash ;
-			log.info("Begin IDao");
-			Template templateIDao = ve.getTemplate("IDAOSpringJpaPrime.vm");
+			log.info("Begin Interface Repository");
+			Template templateIDao = ve.getTemplate("Repository.vm");
 			StringWriter swIdao = new StringWriter();
 			templateIDao.merge(context, swIdao);
-			FileWriter fwIdao = new FileWriter(path+ "I" +metaData.getRealClassName()+"DAO.java");
+			FileWriter fwIdao = new FileWriter(path +metaData.getRealClassName()+"Repository.java");
 			BufferedWriter bwIdao = new BufferedWriter(fwIdao);
 			bwIdao.write(swIdao.toString());
 			bwIdao.close();
 			fwIdao.close();
-			log.info("End IDao");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "DAO.java");
+			log.info("End Interface Repository");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Repository.java");
 
-			log.info("Begin Dao");
-			Template templateDao = ve.getTemplate("DAOSpringJpaPrime.vm");
+			log.info("Begin Class RepositoryImpl");
+			Template templateDao = ve.getTemplate("RepositoryImpl.vm");
 			StringWriter swDao = new StringWriter();
 			templateDao.merge(context, swDao);
-			FileWriter fwDao = new FileWriter(path+ metaData.getRealClassName()+"DAO.java");
+			FileWriter fwDao = new FileWriter(path+ metaData.getRealClassName()+"RepositoryImpl.java");
 			BufferedWriter bwDao = new BufferedWriter(fwDao);
 			bwDao.write(swDao.toString());
 			bwDao.close();
 			fwDao.close();
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "DAO.java");
-			log.info("End Dao");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RepositoryImpl.java");
+			log.info("End Class RepositoryImpl");
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -474,36 +474,36 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doApiSpringHibernate(VelocityContext context, String hdLocation) throws Exception{
+	public void doRepositoryAPI(VelocityContext context, String hdLocation) throws Exception{
 
 		try {
 
 			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash + "repository"+ GeneratorUtil.slash;
 
-			log.info("Begin api Spring+PrimeFaces+Hibernate");
+			log.info("Begin RepositoryAPI");
 
-			Template apiSpringPrimeHibernateTemplate = ve.getTemplate("Dao.vm");
+			Template apiSpringPrimeHibernateTemplate = ve.getTemplate("RepositoryAPI.vm");
 			StringWriter stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			FileWriter fileWriter = new FileWriter(path+"Dao.java");
+			FileWriter fileWriter = new FileWriter(path+"Repository.java");
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
 
-			apiSpringPrimeHibernateTemplate = ve.getTemplate("DaoException.vm");
+			apiSpringPrimeHibernateTemplate = ve.getTemplate("RepositoryException.vm");
 			stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			fileWriter = new FileWriter(path+"DaoException.java");
+			fileWriter = new FileWriter(path+"RepositoryException.java");
 			bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
 
-			apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaDaoImpl.vm");
+			apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaRepositoryImpl.vm");
 			stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			fileWriter = new FileWriter(path+"JpaDaoImpl.java");
+			fileWriter = new FileWriter(path+"JpaRepositoryImpl.java");
 			bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
@@ -518,11 +518,11 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bufferedWriter.close();
 			fileWriter.close();
 
-			log.info("End api Spring+PrimeFaces+Hibernate");
+			log.info("End RepositoryAPI");
 
-			JalopyCodeFormatter.formatJavaCodeFile(path + "Dao.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "DaoException.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaDaoImpl.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "Repository.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "RepositoryException.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaRepositoryImpl.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + "Paginator.java");
 
 		} catch (Exception e) {
@@ -533,37 +533,37 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doLogicSpringXMLHibernate(MetaData metaData,
+	public void doService(MetaData metaData,
 			VelocityContext context, String hdLocation,
 			MetaDataModel dataModel, String modelName)throws Exception {
 		try {
 			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
 
-			log.info("Begin ILogic");
-			Template templateIlogic = ve.getTemplate("ILogicSpringJpaPrimeFaces.vm");
+			log.info("Begin Interface Service");
+			Template templateIlogic = ve.getTemplate("Service.vm");
 			StringWriter swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
-			FileWriter fwIlogic = new FileWriter(path+"I"+ metaData.getRealClassName()+"Logic.java");
+			FileWriter fwIlogic = new FileWriter(path+ metaData.getRealClassName()+"Service.java");
 			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
 			bwIlogic.write(swIlogic.toString());
 			bwIlogic.close();
 			fwIlogic.close();
-			log.info("End ILogic");
+			log.info("End Interface Service");
 
-			log.info("Begin Logic");
-			Template templateLogic = ve.getTemplate("LogicSpringJpaPrimeFaces.vm");
+			log.info("Begin Class ServiceImpl");
+			Template templateLogic = ve.getTemplate("ServiceImpl.vm");
 			StringWriter swLogic= new StringWriter();
 			templateLogic.merge(context, swLogic);
-			FileWriter fwLogic = new FileWriter(path+ metaData.getRealClassName() + "Logic.java");
+			FileWriter fwLogic = new FileWriter(path+ metaData.getRealClassName() + "ServiceImpl.java");
 			BufferedWriter bwLogic = new BufferedWriter(fwLogic);
 			bwLogic.write(swLogic.toString());
 			bwLogic.close();
 			fwLogic.close();
-			log.info("End Logic");
+			log.info("End Class ServiceImpl");
 
-			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Logic.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Logic.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path+ metaData.getRealClassName() + "Service.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "ServiceImpl.java");
 
 
 
@@ -583,10 +583,10 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "view"+ GeneratorUtil.slash;
 			log.info("Begin IBusinessDelegate");
-			Template templateIbusinessDelegate= ve.getTemplate("IBusinessDelegatorView.vm");
+			Template templateIbusinessDelegate= ve.getTemplate("BusinessDelegator.vm");
 			StringWriter swIbusinessDelegate = new StringWriter();
 			templateIbusinessDelegate.merge(context, swIbusinessDelegate);
-			FileWriter fwIbusinessDelegate = new FileWriter(path+"IBusinessDelegatorView.java");
+			FileWriter fwIbusinessDelegate = new FileWriter(path+"BusinessDelegator.java");
 			BufferedWriter bwIbusinessDelegate = new BufferedWriter(fwIbusinessDelegate);
 			bwIbusinessDelegate.write(swIbusinessDelegate.toString());
 			bwIbusinessDelegate.close();
@@ -594,18 +594,18 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			log.info("End IBusinessDelegate");
 
 			log.info("Begin BusinessDelegate");
-			Template templateBusinessDelegate = ve.getTemplate("BusinessDelegatorView.vm");
+			Template templateBusinessDelegate = ve.getTemplate("BusinessDelegatorImpl.vm");
 			StringWriter swBusinessDelegate = new StringWriter();
 			templateBusinessDelegate.merge(context, swBusinessDelegate);
-			FileWriter fwBusinessDelegate = new FileWriter(path+"BusinessDelegatorView.java");
+			FileWriter fwBusinessDelegate = new FileWriter(path+"BusinessDelegatorImpl.java");
 			BufferedWriter bwBusinessDelegate = new BufferedWriter(fwBusinessDelegate);
 			bwBusinessDelegate.write(swBusinessDelegate.toString());
 			bwBusinessDelegate.close();
 			fwBusinessDelegate.close();
 			log.info("End BusinessDelegate");
 
-			JalopyCodeFormatter.formatJavaCodeFile(path + "IBusinessDelegatorView.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "BusinessDelegatorView.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "BusinessDelegator.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "BusinessDelegatorImpl.java");
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -721,7 +721,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
 		try {
 
-			Template dtoTemplate = ve.getTemplate("DtoPrimeSpringJpa.vm");
+			Template dtoTemplate = ve.getTemplate("Dto.vm");
 			StringWriter swDto = new StringWriter();
 			dtoTemplate.merge(context, swDto);
 
@@ -931,7 +931,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		try {
 			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "view" + GeneratorUtil.slash;
 			log.info("Begin BackEndBean ");
-			Template templateBackEndBean= ve.getTemplate("BackingBeansSpringJpaPrime.vm");
+			Template templateBackEndBean= ve.getTemplate("BackingBean.vm");
 			StringWriter swBackEndBean = new StringWriter();
 			templateBackEndBean.merge(context, swBackEndBean);
 			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "View.java");
@@ -1004,31 +1004,31 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash +"mapper" + GeneratorUtil.slash;
 
-			log.info("Begin I DTO Mapper");
-			Template templateIMapperDTO = ve.getTemplate("IMapperDTOHbm.vm");
+			log.info("Begin Interface DTO Mapper");
+			Template templateIMapperDTO = ve.getTemplate("DTOMapper.vm");
 			StringWriter swIMapperDTO = new StringWriter();
 			templateIMapperDTO.merge(context, swIMapperDTO);
 
-			FileWriter fwIMapperDTO = new FileWriter(path + "I" + metaData.getRealClassName() + "Mapper.java");
+			FileWriter fwIMapperDTO = new FileWriter(path + metaData.getRealClassName() + "Mapper.java");
 			BufferedWriter bwIMapperDTO = new BufferedWriter(fwIMapperDTO);
 			bwIMapperDTO.write(swIMapperDTO.toString());
 			bwIMapperDTO.close();
 			fwIMapperDTO.close();
 
-			log.info("Begin DTO Mapper");
+			log.info("Begin Interface DTO Mapper");
 
-			Template templateMapperDTO = ve.getTemplate("MapperDTOHbm.vm");
+			Template templateMapperDTO = ve.getTemplate("DTOMapperImpl.vm");
 			StringWriter swMapperDTO = new StringWriter();
 			templateMapperDTO.merge(context, swMapperDTO);
 
-			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "Mapper.java");
+			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "MapperImpl.java");
 			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
 			bwMapperDTO.write(swMapperDTO.toString());
 			bwMapperDTO.close();
 			fwMapperDTO.close();
 
-			JalopyCodeFormatter.formatJavaCodeFile(path + "I" + metaData.getRealClassName() + "Mapper.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "MapperImpl.java");
 
 		} catch (Exception e) {
 			log.error(e.toString());

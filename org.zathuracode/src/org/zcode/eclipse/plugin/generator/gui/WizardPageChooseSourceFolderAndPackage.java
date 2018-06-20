@@ -249,6 +249,12 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		btnNewPackage.setBounds(393, 90, 87, 27);
 		btnNewPackage.setText(Messages.WizardPageChooseSourceFolderAndPackage_21);
 		
+		//Carga los Generadores de JPA
+		setDescription(Messages.WizardPageChooseSourceFolderAndPackage_22);
+		EclipseGeneratorUtil.makeItXml=false;
+		loadListGeneratorsNextWizard();
+		
+		/*
 		Button bRadioJPAReverseEngineering = new Button(container, SWT.RADIO);
 		bRadioJPAReverseEngineering.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -258,8 +264,10 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 				loadListGeneratorsNextWizard();
 			}
 		});
+		bRadioJPAReverseEngineering.setSelection(true);
 		bRadioJPAReverseEngineering.setBounds(10, 246, 189, 22);
 		bRadioJPAReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_23);
+		
 		
 		Button bRadioHibernateReverseEngineering = new Button(container, SWT.RADIO);
 		bRadioHibernateReverseEngineering.setSelection(true);
@@ -273,7 +281,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		});
 		bRadioHibernateReverseEngineering.setBounds(10, 218, 232, 22);
 		bRadioHibernateReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_25);
-		
+		*/
 		Label label = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setText(Messages.WizardPageChooseSourceFolderAndPackage_label_text);
 		label.setBounds(10, 282, 552, 2);

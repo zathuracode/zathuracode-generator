@@ -1,7 +1,7 @@
 package ${virginPackage}.controller;
 
-import ${virginPackage}.mapper.I${metaData.getRealClassName()}Mapper;
-import ${virginPackage}.view.IBusinessDelegatorView;
+import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
+import ${virginPackage}.service.${metaData.getRealClassName()}Service;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,17 +27,17 @@ public class ${metaData.getRealClassName()}RestController {
 	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}RestController.class);
 
 	@Autowired
-    private IBusinessDelegatorView businessDelegatorView;
+    private ${metaData.getRealClassName()}Service ${metaData.getRealClassNameAsVariable()}Service;
   
   	@Autowired
-	private I${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
+	private ${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
      
     @PostMapping(value = "/save${metaData.getRealClassName()}")
     public void save${metaData.getRealClassName()}(@RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO) throws Exception {
     	try {
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
     		
-    		businessDelegatorView.save${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+    		${metaData.getRealClassNameAsVariable()}Service.save${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     		throw e;
@@ -60,13 +60,13 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
 				
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = businessDelegatorView.get${metaData.getRealClassName()}(${primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${primaryKey.getShowName()});
 			#end
     	
-    		businessDelegatorView.delete${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+    		${metaData.getRealClassNameAsVariable()}Service.delete${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     		throw e;
@@ -78,7 +78,7 @@ public class ${metaData.getRealClassName()}RestController {
     	try {
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
     		
-    		businessDelegatorView.update${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+    		${metaData.getRealClassNameAsVariable()}Service.update${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     		throw e;
@@ -88,7 +88,7 @@ public class ${metaData.getRealClassName()}RestController {
     @GetMapping(value = "/getData${metaData.getRealClassName()}")
     public List<${metaData.getRealClassName()}DTO> getData${metaData.getRealClassName()}() throws Exception {
 		try {
-			return businessDelegatorView.getData${metaData.getRealClassName()}();
+			return ${metaData.getRealClassNameAsVariable()}Service.getData${metaData.getRealClassName()}();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw e;
@@ -110,10 +110,10 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = businessDelegatorView.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
 				
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = businessDelegatorView.get${metaData.getRealClassName()}(${primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${primaryKey.getShowName()});
 			#end
     					
 			return ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()});

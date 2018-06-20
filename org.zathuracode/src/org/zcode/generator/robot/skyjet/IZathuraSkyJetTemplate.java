@@ -28,7 +28,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param context the context
 	 * @param hdLocation the hd location
 	 */
-	public void doDaoSpringXMLHibernate(MetaData metaData, VelocityContext context, String hdLocation)throws Exception;
+	public void doRepository(MetaData metaData, VelocityContext context, String hdLocation)throws Exception;
 
 	/**
 	 * Do dao spring xml hibernate.
@@ -37,7 +37,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param context the context
 	 * @param hdLocation the hd location
 	 */
-	public void doApiSpringHibernate(VelocityContext context, String hdLocation)throws Exception;
+	public void doRepositoryAPI(VelocityContext context, String hdLocation)throws Exception;
 
 	/**
 	 * Do logic spring xml hibernate.
@@ -48,7 +48,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param dataModel the data model
 	 * @param modelName the model name
 	 */
-	public void doLogicSpringXMLHibernate(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
+	public void doService(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
 	/**
 	 * Do business delegator.

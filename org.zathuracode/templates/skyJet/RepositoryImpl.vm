@@ -15,7 +15,7 @@ import $package.${metaData.getRealClassName()};
 #end
 
 /**
- * A data access object (DAO) providing persistence and search support for
+ * A Repository providing persistence and search support for
  * ${metaData.getRealClassName()} entities. Transaction control of the save(), update() and
  * delete() operations can directly support Spring container-managed
  * transactions or they can be augmented to handle user-managed Spring
@@ -25,15 +25,16 @@ import $package.${metaData.getRealClassName()};
  * @see lidis.${metaData.getRealClassName()}
  */
 @Scope("singleton")
-@Repository("${metaData.getRealClassName()}DAO")
-public class ${metaData.getRealClassName()}DAO extends JpaDaoImpl<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> implements I${metaData.getRealClassName()}DAO {
+@Repository()
+public class ${metaData.getRealClassName()}RepositoryImpl extends JpaRepositoryImpl<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> implements ${metaData.getRealClassName()}Repository {
 
-	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}DAO.class);
+	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}RepositoryImpl.class);
 	
 	@PersistenceContext
     private EntityManager entityManager;
     
-	public static I${metaData.getRealClassName()}DAO getFromApplicationContext(ApplicationContext ctx) {
-        return (I${metaData.getRealClassName()}DAO) ctx.getBean("${metaData.getRealClassName()}DAO");
+	public static ${metaData.getRealClassName()}Repository getFromApplicationContext(ApplicationContext ctx) {
+		log.info("getFromApplicationContext");
+        return (${metaData.getRealClassName()}Repository) ctx.getBean("${metaData.getRealClassName()}Repository");
     }  
  }

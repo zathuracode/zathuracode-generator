@@ -14,14 +14,13 @@ import javax.persistence.criteria.Root;
 
 /**
  * 
- * @author <a href="mailto:dgomez@vortexbird.com">Diego A Gomez</a>
  * @project zathuracode
  * @class JpaDaoImpl
- * @date Nov 01, 2013
+ * @date Junio 01, 2018
  * 
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class JpaDaoImpl<T, PK extends Serializable> implements Dao<T, PK> {
+public class JpaRepositoryImpl<T, PK extends Serializable> implements Repository<T, PK> {
 	
 	private Class<T> entityClass;
 	private Logger log = null;
@@ -31,14 +30,14 @@ public class JpaDaoImpl<T, PK extends Serializable> implements Dao<T, PK> {
 	
 	private int maxResults = 0;
 
-	public JpaDaoImpl() {
+	public JpaRepositoryImpl() {
 		super();
 		this.entityClass = (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 		log = LoggerFactory.getLogger(entityClass);
 	}
 
-	public void save(T newEntity) throws DaoException {
+	public void save(T newEntity) throws RepositoryException {
 		entityManager.persist(newEntity);
 	}
 
@@ -46,21 +45,21 @@ public class JpaDaoImpl<T, PK extends Serializable> implements Dao<T, PK> {
 		return (T) entityManager.find(entityClass, id);
 	}
 
-	public void update(T entity) throws DaoException {
+	public void update(T entity) throws RepositoryException {
 		entityManager.merge(entity);
 	}
 
-	public void delete(T entity) throws DaoException {
+	public void delete(T entity) throws RepositoryException {
 		entityManager.remove(entity);
 	}
 
-	public void deleteById(PK id) throws DaoException {
+	public void deleteById(PK id) throws RepositoryException {
 		T toRemove = findById(id);
 		entityManager.remove(toRemove);
 	}
 
 	public void deleteByProperty(String tableName, String propertyName,
-			Object value) throws DaoException {
+			Object value) throws RepositoryException {
 		String queryString = "delete from " + tableName
 				+ " as model where model." + propertyName + "= ?0";
 		Query queryObject = entityManager.createQuery(queryString);
@@ -68,7 +67,7 @@ public class JpaDaoImpl<T, PK extends Serializable> implements Dao<T, PK> {
 		queryObject.executeUpdate();
 	}
 
-	public void deleteAll() throws DaoException {
+	public void deleteAll() throws RepositoryException {
 		String queryString = "delete from " + entityClass.getName();
 		Query queryObject = entityManager.createQuery(queryString);
 		queryObject.executeUpdate();

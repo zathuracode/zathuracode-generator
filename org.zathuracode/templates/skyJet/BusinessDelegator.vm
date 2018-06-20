@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 #foreach($metaData  in $dataModel.theMetaData)
-    import ${virginPackage}.service.${metaData.getRealClassName()}Logic;
-    import ${virginPackage}.service.I${metaData.getRealClassName()}Logic;
+    import ${virginPackage}.service.${metaData.getRealClassName()}Service;
 	import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
     import ${package}.${metaData.getRealClassName()};
     #if(${metaData.primaryKey.isPrimiaryKeyAComposeKey()})
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Service;
 * www.zathuracode.org
 * 
 */
-public interface IBusinessDelegatorView {
+public interface BusinessDelegator {
 #foreach($metaData  in $dataModel.theMetaData)
     public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() throws Exception;
     public void save${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception;

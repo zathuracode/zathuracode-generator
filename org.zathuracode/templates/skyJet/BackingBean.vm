@@ -69,8 +69,8 @@ private ${metaData.getRealClassName()}DTO selected${metaData.getRealClassName()}
 private ${metaData.getRealClassName()} entity;
 private boolean showDialog;
     
-@ManagedProperty(value="#{BusinessDelegatorView}")
-private IBusinessDelegatorView businessDelegatorView;
+@ManagedProperty(value="#{businessDelegator}")
+private BusinessDelegator businessDelegatorView;
 
 
 		
@@ -454,11 +454,11 @@ private IBusinessDelegatorView businessDelegatorView;
                                              return java.util.TimeZone.getDefault();
                                              }
 																							
-											 public IBusinessDelegatorView getBusinessDelegatorView() {
+											 public BusinessDelegator getBusinessDelegatorView() {
 											 return businessDelegatorView;
 											 }
 
-											public void setBusinessDelegatorView(IBusinessDelegatorView businessDelegatorView) {
+											public void setBusinessDelegatorView(BusinessDelegator businessDelegatorView) {
 											this.businessDelegatorView = businessDelegatorView;
 											}
 											

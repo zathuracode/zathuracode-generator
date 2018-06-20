@@ -1564,6 +1564,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		// Collections.sort(finalParam);
 
+		//TODO revisar Sservice
 		int cont = 1;
 		for (MetaData metaData1 : theMetaData) {
 			for (Member member : manyToOne) {
@@ -2568,7 +2569,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (hashMapProve == null) {
 
-											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".get"
 													+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
 													+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
 													+ "()); \n\n" + "if (" + member.getRealClassVariableName() + "!= null) { \n"
@@ -2582,7 +2583,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
 													+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam2.substring(0, 1).toUpperCase()
 													+ tmpFinalParam2.substring(1) + "() != null) {" 
-													+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+													+ member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".get"
 													+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
 													+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
 													+ "()); \n } \n\n"
@@ -2650,7 +2651,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 										String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
 												+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
 												+ tmpFinalParam1.substring(1) + "() != null) {" 
-												+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+												+ member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".get"
 												+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
 												+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
 												+ "()); \n } \n\n"
@@ -2665,7 +2666,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 										String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
 												+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
 												+ tmpFinalParam1.substring(1) + "() != null) {" 
-												+ member.getRealClassVariableName() + " = logic" + member.getRealClassName() + logicAux + ".get"
+												+ member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".get"
 												+ member.getRealClassName() + "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
 												+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
 												+ "()); \n } \n\n"
