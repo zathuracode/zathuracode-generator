@@ -1,3 +1,18 @@
+/*
+ * Copyright 2002-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.zcode.eclipse.plugin.generator.utilities;
 
 import java.io.File;
@@ -26,8 +41,6 @@ import org.zcode.reverse.engine.IZathuraReverseEngineering;
 import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *
@@ -196,6 +209,9 @@ public class EclipseGeneratorUtil {
 	public static void generate() throws MetaDataReaderNotFoundException, GeneratorNotFoundException,Exception {
 
 		EclipseGeneratorUtil.metaDataReader = MetaDataReaderFactory.JPAEntityLoaderEngine;
+		
+		GeneratorUtil.generateMavenDirectoryStructure(fullPathProject);
+		
 		String jpaPath = EclipseGeneratorUtil.javaClassFolderPath;
 		String jpaPckgName = EclipseGeneratorUtil.javaEntityPackage;
 		String projectName = EclipseGeneratorUtil.projectName;
@@ -203,6 +219,10 @@ public class EclipseGeneratorUtil {
 		String webRootFolderPath = EclipseGeneratorUtil.webRootFolderPath;
 		String libFolderPath = EclipseGeneratorUtil.libFolderPath;
 		File pomFile = EclipseGeneratorUtil.pomXmlFile;
+		
+		String MAIN_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
+		String TEST_JAVA=		GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"java"+GeneratorUtil.slash;
+		String TEST_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
 
 		// Para que no corte los nombres de los paquetes
 		int specificityLevel = 1;
@@ -224,6 +244,10 @@ public class EclipseGeneratorUtil {
 		properties.put("isMavenProject", isMavenProject);
 		properties.put("pomFile", pomFile);
 		
+		properties.put("mainResoruces", fullPathProject+MAIN_RESOURCES);
+		properties.put("testJava", 		fullPathProject+TEST_JAVA);
+		properties.put("testResoruces", fullPathProject+TEST_RESOURCES);
+		
 		IZathuraGenerator zathuraGenerator = ZathuraGeneratorFactory.createZathuraGenerator(EclipseGeneratorUtil.zathuraGeneratorName);
 		zathuraGenerator.toGenerate(metaDataModel, projectName, folderProjectPath, properties);
 	}
@@ -239,6 +263,8 @@ public class EclipseGeneratorUtil {
 			throw new Exception("A package name cannot start or end with a dot");
 		}
 	}
+	
+	
 
 	/**
 	 * Generate jpa reverse engineering.
@@ -267,7 +293,7 @@ public class EclipseGeneratorUtil {
 		connectionProperties.put("catalog", catalog == null ? "" : catalog);
 
 		log.info("Delete folder in "+destinationDirectory);
-		// Borrar carpeta de temporales
+		// Borrar carpeta de temporales src/
 		GeneratorUtil.deleteFiles(destinationDirectory);
 		log.info("Create folder in "+destinationDirectory);
 		// Crea carpeta de temporales

@@ -32,7 +32,6 @@ public class GeneratorUtil {
 	
 	
 	private final static String generatorTemplatesPath="templates";
-	private final static String generatorLibrariesPath="libraries";
 	private final static String generatorExtPath="ext";
 
 	/** The log. */
@@ -67,15 +66,13 @@ public class GeneratorUtil {
 
 	// JavaEE-HibernateCore-Spring-WebCentric
 	/** The spring centric templates. */
-	private static String springCentricTemplates = "generatorTemplates" + GeneratorUtil.slash + "zathura-JavaEE-hibernateCore-Spring-Centric"
-	+ GeneratorUtil.slash;
+	private static String springCentricTemplates = "generatorTemplates" + GeneratorUtil.slash + "zathura-JavaEE-hibernateCore-Spring-Centric" + GeneratorUtil.slash;
 
 	/** The generator libraries zathura java ee spring web centric. */
 	private static String generatorLibrariesZathuraJavaEESpringWebCentric = "generatorLibraries" + GeneratorUtil.slash;
 
 	/** The generator ext zathura java ee spring web centric. */
-	private static String generatorExtZathuraJavaEESpringWebCentric = "generatorExt" + GeneratorUtil.slash + "zathura-JavaEE-hibernateCore-Spring-Centric"
-	+ GeneratorUtil.slash;
+	private static String generatorExtZathuraJavaEESpringWebCentric = "generatorExt" + GeneratorUtil.slash + "zathura-JavaEE-hibernateCore-Spring-Centric"+ GeneratorUtil.slash;
 
 	// JavaEE-HibernateCore-WebCentric
 	/** The templates zathura java ee hibernate core web centric. */
@@ -89,21 +86,7 @@ public class GeneratorUtil {
 	private static String generatorExtZathuraJavaEEHibernateCoreWebCentric = "generatorExt" + GeneratorUtil.slash + "zathura-JavaEE-hibernateCore-Web-Centric"
 	+ GeneratorUtil.slash;
 
-	// JavaEEGwtCentric
-	/** The gwt centric templates. */
-	private static String gwtCentricTemplates = "generatorTemplates" + GeneratorUtil.slash + "zathura-JavaEE-GWT-Centric" + GeneratorUtil.slash;
 
-	/** The generator libraries zathura java ee gwt centric. */
-	private static String generatorLibrariesZathuraJavaEEGwtCentric = "generatorLibraries";
-
-	/** The generator ext zathura java ee gwt centric. */
-	private static String generatorExtZathuraJavaEEGwtCentric = "generatorExt" + GeneratorUtil.slash + "zathura-JavaEE-GWT-Centric" + GeneratorUtil.slash;
-
-	// SP Store Procedure
-	/** The store procedure templates. */
-	private static String storeProcedureTemplates = "generatorTemplates" + GeneratorUtil.slash + "amazilia-storeProcedure" + GeneratorUtil.slash;
-
-	
 	
 	// Java JEE jpa+ prime
 	private static String  primeCentricTemplates= "generatorTemplates"+ GeneratorUtil.slash + "zathura-JavaEE-Prime-Web-Centric" +GeneratorUtil.slash;
@@ -126,6 +109,25 @@ public class GeneratorUtil {
 	private static String generatorExtZathuraJavaEEPrimeSpringJpaCentric= "generatorExt" +GeneratorUtil.slash+"zathura-JavaEE-jpaCore-Prime-Spring-Centric"+GeneratorUtil.slash;
 	private static String generatorLibrariesZathuraJavaEEPrimeSpringJpa="generatorLibraries"+ GeneratorUtil.slash;
 	
+	
+	/**
+	 * Crea la estructura de caroetas del proyecto maven si no existe
+	 */
+	public static void generateMavenDirectoryStructure(String projectPath) {
+		String MAIN_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
+		String TEST_JAVA=		GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"java"+GeneratorUtil.slash;
+		String TEST_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
+		
+		String MAIN_META_INF=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash+"META-INF"+GeneratorUtil.slash;
+		log.info("Begin Validate Maven Directory Structure");
+			projectPath=projectPath+GeneratorUtil.slash;
+			createFolder(projectPath+MAIN_RESOURCES);
+			createFolder(projectPath+TEST_JAVA);
+			createFolder(projectPath+TEST_RESOURCES);
+			createFolder(projectPath+MAIN_META_INF);
+		log.info("End Validate Maven Directory Structure");
+	}
+	
 	/**
 	 * Retorna el path de los templates de velocity
 	 * @return
@@ -135,17 +137,6 @@ public class GeneratorUtil {
 			return fullPath +generatorTemplatesPath;
 		}
 		return generatorTemplatesPath;
-	}
-
-	/**
-	 * retorna el path de las librerias
-	 * @return
-	 */
-	public static String getGeneratorLibrariesPath() {
-		if(fullPath!=null && fullPath.equals("")!= true){
-			return fullPath +generatorLibrariesPath;
-		}
-		return generatorLibrariesPath;
 	}
 
 	/**
@@ -478,54 +469,7 @@ public class GeneratorUtil {
 		return generatorExtZathuraJavaEEHibernateCoreWebCentric;
 	}
 
-	// JavaEEGwtCentric
-	/**
-	 * Gets the generator libraries zathura java ee gwt centric.
-	 *
-	 * @return the generator libraries zathura java ee gwt centric
-	 */
-	public static String getGeneratorLibrariesZathuraJavaEEGwtCentric() {
-		if (fullPath != null && fullPath.equals("") != true) {
-			return fullPath + generatorLibrariesZathuraJavaEEGwtCentric;
-		}
-		return generatorLibrariesZathuraJavaEEGwtCentric;
-	}
-
-	/**
-	 * Gets the generator ext zathura java ee gwt centric.
-	 *
-	 * @return the generator ext zathura java ee gwt centric
-	 */
-	public static String getGeneratorExtZathuraJavaEEGwtCentric() {
-		if (fullPath != null && fullPath.equals("") != true) {
-			return fullPath + generatorExtZathuraJavaEEGwtCentric;
-		}
-		return generatorExtZathuraJavaEEGwtCentric;
-	}
-
-	/**
-	 * Gets the gwt centric templates.
-	 *
-	 * @return the gwt centric templates
-	 */
-	public static String getGwtCentricTemplates() {
-		if (fullPath != null && fullPath.equals("") != true) {
-			return fullPath + gwtCentricTemplates;
-		}
-		return gwtCentricTemplates;
-	}
-
-	/**
-	 * Getstore procedure templates.
-	 *
-	 * @return the store procedure templates
-	 */
-	public static String getstoreProcedureTemplates() {
-		if (fullPath != null && fullPath.equals("") != true) {
-			return fullPath + storeProcedureTemplates;
-		}
-		return storeProcedureTemplates;
-	}
+	
 
 	/**
 	 * Creates the folder.
@@ -772,46 +716,20 @@ public class GeneratorUtil {
 
 			
 			String pomLocation = EclipseGeneratorUtil.fullPathProject + GeneratorUtil.slash + GeneratorUtil.pomFile;
-			/*
-			XMLInputFactory factory = XMLInputFactory.newInstance();
-			XMLEventReader r = factory.createXMLEventReader(new FileInputStream(pomLocation));
-			*/
 			
-
-			/*
-			String modelVersion = "";			
-			String version = "";	
-			String packaging = "";
-			String parentGroupId = "";
-			String parentArtifactId = "";
-			String parentVersion = "";			
-			*/
 			String groupId = EclipseGeneratorUtil.companyDomainName;						
 			String artifactId = EclipseGeneratorUtil.projectName;
 			String name = EclipseGeneratorUtil.projectName;
 			String description = "Maven Project generated by Zathuracode";
 									
-			//context.put("modelVersion", modelVersion);
 			context.put("groupId", groupId);
 			context.put("artifactId", artifactId);
 			context.put("name", name);
 			context.put("description", description);
 			
-			/*
-			context.put("packaging", packaging);
-			context.put("parentGroupId", parentGroupId);
-			context.put("parentArtifactId", parentArtifactId);
-			context.put("parentVersion", parentVersion);
-			context.put("version", version);
-			*/
-			
-			
-			
 			String groupIdConnector = 		EclipseGeneratorUtil.connectionGroupId;
 			String artifactIdConnector = 	EclipseGeneratorUtil.connectionArtifactId;
 			String versionConnector = 		EclipseGeneratorUtil.connectionVersion;
-			
-			
 			
 			context.put("groupIdConnector", groupIdConnector.equals("")!=true?groupIdConnector:"configure yourself");
 			context.put("artifactIdConnector", artifactIdConnector.equals("")!=true?artifactIdConnector:"configure yourself");
@@ -828,31 +746,12 @@ public class GeneratorUtil {
 			JalopyCodeFormatter.formatJavaCodeFile(pomLocation);
 
 			log.info("End doPomXml");
-			
 		} catch (Exception e) {
 			log.info("Error: " + e.getMessage());
 			throw e;
 		}
 		
 	}
-	
-	/**
-	 * Carga en el hilo de ejecucion el class loader del OSGI Esto resuleve probelemas de cargas de JAR
-	 */
-	
-	/*
-	public static void putBundleClassLoaderInCurrentThread(){
-		//log.info("putBundleClassLoaderInCurrentThread:"+EclipseGeneratorUtil.bundleClassLoader);
-		//Thread thread = Thread.currentThread();
-		//thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
-	}
-	
-	public static void putThreadClassLoaderInCurrentThread(){
-		//log.info("putThreadClassLoaderInCurrentThread:"+EclipseGeneratorUtil.threadClassLoader);
-		//Thread thread = Thread.currentThread();
-		//thread.setContextClassLoader(EclipseGeneratorUtil.threadClassLoader);
-	}
-	*/
-	
+
 		
 }

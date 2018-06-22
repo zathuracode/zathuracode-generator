@@ -1,3 +1,19 @@
+/*
+ * Copyright 2002-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.zcode.generator.robot.skyjet;
 
 import java.io.BufferedWriter;
@@ -35,7 +51,7 @@ import org.zcode.metadata.model.SimpleMember;
 public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	private static final Logger log = LoggerFactory.getLogger(SkyJet.class);
-	//private static String pathTemplates;
+	
 	private String paqueteVirgen;
 	private VelocityEngine ve;
 	private Properties properties;
@@ -43,11 +59,9 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	private final static String mainFolder="skyJet";
 
-
-	/// final static String pathTemplates;
-	private final static String templatesPath=GeneratorUtil.getGeneratorTemplatesPath()+GeneratorUtil.slash+mainFolder+GeneratorUtil.slash;
-	private final static String librariesPath=GeneratorUtil.getGeneratorLibrariesPath()+GeneratorUtil.slash;
-	private final static String extPath	  =GeneratorUtil.getGeneratorExtPath()+         GeneratorUtil.slash+mainFolder+GeneratorUtil.slash;
+	private final static String templatesPath	=GeneratorUtil.getGeneratorTemplatesPath()+GeneratorUtil.slash+mainFolder+GeneratorUtil.slash;
+	private final static String extPath	  		=GeneratorUtil.getGeneratorExtPath()+GeneratorUtil.slash+mainFolder+GeneratorUtil.slash;
+	
 
 
 
@@ -84,28 +98,6 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	public void copyLibraries(){		
 
 		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
-
-		/*
-		String pathHibernate= librariesPath+"core-hibernate"+GeneratorUtil.slash;
-		String pathJPA=librariesPath+"jpa-hibernate"+GeneratorUtil.slash;
-		String pathHibernateJpa = librariesPath+"hibernate-jpa"+GeneratorUtil.slash;
-
-		String pathPrimeFaces= librariesPath+"primeFaces"+GeneratorUtil.slash;
-
-		String pathSpring= librariesPath+"spring"+GeneratorUtil.slash;
-		String pathSpringSecurity= librariesPath+"spring-security"+GeneratorUtil.slash;
-
-
-		String pathSL4J= librariesPath+"slf4j"+GeneratorUtil.slash;
-		String pathJamon= librariesPath+"jamon"+GeneratorUtil.slash;
-		String pathMojarra= librariesPath+"mojarra"+GeneratorUtil.slash;
-		String pathApacheCommons= librariesPath+"apache-commons"+GeneratorUtil.slash;
-		String pathAopAlliance= librariesPath+"aopalliance"+GeneratorUtil.slash;
-		String pathLog4j=librariesPath+"log4j"+GeneratorUtil.slash;
-		String pathServlet=librariesPath+"servlet3.1.1"+GeneratorUtil.slash;
-
-		String pathLib= properties.getProperty("libFolderPath");
-		 */
 		
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
 
@@ -144,19 +136,15 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
 
 		//copy log4j
-		String folderProjectPath = properties.getProperty("folderProjectPath");
-		GeneratorUtil.copyFolder(log4j, folderProjectPath + GeneratorUtil.slash);
+		String log4jDestination = properties.getProperty("mainResoruces");
+		GeneratorUtil.copyFolder(log4j, log4jDestination);
 
 	}
 
 	@Override
-	public void doTemplate(String hdLocation, MetaDataModel metaDataModel,
-			String jpaPckgName, String projectName, Integer specificityLevel,
-			String domainName) throws Exception{
+	public void doTemplate(String hdLocation, MetaDataModel metaDataModel,String jpaPckgName, String projectName, Integer specificityLevel,	String domainName) throws Exception{
 
 		try {
-
-
 
 			ve= new VelocityEngine();		
 			Properties propiedadesVelocity= new Properties();
@@ -182,33 +170,18 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				primaryKeyByClass.put(metaData.getRealClassName().toLowerCase(), SkyJetUtilities.getInstance().camelCaseToUnderScore(metaData.getPrimaryKey().getName()));
 			}
 			
-			if (specificityLevel.intValue() == 2) {
-				try {
-					int lastIndexOf = jpaPckgName.lastIndexOf(".");
-					packageOriginal = jpaPckgName.substring(0, lastIndexOf);
+			try {
+				packageOriginal = jpaPckgName;
 
-					int lastIndexOf2 = packageOriginal.lastIndexOf(".") + 1;
-					modelName = packageOriginal.substring(lastIndexOf2);
+				int lastIndexOf2 = packageOriginal.lastIndexOf(".") + 1;
+				modelName = jpaPckgName.substring(lastIndexOf2);
 
-					int virginLastIndexOf = packageOriginal.lastIndexOf(".");
-					virginPackage = packageOriginal.substring(0, virginLastIndexOf);
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
-			} else {
-				try {
-					packageOriginal = jpaPckgName;
-
-					int lastIndexOf2 = packageOriginal.lastIndexOf(".") + 1;
-					modelName = jpaPckgName.substring(lastIndexOf2);
-
-					int virginLastIndexOf = packageOriginal.lastIndexOf(".");
-					virginPackage = packageOriginal.substring(0, virginLastIndexOf);
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
+				int virginLastIndexOf = packageOriginal.lastIndexOf(".");
+				virginPackage = packageOriginal.substring(0, virginLastIndexOf);
+			} catch (Exception e) {
+				log.error(e.toString());
 			}
-
+			
 			velocityContext.put("packageOriginal", packageOriginal);
 			velocityContext.put("virginPackage", virginPackage);
 			velocityContext.put("package", jpaPckgName);
@@ -857,14 +830,14 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doSpringContextConfFiles(VelocityContext context,
-			String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
+	public void doSpringContextConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
 		try {
 			log.info("Begin applicationContext.xml");
+			String path=properties.getProperty("mainResoruces");
 			Template templateApplicationContext = ve.getTemplate("applicationContext.xml.vm");
 			StringWriter swApplicationContext = new StringWriter();
 			templateApplicationContext.merge(context, swApplicationContext);
-			FileWriter fwApplicationContext = new FileWriter(hdLocation + "applicationContext.xml");
+			FileWriter fwApplicationContext = new FileWriter(path + "applicationContext.xml");
 			BufferedWriter bwApplicationContext = new BufferedWriter(fwApplicationContext);
 			bwApplicationContext.write(swApplicationContext.toString());
 			bwApplicationContext.close();
@@ -875,7 +848,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			Template templateAopContext = ve.getTemplate("aopContext.xml.vm");
 			StringWriter swAopContext = new StringWriter();
 			templateAopContext.merge(context, swAopContext);
-			FileWriter fwAopContext = new FileWriter(hdLocation+"aopContext.xml");
+			FileWriter fwAopContext = new FileWriter(path+"aopContext.xml");
 			BufferedWriter bwAopContext = new BufferedWriter(fwAopContext);
 			bwAopContext.write(swAopContext.toString());
 			bwAopContext.close();
@@ -886,7 +859,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			Template secContext= ve.getTemplate("securityContext.xml.vm");
 			StringWriter swSecContext = new StringWriter();
 			secContext.merge(context, swSecContext);
-			FileWriter fwSecContext = new FileWriter(hdLocation+"securityContext.xml");
+			FileWriter fwSecContext = new FileWriter(path+"securityContext.xml");
 			BufferedWriter bwSecContext = new BufferedWriter(fwSecContext);
 			bwSecContext.write(swSecContext.toString());
 			bwSecContext.close();
@@ -901,16 +874,16 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doPersitenceXml(MetaDataModel dataModel,
-			VelocityContext context, String hdLocation)throws Exception {
+	public void doPersitenceXml(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
 
 		try {
-
+			
 			log.info("Begin persistnece.xml");
+			String path=properties.getProperty("mainResoruces");
 			Template templatePersistence = ve.getTemplate("persistence.xml.vm");
 			StringWriter swPersistence = new StringWriter();
 			templatePersistence.merge(context, swPersistence);
-			FileWriter fwPersistence = new FileWriter(hdLocation + "META-INF" + GeneratorUtil.slash + "persistence.xml");
+			FileWriter fwPersistence = new FileWriter(path + "META-INF" + GeneratorUtil.slash + "persistence.xml");
 			BufferedWriter bwPersistence = new BufferedWriter(fwPersistence);
 			bwPersistence.write(swPersistence.toString());
 			bwPersistence.close();
@@ -926,8 +899,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doBackingBeans(MetaData metaData, VelocityContext context,
-			String hdLocation, MetaDataModel dataModel)throws Exception {
+	public void doBackingBeans(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel)throws Exception {
 		try {
 			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "view" + GeneratorUtil.slash;
 			log.info("Begin BackEndBean ");
