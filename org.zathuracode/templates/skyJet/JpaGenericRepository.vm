@@ -1,41 +1,42 @@
 package ${virginPackage}.repository;
 
 import java.io.Serializable;
+
 import java.util.List;
+
+import javax.persistence.Query;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 
 /**
  * 
  * @author <a href="mailto:dgomez@vortexbird.com">Diego A Gomez</a>
  * @project zathuracode
- * @class Dao
- * @date Nov 01, 2013
- * 
+ * @class JpaGenericRepository
+ * @date Jun 26, 2018
+ *
  */
-public interface Repository<T, PK extends 	Serializable> {
-		void save(T newEntity) throws RepositoryException;
+@NoRepositoryBean
+public interface JpaGenericRepository<T, ID extends Serializable> extends JpaRepository<T, ID>  {
 
-	T findById(PK id);
+    void update(T entity);
 
-	void update(T entity) throws RepositoryException;
+    void deleteByProperty(String tableName, String propertyName, Object value);
 
-	void delete(T entity) throws RepositoryException;
+    List<T> findPage(String sortColumnName, boolean sortAscending,int startRow, int maxResults);
 
-	void deleteById(PK id) throws RepositoryException;
+    List<T> findByCriteria(String whereCondition);
 
-	void deleteByProperty(String tableName, String propertyName,
-			Object value) throws RepositoryException;
+    List<T> findByProperty(String propertyName, Object value);
+    
+    int getMaxResults();
+    
+    void setMaxResults(int maxResults);
+    
+    Query createQuery(String queryString);
 
-	void deleteAll() throws RepositoryException ;
-
-	Long count();
-
-	List<T> findAll();
-
-	List<T> findPage(String sortColumnName, boolean sortAscending,
-			int startRow, int maxResults);
-
-	List<T> findByCriteria(String whereCondition);
-
-	List<T> findByProperty(String propertyName, Object value);
+	void prepareQuery(Query queryObject);
+    
 }

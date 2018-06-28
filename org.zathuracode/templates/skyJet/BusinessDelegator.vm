@@ -1,16 +1,10 @@
 package ${virginPackage}.view;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.math.BigDecimal;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import java.util.*;
+import java.math.*;
 
 
 #foreach($metaData  in $dataModel.theMetaData)
-    import ${virginPackage}.service.${metaData.getRealClassName()}Service;
 	import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
     import ${package}.${metaData.getRealClassName()};
     #if(${metaData.primaryKey.isPrimiaryKeyAComposeKey()})

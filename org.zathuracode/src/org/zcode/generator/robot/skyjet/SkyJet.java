@@ -415,8 +415,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		try {
 
 			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "repository" + GeneratorUtil.slash ;
-			log.info("Begin Interface Repository");
-			Template templateIDao = ve.getTemplate("Repository.vm");
+			log.info("Begin Interface EntityRepository");
+			Template templateIDao = ve.getTemplate("EntityRepository.vm");
 			StringWriter swIdao = new StringWriter();
 			templateIDao.merge(context, swIdao);
 			FileWriter fwIdao = new FileWriter(path +metaData.getRealClassName()+"Repository.java");
@@ -424,21 +424,11 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bwIdao.write(swIdao.toString());
 			bwIdao.close();
 			fwIdao.close();
-			log.info("End Interface Repository");
+			log.info("End Interface EntityRepository");
+			
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Repository.java");
 
-			log.info("Begin Class RepositoryImpl");
-			Template templateDao = ve.getTemplate("RepositoryImpl.vm");
-			StringWriter swDao = new StringWriter();
-			templateDao.merge(context, swDao);
-			FileWriter fwDao = new FileWriter(path+ metaData.getRealClassName()+"RepositoryImpl.java");
-			BufferedWriter bwDao = new BufferedWriter(fwDao);
-			bwDao.write(swDao.toString());
-			bwDao.close();
-			fwDao.close();
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RepositoryImpl.java");
-			log.info("End Class RepositoryImpl");
-
+			
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -453,50 +443,30 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash + "repository"+ GeneratorUtil.slash;
 
-			log.info("Begin RepositoryAPI");
+			log.info("Begin JpaGenericRepository");
 
-			Template apiSpringPrimeHibernateTemplate = ve.getTemplate("RepositoryAPI.vm");
+			Template apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaGenericRepository.vm");
 			StringWriter stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			FileWriter fileWriter = new FileWriter(path+"Repository.java");
+			FileWriter fileWriter = new FileWriter(path+"JpaGenericRepository.java");
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
 
-			apiSpringPrimeHibernateTemplate = ve.getTemplate("RepositoryException.vm");
+			apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaGenericRepositoryImpl.vm");
 			stringWriter = new StringWriter();
 			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			fileWriter = new FileWriter(path+"RepositoryException.java");
+			fileWriter = new FileWriter(path+"JpaGenericRepositoryImpl.java");
 			bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(stringWriter.toString());
 			bufferedWriter.close();
 			fileWriter.close();
 
-			apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaRepositoryImpl.vm");
-			stringWriter = new StringWriter();
-			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			fileWriter = new FileWriter(path+"JpaRepositoryImpl.java");
-			bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(stringWriter.toString());
-			bufferedWriter.close();
-			fileWriter.close();
+			log.info("End JpaGenericRepository");
 
-			apiSpringPrimeHibernateTemplate = ve.getTemplate("Paginator.vm");
-			stringWriter = new StringWriter();
-			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			fileWriter = new FileWriter(path+"Paginator.java");
-			bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(stringWriter.toString());
-			bufferedWriter.close();
-			fileWriter.close();
-
-			log.info("End RepositoryAPI");
-
-			JalopyCodeFormatter.formatJavaCodeFile(path + "Repository.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "RepositoryException.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaRepositoryImpl.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "Paginator.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaGenericRepository.java");
+			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaGenericRepositoryImpl.java");
 
 		} catch (Exception e) {
 			log.error(e.toString());

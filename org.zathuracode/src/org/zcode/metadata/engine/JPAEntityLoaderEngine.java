@@ -41,7 +41,6 @@ import org.zcode.metadata.reader.IMetaDataReader;
 import org.zcode.metadata.utilities.MetaDataUtil;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *

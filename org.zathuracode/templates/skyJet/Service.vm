@@ -1,10 +1,9 @@
 package  ${virginPackage}.service;
 import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
+
+import java.math.*;
 import java.util.*;
-import java.util.List;
-import java.util.Set;
-import java.util.Date;
-import java.math.BigDecimal;
+
 import $package.${metaData.getRealClassName()};
 #if($composedKey)
     import $package.${metaData.primaryKey.getRealClassName()};
