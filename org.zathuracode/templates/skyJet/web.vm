@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+
 	<display-name></display-name>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -23,6 +21,7 @@
 	 	<mime-type>application/xml</mime-type> 
 	 </mime-mapping>
 
+	<!-- Spring Framework -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -41,15 +40,23 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/applicationContext.xml;classpath*:/securityContext.xml</param-value>
+	</context-param>
 	
-	#end
+	#else
 	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/classes/applicationContext.xml</param-value>
+		<param-value>classpath*:/applicationContext.xml</param-value>
 	</context-param>
 	
-	<!-- MVC -->
+	#end
+	<!-- Spring Framework -->
+	
+	<!-- Spring MVC -->
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -60,8 +67,10 @@
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<url-pattern>/rest/controllers/*</url-pattern>
 	</servlet-mapping>
-	<!-- MVC -->
+	<!-- Spring MVC -->
 	
+	#if($frontend)
+	<!-- Java Server Faces -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -76,11 +85,13 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-
+	<!-- Java Server Faces -->
+	<!-- Primefaces THEME -->
 	<context-param>  
     	<param-name>primefaces.THEME</param-name>  
-    	<param-value>omega</param-value>  
-	</context-param> 
-
+    	<param-value>bootstrap</param-value>  
+	</context-param>
+	<!-- Primefaces THEME -->
+	#end
 
 </web-app>

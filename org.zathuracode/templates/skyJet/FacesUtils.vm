@@ -34,23 +34,36 @@ package ${virginPackage}.utility;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
 import java.sql.Blob;
-import javax.sql.rowset.serial.SerialBlob;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.FactoryFinder;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.visit.VisitCallback;
+import javax.faces.component.visit.VisitContext;
+import javax.faces.component.visit.VisitResult;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
+
+import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sun.faces.component.visit.FullVisitContext;
 
 import ${virginPackage}.exception.ZMessManager;
 
@@ -58,6 +71,7 @@ import ${virginPackage}.exception.ZMessManager;
  * JSF utilities.
  */
 public class FacesUtils {
+	private final static Logger log = LoggerFactory.getLogger(FacesUtils.class);
 	/**
 	 * Get servlet context.
 	 * 
@@ -155,21 +169,21 @@ public class FacesUtils {
 	 * @param msg
 	 *            the information message
 	 */
-	public static void addInfoMessage(String msg) {
-		addInfoMessage(null, msg);
+	public static void addInfoMessage(String idMsg) {
+		addInfoMessage(null, idMsg);
 	}
 
 	/**
-	 * Add information message to a specific client.
-	 * 
-	 * @param clientId
-	 *            the client id
+	 * @author Frank Edward Daza González
+     * @author Andrés Felipe Vargas
+     * @date Oct 19, 2017
+	 * @param idComponent
 	 * @param msg
-	 *            the information message
 	 */
-	public static void addInfoMessage(String clientId, String msg) {
-		FacesContext.getCurrentInstance().addMessage(clientId,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
+	public static void addInfoMessage(String idComponent, String idMsg) {
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_INFO, errorComponentLogic(idMsg), errorComponentLogic(idMsg)));
 	}
 
 	/**
@@ -178,23 +192,119 @@ public class FacesUtils {
 	 * @param msg
 	 *            the error message
 	 */
-	public static void addErrorMessage(String msg) {
-		addErrorMessage(null, msg);
+	public static void addErrorMessage(String idMsg) {
+		if(idMsg == null || idMsg.equals("null")){
+			idMsg = "msgContactarAlAdministrador";
+		}
+		addErrorMessage(null, idMsg);
 	}
-
+	
 	/**
-	 * Add error message to a specific client.
+	 * Add error message.
 	 * 
-	 * @param clientId
-	 *            the client id
 	 * @param msg
 	 *            the error message
 	 */
-	public static void addErrorMessage(String clientId, String msg) {
-		FacesContext.getCurrentInstance().addMessage(clientId,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+	public static void addErrorMessageParams(String idMsg, Long sendMenos1, String... params) {
+		addErrorMessageParams(null, idMsg, params);
 	}
 
+	/**
+	 * @author Frank Edward Daza González
+     * @author Andrés Felipe Vargas
+     * @date Oct 19, 2017
+	 * @param idComponent
+	 * @param msg
+	 */
+	public static void addErrorMessage(String idComponent, String idMsg) {
+		
+		String message = errorComponentLogic(idMsg);
+		
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
+	}
+	
+	/**
+	 * @author Frank Edward Daza González
+     * @author Andrés Felipe Vargas
+     * @date Oct 19, 2017
+	 * @param idComponent
+	 * @param msg
+	 */
+	public static void addErrorMessageParams(String idComponent, String idMsg, String...params) {
+		
+		String message = errorComponentLogic(idMsg);
+		
+		if (message!=null && params!=null && params.length>0) {
+			for(int i=0;i<params.length; i++) {
+				String s = "\\$"+(i+1);
+				message = message.replaceAll(s, params[i]);
+			}
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
+	}
+	
+	/**
+	 * Add Warning message.
+	 * 
+	 * @param msg
+	 *            the Warning message
+	 */
+	public static void addWarningMessage(String idMsg) {
+		addWarningMessage(null, idMsg);
+	}
+	
+	/**
+	 * Add Warning message.
+	 * 
+	 * @param msg
+	 *            the Warning message
+	 */
+	public static void addWarningMessageParams(String idMsg, String... params) {
+		addWarningMessageParams(null, idMsg, params);
+	}
+
+	/**
+	 * @author Camilo Delgado
+     * @date Oct 19, 2017
+	 * @param idComponent
+	 * @param msg
+	 */
+	public static void addWarningMessage(String idComponent, String idMsg) {
+		
+		String message = errorComponentLogic(idMsg);
+		
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_WARN, message, message));
+	}
+	
+	/**
+	 * @author Frank Edward Daza González
+     * @author Andrés Felipe Vargas
+     * @date Oct 19, 2017
+	 * @param idComponent
+	 * @param msg
+	 */
+	public static void addWarningMessageParams(String idComponent, String idMsg, String...params) {
+		
+		String message = errorComponentLogic(idMsg);
+		
+		if (message!=null && params!=null && params.length>0) {
+			for(int i=0;i<params.length; i++) {
+				message = message.replaceAll("$"+(i+1), params[i]);
+			}
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
+	}
+	
 	private static Application getApplication() {
 		ApplicationFactory appFactory = (ApplicationFactory) FactoryFinder
 				.getFactory(FactoryFinder.APPLICATION_FACTORY);
@@ -237,7 +347,18 @@ public class FacesUtils {
 				.getExternalContext().getSession(true);
 		session.setAttribute(name, o);
 	}
-
+	
+	/**
+	 * 
+	 * @param o
+	 *            Remove an object from session
+	 */
+	public static void removeFromSession(String name) {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		session.removeAttribute(name);
+	}
+	
 	/**
 	 * 
 	 * @param name
@@ -469,5 +590,165 @@ public class FacesUtils {
 		}
 		return blob;
 		
+	}
+	
+	public static void showDialog(String nameDialog) throws Exception{
+		RequestContext requestContext = RequestContext.getCurrentInstance();  
+		requestContext.execute("PF('" + nameDialog +"').show()");
+	}
+	
+	public static void hideDialog(String nameDialog) throws Exception{
+		RequestContext requestContext = RequestContext.getCurrentInstance();  
+		requestContext.execute("PF('" + nameDialog +"').hide()");
+	}
+	
+	public static void filterTable(String nameTable) throws Exception{
+		RequestContext requestContext = RequestContext.getCurrentInstance();  
+		requestContext.execute("PF('" + nameTable +"').filter()");
+	}
+	
+	public static void clearFilterTable(String nameTable) throws Exception{
+		RequestContext requestContext = RequestContext.getCurrentInstance();  
+		requestContext.execute("PF('" + nameTable +"').clearFilters()");
+	}
+	
+	/**
+     * @author Frank Edward Daza González
+     * @date Sep 13, 2017
+     */
+	public static void errorComponent(String idComponent, String message) {
+		FacesContext.getCurrentInstance().addMessage(idComponent, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, message));
+	}
+	
+	/**
+     * @author Frank Edward Daza González
+     * @date Sep 13, 2017
+     */
+	public static void info(String idComponent, String message) {
+		FacesContext.getCurrentInstance().addMessage(idComponent, new FacesMessage(FacesMessage.SEVERITY_INFO, null, message));
+	}
+	
+	/**
+     * @author Frank Edward Daza González
+     * @date Sep 19, 2017
+     */
+	public static String capitalizeString(String string) {
+		  char[] chars = string.toLowerCase().toCharArray();
+		  boolean found = false;
+		  for (int i = 0; i < chars.length; i++) {
+		    if (!found && Character.isLetter(chars[i])) {
+		      chars[i] = Character.toUpperCase(chars[i]);
+		      found = true;
+		    } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'') { // You can add other chars here
+		      found = false;
+		    }
+		  }
+		  return String.valueOf(chars);
+		}
+	
+	
+	/**
+	 * @author Frank Edward Daza González
+     * @author Andrés Felipe Vargas
+     * @date Oct 19, 2017
+     */
+	public static UIComponent findComponentById(final String id) {
+	    FacesContext context = FacesContext.getCurrentInstance(); 
+	    UIViewRoot root = context.getViewRoot();
+	    final UIComponent[] found = new UIComponent[1];
+
+	    root.visitTree(new FullVisitContext(context), new VisitCallback() {     
+	        @Override
+	        public VisitResult visit(VisitContext context, UIComponent component) {
+	        	if (component != null && component.getId() != null && component.getId().equals(id)){
+	                found[0] = component;
+	                return VisitResult.COMPLETE;
+	            }
+	            return VisitResult.ACCEPT;              
+	        }
+	    });
+	    return found[0];
+	}
+	
+	public static String errorComponentLogic(String lblName){
+		String message = "";
+		try {
+    		FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msgs");
+            message = bundle.getString(lblName);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return message;	
+	}
+	
+	/**
+	 * Add information message.
+	 * 
+	 * @author Frank Edward Daza Gonález
+	 * @date Nov 1, 2017
+	 * @param msg the information message
+	 */
+	public static void addInfoOnlyMessage(String msg) {
+		addInfoOnlyMessage(null, msg);
+	}
+
+	/**
+	 * @author Frank Edward Daza Gonález
+	 * @date Nov 1, 2017
+	 * @param idComponent
+	 * @param msg
+	 */
+	public static void addInfoOnlyMessage(String idComponent, String msg) {
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
+	}
+
+	/**
+	 * Add error message.
+	 * 
+	 * @author Frank Edward Daza Gonález
+	 * @date Nov 1, 2017
+	 * @param msg the error message
+	 */
+	public static void addErrorOnlyMessage(String msg) {
+		addErrorOnlyMessage(null, msg);
+	}
+
+	/**
+	 * @author Frank Edward Daza Gonález
+	 * @date Nov 1, 2017
+	 * @param idComponent
+	 * @param msg
+	 */
+	public static void addErrorOnlyMessage(String idComponent, String msg) {
+		FacesContext.getCurrentInstance().addMessage(
+				((idComponent != null) ? findComponentById(idComponent).getClientId() : null),
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+	}
+	
+	/**
+	 * Método para valida emails
+	 * @author Camilo Andrés Cifuentes Grass
+	 * @version 2018/01/17
+	 * @param sEmail el email a verificar
+	 * @return true si es un email válido, false en caso que no sea así.
+	 */
+	public static boolean isValidEmail(String sEmail) {
+		boolean isValid = false;
+		
+		final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		Pattern pat = Pattern.compile(EMAIL_PATTERN);
+		Matcher mat = pat.matcher(sEmail);
+		
+		if(pat.matcher(sEmail).matches()) {
+			isValid = true;
+        }else {
+			isValid = false;
+        }
+		return isValid;
 	}
 }

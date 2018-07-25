@@ -29,17 +29,16 @@
                 </head>
                 <body>
                  		<h3>The SkyJet Robot</h3>
-				        <p>Built JavaEE applications using the following frameworks</p>
+				        <p>Generate Spring Web applications and Spring microservices using the following frameworks</p>
 				        <ul>
 				        	<li>Primefaces 6.1</li>
-                            <li>Mojarra 2.2.8-21</li>
-                            <li>Spring Framework 4.3.8.RELEASE</li>
-                            <li>Spring Security 4.2.2.RELEASE</li>                    
-                            <li>Hibernate 5.2.10.Final</li>
-                            <li>Hibernate Validator 5.4.1.Final</li>
-                            <li>log4J2 2.8.2</li>
-                            <li>Jackson Core 2.8.8</li>
-                            <li>Jackson Mapper 1.9.13</li>
+                            <li>Mojarra 2.2.17</li>
+                            <li>Spring Framework 5.0.7.RELEASE</li>
+                            <li>Spring Security 5.0.6.RELEASE</li>                    
+                            <li>Hibernate 5.3.3.Final</li>
+                            <li>Hibernate Validator 6.0.11.Final</li>
+                            <li>log4J2 2.11.0</li>
+                            <li>Jackson Core 2.9.6</li>
 				            <li>JPA 2.1</li>
 				        </ul>
 				        

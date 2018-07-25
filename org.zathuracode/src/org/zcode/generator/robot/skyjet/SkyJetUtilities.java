@@ -562,9 +562,8 @@ public class SkyJetUtilities {
 		
 		if (EclipseGeneratorUtil.isFrontend) {
 			folderBuilder.add(pckge + "security");
-		}
-
-		folderBuilder.add(pckge + "view");
+			folderBuilder.add(pckge + "view");
+		}		
 
 		folderBuilder.add(properties.getProperty("webRootFolderPath"));
 

@@ -97,7 +97,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	public void copyLibraries(){		
 
-		String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
+		//String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
 		
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
 
@@ -133,7 +133,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 		}
 		
-		GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
+		//GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
 
 		//copy log4j
 		String log4jDestination = properties.getProperty("mainResoruces");
@@ -198,6 +198,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			velocityContext.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
 
 			this.paqueteVirgen = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
+			
+			
 			SkyJetUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
 			SkyJetUtilities.getInstance().biuldHashToGetIdValuesLengths(listMetaData);
 
@@ -387,13 +389,14 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				doAuthenticationProvider(velocityContext, hdLocation, metaDataModel, modelName);
 				doJspFacelets(velocityContext, hdLocation);
 				doJspInitialMenu(metaDataModel, velocityContext, hdLocation);
+				doFacesConfig(metaDataModel, velocityContext, hdLocation);
+				doBusinessDelegator(velocityContext, hdLocation, metaDataModel);
+				doSpringSecurityConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
 			}
-			doPersitenceXml(metaDataModel, velocityContext, hdLocation);						
-			doBusinessDelegator(velocityContext, hdLocation, metaDataModel);
-			doFacesConfig(metaDataModel, velocityContext, hdLocation);
+			doPersitenceXml(metaDataModel, velocityContext, hdLocation);					
 			doSpringContextConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
 
-			String restPath = paqueteVirgen + GeneratorUtil.slash + "rest" + GeneratorUtil.slash + "controllers";
+			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
 			restPath = restPath.replace(GeneratorUtil.slash, ".");
 			velocityContext.put("restPackage", restPath);
 
@@ -825,6 +828,21 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwAopContext.close();
 			log.info("End aopContext.xml");
 
+			
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doSpringSecurityConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
+		
+		
+			String path=properties.getProperty("mainResoruces");
+			
 			log.info("Begin securityContext.xml");
 			Template secContext= ve.getTemplate("securityContext.xml.vm");
 			StringWriter swSecContext = new StringWriter();
@@ -835,12 +853,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bwSecContext.close();
 			fwSecContext.close();
 			log.info("End securityContext.xml");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
+		
 	}
 
 	@Override
