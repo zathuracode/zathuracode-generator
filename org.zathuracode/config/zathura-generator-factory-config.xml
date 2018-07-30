@@ -23,7 +23,7 @@
 			background-size: cover;
 			background-repeat: no-repeat;
 			margin-left: 0px;
-			height: 960px;
+			height: auto;
 
 			
 		}
