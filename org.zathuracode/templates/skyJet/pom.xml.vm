@@ -13,7 +13,7 @@
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<hibernate.core.version>5.3.3.Final</hibernate.core.version>
+		<hibernate.core.version>5.3.4.Final</hibernate.core.version>
 		<hibernate.validator.version>6.0.11.Final</hibernate.validator.version>
 		<primefaces.version>6.2</primefaces.version>
 		<spring.framework.version>5.0.8.RELEASE</spring.framework.version>
