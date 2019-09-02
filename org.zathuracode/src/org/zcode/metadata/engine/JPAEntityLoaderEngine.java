@@ -110,7 +110,7 @@ public class JPAEntityLoaderEngine implements IMetaDataReader {
 		metaData.setName(clazz.getName());
 
 		// Con Bean Util se lee las descripcion de la clase
-		Map<String, Object> desc = BeanUtils.describe(clazz.newInstance());
+		Map<String, String> desc = BeanUtils.describe(clazz.newInstance());
 		Set<String> members = desc.keySet();
 
 		log.info("Properties Entity:" + members);

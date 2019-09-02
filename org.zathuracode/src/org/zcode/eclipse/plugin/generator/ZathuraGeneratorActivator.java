@@ -1,5 +1,7 @@
 package org.zcode.eclipse.plugin.generator;
 
+
+
 import java.util.Enumeration;
 import java.util.Properties;
 
