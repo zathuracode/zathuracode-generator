@@ -367,10 +367,12 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 				doEntityGenerator(metaData, velocityContext, hdLocation, metaDataModel);
 				doRepository(metaData, velocityContext, hdLocation);
+				/*
 				if (EclipseGeneratorUtil.isFrontend) {
 					doBackingBeans(metaData, velocityContext, hdLocation, metaDataModel);
 					doJsp(metaData, velocityContext, hdLocation, metaDataModel);
 				}
+				*/
 				doService(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
@@ -385,6 +387,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doRepositoryAPI(velocityContext, hdLocation);
 			doExceptions(velocityContext, hdLocation);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
+			/*
 			if (EclipseGeneratorUtil.isFrontend) {
 				doAuthenticationProvider(velocityContext, hdLocation, metaDataModel, modelName);
 				doJspFacelets(velocityContext, hdLocation);
@@ -393,14 +396,15 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				doBusinessDelegator(velocityContext, hdLocation, metaDataModel);
 				doSpringSecurityConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
 			}
-			doPersitenceXml(metaDataModel, velocityContext, hdLocation);					
-			doSpringContextConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
+			*/
+			doApplicationProperties(metaDataModel, velocityContext, hdLocation);					
+			//doSpringContextConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
 			restPath = restPath.replace(GeneratorUtil.slash, ".");
 			velocityContext.put("restPackage", restPath);
 
-			doMvcDispatcherServlet(metaDataModel, velocityContext, hdLocation);
+			//doMvcDispatcherServlet(metaDataModel, velocityContext, hdLocation);
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -522,6 +526,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
+	/*
 	@Override
 	public void doBusinessDelegator(VelocityContext context, String hdLocation,
 			MetaDataModel dataModel)throws Exception {
@@ -561,58 +566,9 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
-	@Override
-	public void doJsp(MetaData metaData, VelocityContext context,
-			String hdLocation, MetaDataModel dataModel)throws Exception {
-		try {
+	*/
 
-			String path = properties.getProperty("webRootFolderPath") + "XHTML" + GeneratorUtil.slash;
-
-			log.info("Begin XHTML");
-			Template templateXhtml = ve.getTemplate("XHTMLSpringJpaPrime.vm");
-			StringWriter swXhtml = new StringWriter();
-			templateXhtml.merge(context, swXhtml);
-
-			FileWriter fwXhtml = new FileWriter(path+metaData.getRealClassNameAsVariable()+".xhtml");
-			BufferedWriter bwXhtml = new BufferedWriter(fwXhtml);
-			bwXhtml.write(swXhtml.toString());
-			bwXhtml.close();
-			fwXhtml.close();
-			log.info("End XHTML");
-
-			log.info("Begin DataTable");
-			Template templateDataTable = ve.getTemplate("XHTMLdataTablesJpaPrime.vm");
-			StringWriter swDataTable = new StringWriter();
-			templateDataTable.merge(context, swDataTable);
-			FileWriter fwDataTable = new FileWriter(path+metaData.getRealClassNameAsVariable()+"ListDataTable.xhtml");
-			BufferedWriter bwDataTable = new BufferedWriter(fwDataTable);
-			bwDataTable.write(swDataTable.toString());
-			bwDataTable.close();
-			fwDataTable.close();
-			log.info("End DataTable");
-
-//			log.info("Begin DataTableEditable");
-//			Template templateDataTableEditable = ve.getTemplate("XHTMLdataTableEditableJpaPrime.vm");
-//			StringWriter swDataTableEditable = new StringWriter();
-//			templateDataTableEditable.merge(context, swDataTableEditable);
-//			FileWriter fwDataTableEditable = new FileWriter(path+ metaData.getRealClassNameAsVariable()+"ListDataTableEditable.xhtml");
-//			BufferedWriter bwDataTableEditable = new BufferedWriter(fwDataTableEditable);
-//			bwDataTableEditable.write(swDataTableEditable.toString());
-//			bwDataTableEditable.close();
-//			fwDataTableEditable.close();
-//			log.info("End DataTableEditable");
-
-			SkyJetUtilities.getInstance().datesJSP = null;
-			SkyJetUtilities.getInstance().datesIdJSP = null;
-
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-
+	/*
 	@Override
 	public void doJspInitialMenu(MetaDataModel dataModel,
 			VelocityContext context, String hdLocation)throws Exception {
@@ -636,7 +592,10 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
+	*/
 
+	//TODO Eliminar
+	/*
 	@Override
 	public void doFacesConfig(MetaDataModel dataModel, VelocityContext context,
 			String hdLocation) throws Exception{
@@ -661,6 +620,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
+	*/
 
 	@Override
 	public void doDto(MetaData metaData, VelocityContext context,
@@ -729,16 +689,6 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			fwUtilities.close();
 			log.info("Begin Utilities");
 
-			log.info("Begin FacesUtils ");
-			Template templateFacesUtils = ve.getTemplate("FacesUtils.vm");
-			StringWriter swFacesUtils = new StringWriter();
-			templateFacesUtils.merge(context, swFacesUtils);
-			FileWriter fwFacesUtils = new FileWriter(path+"FacesUtils.java");
-			BufferedWriter bwFacesUtils = new BufferedWriter(fwFacesUtils);
-			bwFacesUtils.write(swFacesUtils.toString());
-			bwFacesUtils.close();
-			fwFacesUtils.close();
-
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -746,6 +696,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
+	/*
 	@Override
 	public void doJspFacelets(VelocityContext context, String hdLocation)throws Exception {
 		try {
@@ -801,6 +752,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
+	*/
+	/*
 
 	@Override
 	public void doSpringContextConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
@@ -836,7 +789,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
-	
+	*/
+	/*
 	@Override
 	public void doSpringSecurityConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
 		
@@ -855,23 +809,23 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			log.info("End securityContext.xml");
 		
 	}
-
+*/
 	@Override
-	public void doPersitenceXml(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
+	public void doApplicationProperties(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
 
 		try {
 			
-			log.info("Begin persistnece.xml");
+			log.info("Begin application.properties.vm");
 			String path=properties.getProperty("mainResoruces");
-			Template templatePersistence = ve.getTemplate("persistence.xml.vm");
+			Template templatePersistence = ve.getTemplate("application.properties.vm");
 			StringWriter swPersistence = new StringWriter();
 			templatePersistence.merge(context, swPersistence);
-			FileWriter fwPersistence = new FileWriter(path + "META-INF" + GeneratorUtil.slash + "persistence.xml");
+			FileWriter fwPersistence = new FileWriter(path + GeneratorUtil.slash + "application.properties");
 			BufferedWriter bwPersistence = new BufferedWriter(fwPersistence);
 			bwPersistence.write(swPersistence.toString());
 			bwPersistence.close();
 			fwPersistence.close();
-			log.info("Begin persistnece.xml");
+			log.info("End application.properties.vm");
 
 
 		} catch (Exception e) {
@@ -881,6 +835,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
+	/*
 	@Override
 	public void doBackingBeans(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel)throws Exception {
 		try {
@@ -904,7 +859,9 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
+	*/
 
+	/*
 	@Override
 	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception{
 
@@ -952,6 +909,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			throw e;
 		}
 	}
+	*/
 
 	@Override
 	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
@@ -1020,6 +978,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
+	/*
 	@Override
 	public void doMvcDispatcherServlet(MetaDataModel dataModel,
 			VelocityContext context, String hdLocation) throws Exception{
@@ -1053,6 +1012,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
+	*/
 
 	@Override
 	public void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,

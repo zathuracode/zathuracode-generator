@@ -72,17 +72,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param hdLocation the hd location
 	 * @param dataModel the data model
 	 */
-	public void doBusinessDelegator(VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
-
-	/**
-	 * Do jsp. 
-	 *
-	 * @param metaData the meta data
-	 * @param context the context
-	 * @param hdLocation the hd location
-	 * @param dataModel the data model
-	 */
-	public void doJsp(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
+	//public void doBusinessDelegator(VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
 
 	/**
 	 * Do jsp initial menu.
@@ -91,7 +81,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param context the context
 	 * @param hdLocation the hd location
 	 */
-	public void doJspInitialMenu(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
+	//public void doJspInitialMenu(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
 
 
 	/**
@@ -101,7 +91,8 @@ public interface IZathuraSkyJetTemplate {
 	 * @param context the context
 	 * @param hdLocation the hd location
 	 */
-	public void doFacesConfig(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
+	//TODO Eliminar
+	//public void doFacesConfig(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
 	
 	/**
 	 * Do dto.
@@ -140,7 +131,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param context the context
 	 * @param hdLocation the hd location
 	 */
-	public void doJspFacelets(VelocityContext context, String hdLocation)throws Exception;
+	//public void doJspFacelets(VelocityContext context, String hdLocation)throws Exception;
 	
 	
 	/**
@@ -151,13 +142,13 @@ public interface IZathuraSkyJetTemplate {
 	 * @param dataModel the data model
 	 * @param modelName the model name
 	 */
-	public void doSpringContextConfFiles(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
+	//public void doSpringContextConfFiles(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
-	public void doSpringSecurityConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception ;
+	//public void doSpringSecurityConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception ;
 	
-	public void doPersitenceXml(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
+	public void doApplicationProperties(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
 	
-	public void doBackingBeans(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
+	//public void doBackingBeans(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
 	
 	/**
 	 * Do Spring Security
@@ -167,13 +158,13 @@ public interface IZathuraSkyJetTemplate {
 	 * @param dataModel
 	 * @throws Exception
 	 */
-	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception;
+	//public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception;
 
 	void doDTOMapper(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
 
 	void doRestControllers(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
 
-	void doMvcDispatcherServlet(MetaDataModel dataModel, VelocityContext context, String hdLocation) throws Exception;
+	//void doMvcDispatcherServlet(MetaDataModel dataModel, VelocityContext context, String hdLocation) throws Exception;
 
 	void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,MetaDataModel metaDataModel) throws Exception;
 	

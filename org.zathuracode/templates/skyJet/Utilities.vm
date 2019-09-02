@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.validator.EmailValidator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,11 +140,6 @@ public class Utilities {
 		} else {
 			return false;
 		}
-	}
-
-	public static boolean validateEmailAddress(String sEmail) {
-		EmailValidator emailValidator = EmailValidator.getInstance();
-		return emailValidator.isValid(sEmail);
 	}
 	
 	/**
