@@ -1,0 +1,37 @@
+
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring.datasource.url=${connectionUrl}
+spring.datasource.username= ${connectionUsername}
+spring.datasource.password= ${connectionPassword}
+
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+# spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+
+spring.jpa.properties.hibernate.show_sql = true
+spring.jpa.properties.hibernate.use_sql_comments = true
+spring.jpa.properties.hibernate.format_sql = true
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
+
+
+#tomcat
+#server.address=my_custom_ip
+server.port=8080
+server.tomcat.max-threads=200
+server.connection-timeout=5s
+server.max-http-header-size=8KB
+server.tomcat.max-swallow-size=2MB
+server.tomcat.max-http-post-size=2MB
+
+#Tomcat Server Access Logs
+server.tomcat.accesslog.enabled=true
+server.tomcat.accesslog.directory=logs
+server.tomcat.accesslog.file-date-format=yyyy-MM-dd
+server.tomcat.accesslog.prefix=access_log
+server.tomcat.accesslog.suffix=.log
+
+##Logs
+logging.file=myapplication.log
+logging.level.org.springframework.web=INFO
+logging.level.org.hibernate=INFO
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql=TRACE
