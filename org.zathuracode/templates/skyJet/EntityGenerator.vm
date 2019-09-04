@@ -1,8 +1,8 @@
 package ${virginPackage}.${modelName};
 
 #if($oneToManyMembers.isEmpty() == false)
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 #end
 
 import java.util.Date;
@@ -42,7 +42,7 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
 		private ${sim.getType().getSimpleName()} ${sim.getShowName()};	
     #end
 	#foreach($omm in $oneToManyMembers)
-		private Set<${omm.getType().getSimpleName()}> ${omm.getShowName()} = new HashSet<${omm.getType().getSimpleName()}>(0);	
+		private List<${omm.getType().getSimpleName()}> ${omm.getShowName()} = new ArrayList<${omm.getType().getSimpleName()}>(0);	
     #end
     
     public ${metaData.getRealClassName()}() {
@@ -111,11 +111,11 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
     #end
 	#foreach($omm in $oneToManyMembers)
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="${metaData.getRealClassNameAsVariable()}")
-		public Set<${omm.getType().getSimpleName()}> get${omm.getShowName().substring(0,1).toUpperCase()}${omm.getShowName().substring(1,${omm.getShowName().length()})}() {
+		public List<${omm.getType().getSimpleName()}> get${omm.getShowName().substring(0,1).toUpperCase()}${omm.getShowName().substring(1,${omm.getShowName().length()})}() {
 	        return this.${omm.getShowName()};
 	    }
 	    
-	    public void set${omm.getShowName().substring(0,1).toUpperCase()}${omm.getShowName().substring(1,${omm.getShowName().length()})}(Set<${omm.getType().getSimpleName()}> ${omm.getShowName()}) {
+	    public void set${omm.getShowName().substring(0,1).toUpperCase()}${omm.getShowName().substring(1,${omm.getShowName().length()})}(List<${omm.getType().getSimpleName()}> ${omm.getShowName()}) {
 	        this.${omm.getShowName()} = ${omm.getShowName()};
 	    }
 			

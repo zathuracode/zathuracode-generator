@@ -271,7 +271,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 					if (member.isOneToManyMember()) {
 						oneToManyMembers.add((OneToManyMember) member);
 
-						constructorStr = constructorStr + "Set<" + member.getType().getSimpleName() + "> "
+						constructorStr = constructorStr + "List<" + member.getType().getSimpleName() + "> "
 								+ member.getShowName() + ", ";
 					}
 
@@ -384,7 +384,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				GeneratorUtil.doPomXml(velocityContext, ve);
 			}
 
-			doRepositoryAPI(velocityContext, hdLocation);
+			//doRepositoryAPI(velocityContext, hdLocation);
 			doExceptions(velocityContext, hdLocation);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			/*
@@ -443,6 +443,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
+	/*
 	@Override
 	public void doRepositoryAPI(VelocityContext context, String hdLocation) throws Exception{
 
@@ -481,6 +482,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
+	*/
 
 	@Override
 	public void doService(MetaData metaData,
@@ -696,120 +698,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
-	/*
-	@Override
-	public void doJspFacelets(VelocityContext context, String hdLocation)throws Exception {
-		try {
-			log.info("Begin Header");
-			String pathFacelets = properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash;
-			Template templateHeader = ve.getTemplate("JSPheader.vm");
-			StringWriter swHeader = new StringWriter();
-			templateHeader.merge(context, swHeader);
-			FileWriter fwHeader = new FileWriter(pathFacelets+"topbar.xhtml");
-			BufferedWriter bwHeader = new BufferedWriter(fwHeader);
-			bwHeader.write(swHeader.toString());
-			bwHeader.close();
-			fwHeader.close();
-			log.info("End Header");
-
-			log.info("Begin Footer");
-			Template templateFooter = ve.getTemplate("JSPfooter.vm");
-			StringWriter swFooter = new StringWriter();
-			templateFooter.merge(context, swFooter);
-			FileWriter fwFooter = new FileWriter(pathFacelets+"footer.xhtml");
-			BufferedWriter bwFooter = new BufferedWriter(fwFooter);
-			bwFooter.write(swFooter.toString());
-			bwFooter.close();
-			fwFooter.close();
-			log.info("End Footer");
-
-
-			log.info("Begin menu");
-			Template templateCommonsColumns = ve.getTemplate("menu.vm");
-			StringWriter swCommonColumns = new StringWriter();
-			templateCommonsColumns.merge(context, swCommonColumns);
-			FileWriter fwCommonColumns = new FileWriter(pathFacelets+"menu.xhtml");
-			BufferedWriter bwCommonColumns = new BufferedWriter(fwCommonColumns);
-			bwCommonColumns.write(swCommonColumns.toString());
-			bwCommonColumns.close();
-			swCommonColumns.close();
-			log.info("End menu");
-
-			log.info("Begin template");
-			Template templateCommonLayout = ve.getTemplate("template.vm");
-			StringWriter swCommonLayout = new StringWriter();
-			templateCommonLayout.merge(context, swCommonLayout);
-			FileWriter fwCommonLayout = new FileWriter(pathFacelets+"template.xhtml");
-			BufferedWriter bwCommonLayout = new BufferedWriter(fwCommonLayout);
-			bwCommonLayout.write(swCommonLayout.toString());
-			bwCommonLayout.close();
-			fwCommonLayout.close();
-			log.info("End template");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
-	/*
-
-	@Override
-	public void doSpringContextConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
-		try {
-			log.info("Begin applicationContext.xml");
-			String path=properties.getProperty("mainResoruces");
-			Template templateApplicationContext = ve.getTemplate("applicationContext.xml.vm");
-			StringWriter swApplicationContext = new StringWriter();
-			templateApplicationContext.merge(context, swApplicationContext);
-			FileWriter fwApplicationContext = new FileWriter(path + "applicationContext.xml");
-			BufferedWriter bwApplicationContext = new BufferedWriter(fwApplicationContext);
-			bwApplicationContext.write(swApplicationContext.toString());
-			bwApplicationContext.close();
-			fwApplicationContext.close();
-			log.info("End applicationContext.xml");
-
-			log.info("Begin aopContext.xml");
-			Template templateAopContext = ve.getTemplate("aopContext.xml.vm");
-			StringWriter swAopContext = new StringWriter();
-			templateAopContext.merge(context, swAopContext);
-			FileWriter fwAopContext = new FileWriter(path+"aopContext.xml");
-			BufferedWriter bwAopContext = new BufferedWriter(fwAopContext);
-			bwAopContext.write(swAopContext.toString());
-			bwAopContext.close();
-			fwAopContext.close();
-			log.info("End aopContext.xml");
-
-			
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
-	/*
-	@Override
-	public void doSpringSecurityConfFiles(VelocityContext context,String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
-		
-		
-			String path=properties.getProperty("mainResoruces");
-			
-			log.info("Begin securityContext.xml");
-			Template secContext= ve.getTemplate("securityContext.xml.vm");
-			StringWriter swSecContext = new StringWriter();
-			secContext.merge(context, swSecContext);
-			FileWriter fwSecContext = new FileWriter(path+"securityContext.xml");
-			BufferedWriter bwSecContext = new BufferedWriter(fwSecContext);
-			bwSecContext.write(swSecContext.toString());
-			bwSecContext.close();
-			fwSecContext.close();
-			log.info("End securityContext.xml");
-		
-	}
-*/
+	
+	
 	@Override
 	public void doApplicationProperties(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
 
@@ -834,82 +724,6 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		}
 
 	}
-
-	/*
-	@Override
-	public void doBackingBeans(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel)throws Exception {
-		try {
-			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "view" + GeneratorUtil.slash;
-			log.info("Begin BackEndBean ");
-			Template templateBackEndBean= ve.getTemplate("BackingBean.vm");
-			StringWriter swBackEndBean = new StringWriter();
-			templateBackEndBean.merge(context, swBackEndBean);
-			FileWriter fwBackEndBean = new FileWriter(path+ metaData.getRealClassName() + "View.java");
-			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
-			bwBackEndBean.write(swBackEndBean.toString());
-			bwBackEndBean.close();
-			fwBackEndBean.close();
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "View.java");
-			SkyJetUtilities.getInstance().dates = null;
-			SkyJetUtilities.getInstance().datesId = null;
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
-
-	/*
-	@Override
-	public void doAuthenticationProvider(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName) throws Exception{
-
-		try {
-
-			String path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "security" + GeneratorUtil.slash;
-
-			log.info("Begin ZathuraCodeAuthenticationProvider");
-			Template templateBakcEndBean= ve.getTemplate("ZathuraCodeAuthenticationProvider.vm");
-			StringWriter swBackEndBean = new StringWriter();
-			templateBakcEndBean.merge(context, swBackEndBean);
-
-			FileWriter fwBackEndBean = new FileWriter(path+ "ZathuraCodeAuthenticationProvider.java");
-			BufferedWriter bwBackEndBean = new BufferedWriter(fwBackEndBean);
-			bwBackEndBean.write(swBackEndBean.toString());
-			bwBackEndBean.close();
-			fwBackEndBean.close();
-			log.info("Begin BackEndBean");
-			JalopyCodeFormatter.formatJavaCodeFile(path+ "ZathuraCodeAuthenticationProvider.java");
-			SkyJetUtilities.getInstance().dates = null;
-			SkyJetUtilities.getInstance().datesId = null;
-
-
-			//ManageBean for LoginView
-			path =hdLocation + paqueteVirgen + GeneratorUtil.slash + "view" + GeneratorUtil.slash;
-
-			log.info("Begin LoginView");
-			templateBakcEndBean= ve.getTemplate("LoginView.vm");
-			swBackEndBean = new StringWriter();
-			templateBakcEndBean.merge(context, swBackEndBean);
-
-			fwBackEndBean = new FileWriter(path+ "LoginView.java");
-			bwBackEndBean = new BufferedWriter(fwBackEndBean);
-			bwBackEndBean.write(swBackEndBean.toString());
-			bwBackEndBean.close();
-			fwBackEndBean.close();
-			log.info("Begin BackEndBean");
-			JalopyCodeFormatter.formatJavaCodeFile(path+ "LoginView.java");
-			SkyJetUtilities.getInstance().dates = null;
-			SkyJetUtilities.getInstance().datesId = null;
-
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-	}
-	*/
 
 	@Override
 	public void doDTOMapper(MetaData metaData, VelocityContext context,String hdLocation, MetaDataModel dataModel) throws Exception{
@@ -978,41 +792,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
-	/*
-	@Override
-	public void doMvcDispatcherServlet(MetaDataModel dataModel,
-			VelocityContext context, String hdLocation) throws Exception{
-		try {
-			String path=properties.getProperty("webRootFolderPath") + "WEB-INF" + GeneratorUtil.slash;
-			log.info("Begin Initial MVC Dispatcher");
-			Template templateInitialMenu = ve.getTemplate("mvcDispatcherServletSkyJet.vm");
-			StringWriter swInitialMenu = new StringWriter();
-			templateInitialMenu.merge(context, swInitialMenu);
-			FileWriter fwInitialMenu = new FileWriter(path+"mvc-dispatcher-servlet.xml");
-			BufferedWriter bwInitialMenu = new BufferedWriter(fwInitialMenu);
-			bwInitialMenu.write(swInitialMenu.toString());
-			bwInitialMenu.close();
-			fwInitialMenu.close();
-			log.info("End Initial  XHTML");
-			
-			log.info("Begin Initial web.xml");
-			Template templateWeb = ve.getTemplate("web.vm");
-			StringWriter swWeb = new StringWriter();
-			templateWeb.merge(context, swWeb);
-			FileWriter fwWeb = new FileWriter(path+"web.xml");
-			BufferedWriter bwWeb = new BufferedWriter(fwWeb);
-			bwWeb.write(swWeb.toString());
-			bwWeb.close();
-			bwWeb.close();
-			log.info("End web.xml");
-			
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
+	
 
 	@Override
 	public void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,

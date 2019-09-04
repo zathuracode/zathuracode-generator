@@ -1,5 +1,5 @@
 package  ${virginPackage}.service;
-import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
+
 
 import java.math.*;
 import java.util.*;
@@ -14,37 +14,19 @@ import $package.${metaData.getRealClassName()};
 * 
 */
 public interface ${metaData.getRealClassName()}Service {
-public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() throws Exception;
+
+	public List<${metaData.getRealClassName()}> findAll();
 	
+    public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity)throws Exception;
     
-    /**
-	 * Save an new ${metaData.getRealClassName()} entity
-	 */
-    public void save${metaData.getRealClassName()}(${metaData.getRealClassName()} entity)throws Exception;
-    /**
-	 * Delete an existing ${metaData.getRealClassName()} entity
-	 * 
-	 */
-    public void delete${metaData.getRealClassName()}(${metaData.getRealClassName()} entity)throws Exception;
-     /**
-	 * Update an existing ${metaData.getRealClassName()} entity
-	 * 
-	 */
-    public void update${metaData.getRealClassName()}(${metaData.getRealClassName()} entity)throws Exception;
-    /**
-	 * Load an existing ${metaData.getRealClassName()} entity
-	 * 
-	 */
-    public ${metaData.getRealClassName()} get${metaData.getRealClassName()}(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception;
+    public ${metaData.getRealClassName()} update(${metaData.getRealClassName()} entity)throws Exception;
     
-    public List<${metaData.getRealClassName()}> findByCriteria(Object[] variables,Object[] variablesBetween, Object[] variablesBetweenDates)throws Exception ;
+    public void delete(${metaData.getRealClassName()} entity)throws Exception;
     
-    public List<${metaData.getRealClassName()}> findPage${metaData.getRealClassName()}(String sortColumnName, boolean sortAscending, int startRow, int maxResults) throws Exception ;
+    public void deleteById(${metaData.primaryKey.getRealClassName()} id)throws Exception;
     
-    public Long findTotalNumber${metaData.getRealClassName()}() throws Exception ;
-	
-	public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception;
+    public Optional<${metaData.getRealClassName()}> findById(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception;
     
-    public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception;
+    public void validate(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception;
     
 }

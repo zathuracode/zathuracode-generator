@@ -52,7 +52,7 @@ public interface IZathuraSkyJetTemplate {
 	 * @param context the context
 	 * @param hdLocation the hd location
 	 */
-	public void doRepositoryAPI(VelocityContext context, String hdLocation)throws Exception;
+	//public void doRepositoryAPI(VelocityContext context, String hdLocation)throws Exception;
 
 	/**
 	 * Do logic spring xml hibernate.

@@ -70,8 +70,8 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 		#end
     #end
                 
-                		
-	public void validate${metaData.getRealClassName()}(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{		
+    @Override        		
+	public void validate(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{		
 		 try {
 			Set<ConstraintViolation<${metaData.getRealClassName()}>> constraintViolations =validator.validate(${metaData.getRealClassNameAsVariable()});
 			 if(constraintViolations.size()>0){
@@ -89,53 +89,42 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 		}
 	}
 
+	@Override
 	@Transactional(readOnly=true)
-	public List<${metaData.getRealClassName()}> get${metaData.getRealClassName()}() throws Exception{
-
-	log.debug("finding all ${metaData.getRealClassName()} instances");
-
-    List<${metaData.getRealClassName()}> list = new ArrayList<${metaData.getRealClassName()}>();
-            try {
-            list = ${metaData.getRealClassNameAsVariable()}Repository.findAll();
-            } catch (Exception e) {
-            log.error("finding all ${metaData.getRealClassName()} failed", e);
-            throw new ZMessManager().new GettingException(ZMessManager.ALL+"${metaData.getRealClassName()}");
-            }finally{
-            }
-            return list;
-            }
+	public List<${metaData.getRealClassName()}> findAll(){
+		log.debug("finding all ${metaData.getRealClassName()} instances");
+       	return ${metaData.getRealClassNameAsVariable()}Repository.findAll();
+    }
 			
 			
-			
-			@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-            public void save${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception {
-				log.debug("saving ${metaData.getRealClassName()} instance");
-            try {
-            
-            if(entity==null){
-	    		throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
-	    	}
-			
-			validate${metaData.getRealClassName()}(entity);
-
-
-            if(get${metaData.getRealClassName()}(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()) != null){
-            throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
-            ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
-            log.debug("save ${metaData.getRealClassName()} successful");
-            } catch (Exception e) {
-            	log.error("save ${metaData.getRealClassName()} failed", e);
-            	throw e;
-            }finally{
-            }
-            }
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)			
+    public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity) throws Exception {
+		log.debug("saving ${metaData.getRealClassName()} instance");
+	    try {
+	    
+	    if(entity==null){
+			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
+		}
+		
+		validate(entity);	
+	
+		if(${metaData.getRealClassNameAsVariable()}Repository.findById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()).isPresent()){
+           throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+        }    
+	
+	    return ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
+	    
+	    } catch (Exception e) {
+	    	log.error("save ${metaData.getRealClassName()} failed", e);
+	    	throw e;
+	    }
+    }
 			
 			
-			
+			@Override
 			@Transactional(readOnly=false , propagation=Propagation.REQUIRED)
-            public void delete${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception {
+            public void delete(${metaData.getRealClassName()} entity) throws Exception {
             	log.debug("deleting ${metaData.getRealClassName()} instance");
             	
 	            if(entity==null){
@@ -151,28 +140,22 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
                     throw new ZMessManager().new EmptyFieldException("${metaData.primaryKey.getShowName()}");
                     }
             #end
+            
             #if(${metaData.isGetOneToManyProperties()})
-                #foreach($member  in ${metaData.getOneToManyProperties()})
-                    List<${member.getRealClassName()}> ${member.name} = null;
-                #end
+	            findById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()).ifPresent(entidad->{	            	
+	                #foreach($member  in ${metaData.getOneToManyProperties()})
+	                    List<${member.getRealClassName()}> ${member.name} = entidad.get${member.getRealClassName()}s();
+	                    
+	                    if(Utilities.validationsList(${member.name})==true){
+                       	 	throw new ZMessManager().new DeletingException("${member.name}");
+                        }
+	                #end
+	            });
             #end
+           
 
             try {
-            #if(${metaData.isGetOneToManyProperties()})
-                #foreach($member  in ${metaData.getOneToManyProperties()})
-                    #if(${metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()})
-                        ${member.name}= ${member.getRealClassVariableName()}Repository.findByProperty("${metaData.getRealClassNameAsVariable()}.${metaData.primaryKey.getShowName()}", entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
-                        if(Utilities.validationsList(${member.name})==true){
-                        throw new ZMessManager().new DeletingException("${member.name}");
-                        }
-                        #else
-                            ${member.name}= ${member.getRealClassVariableName()}Repository.findByProperty("${metaData.getRealClassNameAsVariable()}.${metaData.primaryKey.getShowName()}", entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
-                            if(Utilities.validationsList(${member.name})==true){
-                            throw new ZMessManager().new DeletingException("${member.name}");
-                            }
-                    #end
-				#end
-			#end
+            
             ${metaData.getRealClassNameAsVariable()}Repository.deleteById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
             log.debug("delete ${metaData.getRealClassName()} successful");
             
@@ -180,263 +163,48 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
             	log.error("delete ${metaData.getRealClassName()} failed", e);
             	throw e;
             }
-            finally{
+            	
             }
-            }
-			
-			
-			
+            
+            @Override
 			@Transactional(readOnly=false , propagation=Propagation.REQUIRED)
-            public void update${metaData.getRealClassName()}(${metaData.getRealClassName()} entity) throws Exception {
+            public void deleteById(${metaData.primaryKey.getRealClassName()} id) throws Exception {            
+            	log.debug("deleting ${metaData.getRealClassName()} instance");
+            	if(id==null){
+            		throw new ZMessManager().new EmptyFieldException("${metaData.primaryKey.getShowName()}");
+            	}
+            	if(${metaData.getRealClassNameAsVariable()}Repository.findById(id).isPresent()){
+           			delete(${metaData.getRealClassNameAsVariable()}Repository.findById(id).get());
+       			}    
+            }	
+			
+			@Override
+			@Transactional(readOnly=false , propagation=Propagation.REQUIRED)
+            public ${metaData.getRealClassName()} update(${metaData.getRealClassName()} entity) throws Exception {
 
 				log.debug("updating ${metaData.getRealClassName()} instance");
 				
-            try {
-            
-            	if(entity==null){
-	    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
-	    		}
-	    		
-            validate${metaData.getRealClassName()}(entity);
-
-            ${metaData.getRealClassNameAsVariable()}Repository.update(entity);
-            
-            log.debug("update ${metaData.getRealClassName()} successful");
-            
-            } catch (Exception e) {
-            	log.error("update ${metaData.getRealClassName()} failed", e);
-            	throw e;		
-            }finally{
-            }
+	            try {
+	            
+	            	if(entity==null){
+		    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
+		    		}
+		    		
+	            validate(entity);
+	
+	            return ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
+	            
+	            } catch (Exception e) {
+	            	log.error("update ${metaData.getRealClassName()} failed", e);
+	            	throw e;		
+	            }
             }
 			
-			## get Data for ListDataTable y ListDataTableEditable
+			@Override
 			@Transactional(readOnly=true)
-			public List<${metaData.getRealClassName()}DTO>getData${metaData.getRealClassName()}()throws Exception{
-				try{
-				List<${metaData.getRealClassName()}> ${metaData.getRealClassNameAsVariable()} = 
-				${metaData.getRealClassNameAsVariable()}Repository.findAll();
-					
-					List<${metaData.getRealClassName()}DTO > ${metaData.getRealClassNameAsVariable()}DTO = new ArrayList<${metaData.getRealClassName()}DTO>();
-						for (${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}Tmp : ${metaData.getRealClassNameAsVariable()}) {
-							
-							
-							${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO2 = 
-								${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}Tmp);
-							${metaData.getRealClassNameAsVariable()}DTO.add(${metaData.getRealClassNameAsVariable()}DTO2);	
-						}
-						
-						return ${metaData.getRealClassNameAsVariable()}DTO ;
-					
-				}catch(Exception e){
-					throw e;	
-				}
-			}
-			
-			
-			@Transactional(readOnly=true)
-            public ${metaData.getRealClassName()} get${metaData.getRealClassName()}(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception {
-            
-            log.debug("getting ${metaData.getRealClassName()} instance");
-            
-            ${metaData.getRealClassName()} entity = null;
-            try {
-            	if(${metaData.getRealClassNameAsVariable()}Repository.findById(${metaData.primaryKey.getShowName()}).isPresent()){
-            		entity = ${metaData.getRealClassNameAsVariable()}Repository.findById(${metaData.primaryKey.getShowName()}).get();
-            	}
-            } catch (Exception e) {
-            	log.error("get ${metaData.getRealClassName()} failed", e);
-             throw new ZMessManager().new FindingException("${metaData.getRealClassName()}");
-            }finally{
-            }
-            return entity;
+            public Optional<${metaData.getRealClassName()}> findById(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception {            
+            	log.debug("getting ${metaData.getRealClassName()} instance");
+            	return ${metaData.getRealClassNameAsVariable()}Repository.findById(${metaData.primaryKey.getShowName()});
             }
 			
-			
-			@Transactional(readOnly=true)
-            public List<${metaData.getRealClassName()}> findPage${metaData.getRealClassName()}(String sortColumnName, boolean sortAscending,
-                int startRow, int maxResults) throws Exception {
-                List<${metaData.getRealClassName()}> entity = null;
-                    try {
-                    entity = ${metaData.getRealClassNameAsVariable()}Repository
-                    .findPage(sortColumnName, sortAscending, startRow,
-                    maxResults);
-                    } catch (Exception e) {
-                    throw new ZMessManager().new FindingException("${metaData.getRealClassName()} Count");
-                    } finally {
-                    }
-                    return entity;
-                    }
-					
-					
-					
-					@Transactional(readOnly=true)
-                    public Long findTotalNumber${metaData.getRealClassName()}() throws Exception {
-                    Long entity = null;
-                    try {
-                    entity = ${metaData.getRealClassNameAsVariable()}Repository.count();
-                    } catch (Exception e) {
-                     throw new ZMessManager().new FindingException("${metaData.getRealClassName()} Count");
-                    } finally {
-                    }
-                    return entity;
-                    }
-					
-					
-					
-					
-                    /**
-                    * 
-                    * @param varibles
-                    *            este arreglo debera tener:
-                    * 
-                    * [0] = String variable = (String) varibles[i]; representa como se llama la
-                    * variable en el pojo
-                    * 
-                    * [1] = Boolean booVariable = (Boolean) varibles[i + 1]; representa si el
-                    * valor necesita o no ''(comillas simples)usado para campos de tipo string
-                    * 
-                    * [2] = Object value = varibles[i + 2]; representa el valor que se va a
-                    * buscar en la BD
-                    * 
-                    * [3] = String comparator = (String) varibles[i + 3]; representa que tipo
-                    * de busqueda voy a hacer.., ejemplo: where nombre=william o where nombre<>william,
-                        * en este campo iria el tipo de comparador que quiero si es = o <>
-                            * 
-                            * Se itera de 4 en 4..., entonces 4 registros del arreglo representan 1
-                            * busqueda en un campo, si se ponen mas pues el continuara buscando en lo
-                            * que se le ingresen en los otros 4
-                            * 
-                            * 
-                            * @param variablesBetween
-                            * 
-                            * la diferencia son estas dos posiciones
-                            * 
-                            * [0] = String variable = (String) varibles[j]; la variable ne la BD que va
-                            * a ser buscada en un rango
-                            * 
-                            * [1] = Object value = varibles[j + 1]; valor 1 para buscar en un rango
-                            * 
-                            * [2] = Object value2 = varibles[j + 2]; valor 2 para buscar en un rango
-                            * ejempolo: a > 1 and a < 5 --> 1 seria value y 5 seria value2
-                                * 
-                                * [3] = String comparator1 = (String) varibles[j + 3]; comparador 1
-                                * ejemplo: a comparator1 1 and a < 5
-                                    * 
-                                    * [4] = String comparator2 = (String) varibles[j + 4]; comparador 2
-                                    * ejemplo: a comparador1>1  and a comparador2<5  (el original: a > 1 and a <
-                                            * 5) *
-                                            * @param variablesBetweenDates(en
-                                            *            este caso solo para mysql)
-                                            *  [0] = String variable = (String) varibles[k]; el nombre de la variable que hace referencia a
-                                            *            una fecha
-                                            * 
-                                            * [1] = Object object1 = varibles[k + 2]; fecha 1 a comparar(deben ser
-                                            * dates)
-                                            * 
-                                            * [2] = Object object2 = varibles[k + 3]; fecha 2 a comparar(deben ser
-                                            * dates)
-                                            * 
-                                            * esto hace un between entre las dos fechas.
-                                            * 
-                                            * @return lista con los objetos que se necesiten
-                                            * @throws Exception
-                                            */
-											@Transactional(readOnly=true)
-                                            public List<${metaData.getRealClassName()}> findByCriteria(Object[] variables, Object[] variablesBetween,
-                                                Object[] variablesBetweenDates) throws Exception {
-                                                List<${metaData.getRealClassName()}> list = new ArrayList<${metaData.getRealClassName()}>();
-                                                        String where = new String();
-                                                        String tempWhere = new String();
-                                                        if (variables != null) {
-                                                        for (int i = 0; i < variables.length; i++) {
-                                                            if (variables[i] != null && variables[i + 1] != null
-                                                            && variables[i + 2] != null
-                                                            && variables[i + 3] != null) {
-                                                            String variable = (String) variables[i];
-                                                            Boolean booVariable = (Boolean) variables[i + 1];
-                                                            Object value = variables[i + 2];
-                                                            String comparator = (String) variables[i + 3];
-                                                            if (booVariable.booleanValue()) {
-                                                            tempWhere = (tempWhere.length() == 0) ? ("(model."
-                                                            + variable + " " + comparator + " \'" + value + "\' )")
-                                                            : (tempWhere + " AND (model." + variable + " "
-                                                            + comparator + " \'" + value + "\' )");
-                                                            } else {
-                                                            tempWhere = (tempWhere.length() == 0) ? ("(model."
-                                                            + variable + " " + comparator + " " + value + " )")
-                                                            : (tempWhere + " AND (model." + variable + " "
-                                                            + comparator + " " + value + " )");
-                                                            }
-                                                            }
-                                                            i = i + 3;
-                                                            }
-                                                            }
-                                                            if (variablesBetween != null) {
-                                                            for (int j = 0; j < variablesBetween.length; j++) {
-                                                                if (variablesBetween[j] != null
-                                                                && variablesBetween[j + 1] != null
-                                                                && variablesBetween[j + 2] != null
-                                                                && variablesBetween[j + 3] != null
-                                                                && variablesBetween[j + 4] != null) {
-                                                                String variable = (String) variablesBetween[j];
-                                                                Object value = variablesBetween[j + 1];
-                                                                Object value2 = variablesBetween[j + 2];
-                                                                String comparator1 = (String) variablesBetween[j + 3];
-                                                                String comparator2 = (String) variablesBetween[j + 4];
-                                                                tempWhere = (tempWhere.length() == 0) ? ("(" + value
-                                                                + " " + comparator1 + " " + variable + " and "
-                                                                + variable + " " + comparator2 + " " + value2 + " )")
-                                                                : (tempWhere + " AND (" + value + " "
-                                                                + comparator1 + " " + variable
-                                                                + " and " + variable + " "
-                                                                + comparator2 + " " + value2 + " )");
-                                                                }
-                                                                j = j + 4;
-                                                                }
-                                                                }
-                                                                if (variablesBetweenDates != null) {
-                                                                for (int k = 0; k < variablesBetweenDates.length; k++) {
-                                                                    if (variablesBetweenDates[k] != null
-                                                                    && variablesBetweenDates[k + 1] != null
-                                                                    && variablesBetweenDates[k + 2] != null) {
-                                                                    String variable = (String) variablesBetweenDates[k];
-                                                                    Object object1 = variablesBetweenDates[k + 1];
-                                                                    Object object2 = variablesBetweenDates[k + 2];
-                                                                    String value = null;
-                                                                    String value2 = null;
-                                                                    try {
-                                                                    Date date1 = (Date) object1;
-                                                                    Date date2 = (Date) object2;
-                                                                    value = Utilities
-                                                                    .formatDateWithoutTimeInAStringForBetweenWhere(date1);
-                                                                    value2 = Utilities
-                                                                    .formatDateWithoutTimeInAStringForBetweenWhere(date2);
-                                                                    } catch (Exception e) {
-                                                                    list = null;
-                                                                    throw e;
-                                                                    }
-                                                                    tempWhere = (tempWhere.length() == 0) ? ("(model."
-                                                                    + variable + " between " + value + " and "
-                                                                    + value2 + ")") : (tempWhere + " AND (model."
-                                                                    + variable + " between " + value + " and "
-                                                                    + value2 + ")");
-                                                                    }
-                                                                    k = k + 2;
-                                                                    }
-                                                                    }
-                                                                    if (tempWhere.length() == 0) {
-                                                                    where = null;
-                                                                    }else{
-                                                                    where = "(" + tempWhere + ")";
-                                                                    }
-                                                                    try {
-                                                                    list = ${metaData.getRealClassNameAsVariable()}Repository
-                                                                    .findByCriteria(where);
-                                                                    } catch (Exception e) {
-                                                                    throw new Exception(e.getMessage());
-                                                                    } finally {
-                                                                    }
-                                                                    return list;
-                                                                    }
-                                                                    }
+}

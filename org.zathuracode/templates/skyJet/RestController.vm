@@ -37,7 +37,7 @@ public class ${metaData.getRealClassName()}RestController {
     	try {
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
     		
-    		${metaData.getRealClassNameAsVariable()}Service.save${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+    		${metaData.getRealClassNameAsVariable()}Service.save(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     		throw e;
@@ -60,13 +60,13 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).get();
 				
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).get();
 			#end
     	
-    		${metaData.getRealClassNameAsVariable()}Service.delete${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+    		${metaData.getRealClassNameAsVariable()}Service.delete(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     		throw e;
@@ -78,7 +78,7 @@ public class ${metaData.getRealClassName()}RestController {
     	try {
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
     		
-    		${metaData.getRealClassNameAsVariable()}Service.update${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()});
+    		${metaData.getRealClassNameAsVariable()}Service.update(${metaData.getRealClassNameAsVariable()});
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     		throw e;
@@ -88,7 +88,8 @@ public class ${metaData.getRealClassName()}RestController {
     @GetMapping(value = "/getData${metaData.getRealClassName()}")
     public List<${metaData.getRealClassName()}DTO> getData${metaData.getRealClassName()}() throws Exception {
 		try {
-			return ${metaData.getRealClassNameAsVariable()}Service.getData${metaData.getRealClassName()}();
+			
+			return ${metaData.getRealClassNameAsVariable()}Mapper.list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}Service.findAll());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw e;
@@ -110,10 +111,10 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${metaData.primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).get();
 				
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.get${metaData.getRealClassName()}(${primaryKey.getShowName()});
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).get();
 			#end
     					
 			return ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()});

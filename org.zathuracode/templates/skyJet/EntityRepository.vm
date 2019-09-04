@@ -2,6 +2,8 @@ package  ${virginPackage}.repository;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import $package.${metaData.getRealClassName()};
 #if($composedKey == true)
     import $package.${metaData.primaryKey.getRealClassName()};
@@ -10,6 +12,6 @@ import $package.${metaData.getRealClassName()};
 * Interface for   ${metaData.getRealClassName()}Repository.
 *
 */
-public interface  ${metaData.getRealClassName()}Repository extends JpaGenericRepository<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> {
+public interface  ${metaData.getRealClassName()}Repository extends JpaRepository<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> {
 
 }
