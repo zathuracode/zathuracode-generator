@@ -3,6 +3,7 @@ package org.zcode.eclipse.plugin.generator.gui;
 
 import java.util.HashMap;
 
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -16,7 +17,6 @@ import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.factory.ZathuraGeneratorFactory;
 import org.zcode.generator.model.GeneratorModel;
 import org.zcode.generator.utilities.GeneratorUtil;
-import org.eclipse.jface.viewers.ComboViewer;
 
 
 // TODO: Auto-generated Javadoc

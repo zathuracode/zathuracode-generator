@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
-
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.ManyToOneMember;

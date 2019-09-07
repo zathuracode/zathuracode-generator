@@ -3,9 +3,6 @@ package org.zcode.eclipse.plugin.generator.gui;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
-
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

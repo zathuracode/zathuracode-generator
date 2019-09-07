@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
-import org.zcode.eclipse.plugin.generator.ZathuraGeneratorActivator;
 import org.zcode.eclipse.plugin.generator.utilities.ConnectionModel;
 import org.zcode.eclipse.plugin.generator.utilities.ConnectionsUtils;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;

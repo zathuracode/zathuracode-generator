@@ -9,7 +9,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
-import org.zcode.eclipse.plugin.generator.gui.Messages;
 import org.zcode.eclipse.plugin.generator.gui.WizardMainZathura;
 import org.zcode.eclipse.plugin.generator.utilities.ConfigEclipsePluginPath;
 

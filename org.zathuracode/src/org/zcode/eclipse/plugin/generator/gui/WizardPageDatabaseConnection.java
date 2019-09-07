@@ -22,13 +22,11 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zcode.eclipse.plugin.generator.ZathuraGeneratorActivator;
 import org.zcode.eclipse.plugin.generator.utilities.ConnectionsUtils;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.eclipse.plugin.generator.utilities.ZathuraGeneratorLog;
 import org.zcode.reverse.utilities.DatabaseTypeModel;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
-import org.zcode.reverse.utilities.ZathuraReverseJarLoader;
 
 
 // TODO: Auto-generated Javadoc
