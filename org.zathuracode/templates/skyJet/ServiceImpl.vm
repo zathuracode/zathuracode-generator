@@ -1,5 +1,5 @@
 package  ${virginPackage}.service;
-import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
+
 
 import java.math.*;
 import java.util.*;
@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import  ${virginPackage}.exception.*;
-import 	${virginPackage}.repository.*;
-import  ${virginPackage}.utility.Utilities;
-import  ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
+import ${virginPackage}.exception.*;
+import ${virginPackage}.repository.*;
+import ${virginPackage}.utility.Utilities;
+
 import ${package}.*;
 
 import javax.validation.ConstraintViolation;
@@ -33,42 +33,11 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 
 	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}ServiceImpl.class);
 
-	/**
-	 * Repository injected by Spring that manages ${metaData.getRealClassName()} entities
-	 * 
-	 */
 	@Autowired
 	private ${metaData.getRealClassName()}Repository ${metaData.getRealClassNameAsVariable()}Repository;
 	
 	@Autowired
-	private ${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
-	
-	@Autowired
 	private Validator validator;
-	
-    #if(${metaData.isGetOneToManyProperties()})
-		#foreach($member  in ${metaData.getOneToManyProperties()})
-			/**
-	 		 * Repository injected by Spring that manages ${member.getRealClassName()} entities
-	 		 * 
-	 		 */
-			@Autowired
-			private ${member.getRealClassName()}Repository ${member.getRealClassVariableName()}Repository;
-			
-			
-		#end
-    #end
-    
-    #if(${metaData.isGetManyToOneProperties()})
-		#foreach($member  in ${metaData.getManyToOneProperties()})
-            /**
-		 	* Service injected by Spring that manages ${member.getRealClassName()} entities
-		 	* 
-		 	*/
-			@Autowired
-			${member.getRealClassName()}Service service${member.getRealClassName()}$velocityCount;
-		#end
-    #end
                 
     @Override        		
 	public void validate(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{		

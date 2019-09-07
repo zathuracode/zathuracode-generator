@@ -8,7 +8,7 @@
 		<gui-name>SkyJet</gui-name>
 		<class>org.zcode.generator.robot.skyjet.SkyJet</class>
 		<persistence>jpa</persistence>
-		<zathuraVersion>6.0</zathuraVersion>
+		<zathuraVersion>8.0</zathuraVersion>
 		<description>
 		<![CDATA[<!doctype html>
 <html>
@@ -54,21 +54,13 @@
 </head>
                <body>
                <h3><img alt="SkyJet" src="${RELATIVE_PATH}/icons/Skyjet_Zathuracode.png" style="width: 150px;"/></h3>
-                        <p>Generate Spring Web App and Spring microservices App using the following frameworks</p>
+                        <p>Generate Spring Boot microservices App using the following frameworks</p>
                         <p>&nbsp;</p>
 				   
 				   
                         <ul>
-                           <li>Primefaces 			6.2</li>
-                           <li>Mojarra 				2.2.17</li>
-                           <li>Spring Framework 	5.0.8</li>
-                           <li>Spring Data JPA 		2.0.9</li>
-                           <li>Spring Security 		5.0.7</li>                    
-                           <li>Hibernate 			5.3.3</li>
-                           <li>Hibernate Validator 	6.0.11</li>
-                           <li>log4J2 				2.11.0</li>
-                           <li>Jackson Core 		2.9.6</li>
-                          <li>JPA 					2.2</li>
+                           <li>Spring Boot 		</li>
+                           <li>Spring Data JPA	</li>
                         </ul>
                         
                         

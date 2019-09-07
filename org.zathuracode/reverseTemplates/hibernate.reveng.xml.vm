@@ -3,48 +3,6 @@
 
 <hibernate-reverse-engineering>
 	<type-mapping>
-		#if(${makeItXml} == true)
-		<sql-type jdbc-type="CHAR" hibernate-type="java.lang.String">
-		</sql-type>
-		<sql-type jdbc-type="VARCHAR" hibernate-type="java.lang.String">
-		</sql-type>
-		<sql-type jdbc-type="LONGVARCHAR" hibernate-type="java.lang.String">
-		</sql-type>
-		<sql-type jdbc-type="DATE" hibernate-type="java.util.Date">
-		</sql-type>
-		<sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Date">
-		</sql-type>
-		<sql-type jdbc-type="TIME" hibernate-type="java.util.Date">
-		</sql-type>		
-		<sql-type jdbc-type="NUMERIC" scale="0" hibernate-type="java.lang.Long">
-		</sql-type>
-		<sql-type jdbc-type="NUMERIC" hibernate-type="java.lang.Double">
-		</sql-type>		
-		<sql-type jdbc-type="DECIMAL" scale="0" hibernate-type="java.lang.Long">
-		</sql-type>
-		<sql-type jdbc-type="DECIMAL" hibernate-type="java.lang.Double">
-		</sql-type>			
-		<sql-type jdbc-type="TINYINT" hibernate-type="java.lang.Integer">
-		</sql-type>
-		<sql-type jdbc-type="SMALLINT" hibernate-type="java.lang.Integer">
-		</sql-type>
-		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer">
-		</sql-type>
-		<sql-type jdbc-type="BIGINT" hibernate-type="java.lang.Long">
-		</sql-type>
-		<sql-type jdbc-type="REAL" hibernate-type="java.lang.Float">
-		</sql-type>
-		<sql-type jdbc-type="FLOAT" hibernate-type="java.lang.Float">
-		</sql-type>
-		<sql-type jdbc-type="DOUBLE" hibernate-type="java.lang.Double">
-		</sql-type>
-		<sql-type jdbc-type="BOOLEAN" hibernate-type="java.lang.String">
-		</sql-type>		
-		<sql-type jdbc-type="BIT" hibernate-type="java.lang.String">
-		</sql-type>
-		<sql-type jdbc-type="OTHER" hibernate-type="java.sql.Timestamp" />
-		#end
-		#if(${makeItXml} == false)
 		<sql-type jdbc-type="CHAR" hibernate-type="String">
 		</sql-type>
 		<sql-type jdbc-type="VARCHAR" hibernate-type="String">
@@ -84,7 +42,6 @@
 		<sql-type jdbc-type="BIT" hibernate-type="String">
 		</sql-type>
 		<sql-type jdbc-type="OTHER" hibernate-type="java.sql.Timestamp" />
-		#end	
 		
 	</type-mapping>
 	#if(${catalogAndSchema}=='1')

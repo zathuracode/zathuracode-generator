@@ -59,9 +59,6 @@ public class RunningGenerationReverseEngineering implements IRunnableWithProgres
 			// Cierra todas la conexiones
 			ZathuraReverseEngineeringUtil.closeAll();
 
-			// copia los Drivers de la base de datos a la carpeta del proyecto
-			EclipseGeneratorUtil.copyDriverJars();
-
 			monitor.subTask("Refresh " + EclipseGeneratorUtil.projectName + " project...");
 			EclipseGeneratorUtil.project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 

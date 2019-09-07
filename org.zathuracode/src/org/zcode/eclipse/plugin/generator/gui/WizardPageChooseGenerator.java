@@ -85,7 +85,6 @@ public class WizardPageChooseGenerator extends WizardPage {
 				if (generatorModel != null) {
 					//Se reemplaza el texto ${RELATIVE_PATH} por la ruta relativa del proyecto,
 					//para que al momento de mostrar el html, se muestren las imagenes
-					//Andres Puerta
 					String descriptionHTML = generatorModel.getDescription().replace("${RELATIVE_PATH}", GeneratorUtil.getFullPath()); //$NON-NLS-1$
 					bwrDescription.setText(descriptionHTML);
 					setPageComplete(true);
@@ -110,14 +109,8 @@ public class WizardPageChooseGenerator extends WizardPage {
 	public void loadListGeneratorsVersion3_1() {
 		if (listGeneratorsVersion3_1 != null) {
 			listGeneratorsVersion3_1.removeAll();
-			for (GeneratorModel generatorModel : theGenerators.values()) {
-				if (generatorModel.getZathuraVersion().equals("6.0")) { //$NON-NLS-1$
-					if (EclipseGeneratorUtil.makeItXml == true && generatorModel.getPersistence().equals("hibernateCore") == true) { //$NON-NLS-1$
-						listGeneratorsVersion3_1.add(generatorModel.getGuiName());
-					} else if (EclipseGeneratorUtil.makeItXml == false && generatorModel.getPersistence().equals("jpa") == true) { //$NON-NLS-1$
-						listGeneratorsVersion3_1.add(generatorModel.getGuiName());
-					}
-				}
+			for (GeneratorModel generatorModel : theGenerators.values()) {				
+					listGeneratorsVersion3_1.add(generatorModel.getGuiName());
 			}
 		}
 

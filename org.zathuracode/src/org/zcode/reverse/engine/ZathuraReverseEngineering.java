@@ -93,9 +93,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	
 	/** The destination directory. */
 	private String destinationDirectory;
-	
-	/** The make it xml. */
-	private Boolean makeItXml;
 
 	/** The catalog. */
 	private String catalog;
@@ -131,10 +128,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		schema = connectionProperties.getProperty("schema");
 		catalog = connectionProperties.getProperty("catalog");
 		catalogAndSchema = connectionProperties.getProperty("catalogAndSchema");
-
-		// Este parametro es para que genere hibernatexml y los pojos con
-		// hibernate
-		makeItXml = Boolean.parseBoolean(connectionProperties.getProperty("makeItXml"));
 
 		this.tablesList = tables;
 
@@ -197,7 +190,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			context.put("connectionPassword", connectionPassword);
 			context.put("companyDomainName", companyDomainName);
 			context.put("companyDomainNameForPojoLocation", companyDomainNameForPojoLocation);
-			context.put("makeItXml", makeItXml);
+			
 			context.put("connectionDriverJarPath", connectionDriverJarPath);
 			context.put("destinationDirectory", destinationDirectory);
 			context.put("tablesList", tablesList);

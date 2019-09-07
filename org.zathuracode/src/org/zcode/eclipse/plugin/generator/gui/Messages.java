@@ -35,8 +35,6 @@ public class Messages extends NLS {
 
 	public static String WizardPageChooseSourceFolderAndPackage_1;
 
-	public static String WizardPageChooseSourceFolderAndPackage_10;
-
 	public static String WizardPageChooseSourceFolderAndPackage_11;
 
 	public static String WizardPageChooseSourceFolderAndPackage_12;

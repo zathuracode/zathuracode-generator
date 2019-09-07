@@ -30,7 +30,7 @@ public class JenderTest {
 	static String projectName = "demo-banco-jender-web";
 	static String folderProjectPath = fullPathProject+"/src/main/java/";
 	
-	static String webRootFolderPath = fullPathProject="/src/main/webapp/";
+	
 	static File pomFile =new File(fullPathProject+"/pom.xml");
 	
 	public static void main(String[] args) {
@@ -40,7 +40,7 @@ public class JenderTest {
 			
 			//Cargo los generadores
 			ZathuraGeneratorFactory.loadZathuraGenerators();			
-			IZathuraGenerator zathuraGenerator=ZathuraGeneratorFactory.createZathuraGenerator("Jender");
+			IZathuraGenerator zathuraGenerator=ZathuraGeneratorFactory.createZathuraGenerator("SkyJet");
 			EclipseGeneratorUtil.javaVersion="1.8";
 			EclipseGeneratorUtil.metaDataReader = MetaDataReaderFactory.JPAEntityLoaderEngine;
 			EclipseGeneratorUtil.fullPathProject=fullPathProject;
@@ -48,8 +48,8 @@ public class JenderTest {
 			EclipseGeneratorUtil.javaEntityPackage=jpaPckgName;
 			EclipseGeneratorUtil.projectName=projectName;
 			EclipseGeneratorUtil.javaSourceFolderPath=folderProjectPath;
-			EclipseGeneratorUtil.webRootFolderPath=webRootFolderPath;
-			EclipseGeneratorUtil.libFolderPath="";
+			
+			
 			EclipseGeneratorUtil.companyDomainName=jpaPckgName;
 			
 			//Maven POM JDBC Connector
@@ -69,8 +69,7 @@ public class JenderTest {
 			EclipseGeneratorUtil.connectionUsername="postgres";
 			EclipseGeneratorUtil.connectionPassword="admin";
 			EclipseGeneratorUtil.companyDomainName=jpaPckgName;
-			//Sirve para saber si es Hibernate core o JPA en true es HibernateCore
-			EclipseGeneratorUtil.makeItXml=true;
+
 			EclipseGeneratorUtil.schema="public";
 			EclipseGeneratorUtil.catalogAndSchema="2";
 			EclipseGeneratorUtil.catalog=null;
@@ -95,18 +94,14 @@ public class JenderTest {
 			properties.put("jpaPath", jpaPath);
 			properties.put("jpaPckgName", jpaPckgName);
 			properties.put("specificityLevel", new Integer(specificityLevel));
-			properties.put("webRootFolderPath", webRootFolderPath);
+			
 			properties.put("libFolderPath", "");
 			properties.put("folderProjectPath", folderProjectPath);
 			properties.put("isMavenProject", true);
 			properties.put("pomFile", pomFile);
-			
-			
-			
-			
+
 			zathuraGenerator.toGenerate(metaDataModel, projectName, folderProjectPath, properties);
-			
-			
+				
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

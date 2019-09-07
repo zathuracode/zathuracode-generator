@@ -76,12 +76,6 @@ public class EclipseGeneratorUtil {
 	/** The java source folder path. */
 	public static String javaSourceFolderPath;
 	
-	/** The web root folder path. */
-	public static String webRootFolderPath;
-	
-	/** The lib folder path. */
-	public static String libFolderPath;
-	
 	/** The full path project. */
 	public static String fullPathProject;
 
@@ -137,14 +131,8 @@ public class EclipseGeneratorUtil {
 	/** The tables list. */
 	public static List<String> tablesList;
 	
-	/** The make it xml. */
-	public static Boolean makeItXml = false;
-	
 	/** The meta data model. */
 	private static MetaDataModel metaDataModel = null;
-
-	/** The copy d bdriver jars. */
-	public static boolean copyDBdriverJars = true;
 	
 	/** The jar list. */
 	public static String[] jarList;
@@ -159,8 +147,6 @@ public class EclipseGeneratorUtil {
 	public static String groupIdMavenPoject;
 	
 	public static String artifactIdMavenProject;
-	
-	public static boolean isFrontend;
 
 	/**
 	 * Reset.
@@ -174,8 +160,7 @@ public class EclipseGeneratorUtil {
 		workspaceFolderPath = null;
 		javaClassFolderPath = null;
 		javaSourceFolderPath = null;
-		webRootFolderPath = null;
-		libFolderPath = null;
+		
 		fullPathProject = null;
 
 		zathuraGeneratorName = null;
@@ -192,7 +177,7 @@ public class EclipseGeneratorUtil {
 		schema = null;
 		catalogAndSchema = null;
 		tablesList = null;
-		makeItXml = false;
+		
 		
 		isMavenProject = false;
 		pomXmlFile = null;
@@ -216,8 +201,7 @@ public class EclipseGeneratorUtil {
 		String jpaPckgName = EclipseGeneratorUtil.javaEntityPackage;
 		String projectName = EclipseGeneratorUtil.projectName;
 		String folderProjectPath = EclipseGeneratorUtil.javaSourceFolderPath;
-		String webRootFolderPath = EclipseGeneratorUtil.webRootFolderPath;
-		String libFolderPath = EclipseGeneratorUtil.libFolderPath;
+		
 		File pomFile = EclipseGeneratorUtil.pomXmlFile;
 		
 		String MAIN_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
@@ -238,8 +222,8 @@ public class EclipseGeneratorUtil {
 		properties.put("jpaPath", jpaPath);
 		properties.put("jpaPckgName", jpaPckgName);
 		properties.put("specificityLevel", new Integer(specificityLevel));
-		properties.put("webRootFolderPath", webRootFolderPath);
-		properties.put("libFolderPath", libFolderPath);
+		
+		
 		properties.put("folderProjectPath", folderProjectPath);
 		properties.put("isMavenProject", isMavenProject);
 		properties.put("pomFile", pomFile);
@@ -287,7 +271,7 @@ public class EclipseGeneratorUtil {
 
 		connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
 		connectionProperties.put("destinationDirectory", destinationDirectory);
-		connectionProperties.put("makeItXml", makeItXml == true ? "True" : false);
+		
 		connectionProperties.put("catalogAndSchema", catalogAndSchema == null ? "" : catalogAndSchema);
 		connectionProperties.put("schema", schema == null ? "" : schema);
 		connectionProperties.put("catalog", catalog == null ? "" : catalog);
@@ -325,8 +309,7 @@ public class EclipseGeneratorUtil {
 		connectionProperties.put("companyDomainName", companyDomainName);
 		connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
 		connectionProperties.put("destinationDirectory", destinationDirectory);
-		// Genera JPA para poder usar el EntityLoader
-		connectionProperties.put("makeItXml", false);
+
 		connectionProperties.put("catalogAndSchema", catalogAndSchema == null ? "" : catalogAndSchema);
 		connectionProperties.put("schema", schema == null ? "" : schema);
 		connectionProperties.put("catalog", catalog == null ? "" : catalog);
@@ -481,17 +464,7 @@ public class EclipseGeneratorUtil {
 
 	}
 
-	/**
-	 * Copy driver jars.
-	 */
-	public static void copyDriverJars() {
-		if (copyDBdriverJars == true && jarList != null && jarList.length > 0) {
-			for (String path : jarList) {
-				String jarName = jarName(path);
-				GeneratorUtil.copy(path, libFolderPath + jarName);
-			}
-		}
-	}
+	
 
 	/**
 	 * Jar name.

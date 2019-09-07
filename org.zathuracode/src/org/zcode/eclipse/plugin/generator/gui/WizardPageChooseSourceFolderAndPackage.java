@@ -61,12 +61,6 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 	/** The btn package. */
 	private Button btnPackage; 
 	
-	/** The txt web root. */
-	private Text txtWebRoot;
-	
-	/** The txt lib. */
-	private Text txtLib;
-	
 	/** The cmb project. */
 	private Combo cmbProject;
 	
@@ -74,15 +68,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 	private  WizardMainNewPackageWizard wizardMainNewPackageWizardPage;
 	
 	/** The btn new package. */
-	private Button btnNewPackage;
-	
-	/** The btn web root. */
-	private Button btnWebRoot;
-	
-	/** The lbl lib.*/
-	private Label lblLibraries;
-	
-	private Boolean isFrontend = true;
+	private Button btnNewPackage;	
 	
 	/**
 	 * Create the wizard.
@@ -92,9 +78,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		setTitle(Messages.WizardPageChooseSourceFolderAndPackage_1);
 		setDescription(Messages.WizardPageChooseSourceFolderAndPackage_2);
 		setPageComplete(false);
-		EclipseGeneratorUtil.makeItXml=true;
-		EclipseGeneratorUtil.isFrontend=true;
-		
+				
 	}
 
 	/**
@@ -151,35 +135,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 			}
 		});
 		btnPackage.setText(Messages.WizardPageChooseSourceFolderAndPackage_8);
-		btnPackage.setBounds(484, 90, 87, 27);
-		
-		Label lblWebRoot = new Label(choosePathGroup, SWT.NONE);
-		lblWebRoot.setText(Messages.WizardPageChooseSourceFolderAndPackage_9);
-		lblWebRoot.setBounds(10, 132, 124, 21);
-		
-		lblLibraries = new Label(choosePathGroup, SWT.NONE);
-		lblLibraries.setText(Messages.WizardPageChooseSourceFolderAndPackage_10);
-		lblLibraries.setBounds(10, 171, 124, 31);
-		
-		txtWebRoot = new Text(choosePathGroup, SWT.BORDER);
-		txtWebRoot.setEditable(false);
-		txtWebRoot.setBounds(140, 129, 338, 24);
-		
-		txtLib = new Text(choosePathGroup, SWT.BORDER);
-		txtLib.setEditable(false);
-		txtLib.setBounds(140, 168, 338, 24);
-		
-		btnWebRoot = new Button(choosePathGroup, SWT.NONE);
-		btnWebRoot.setEnabled(false);
-		btnWebRoot.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				handleBrowseWebRootFolder();
-				validatePageComplete();
-			}
-		});
-		btnWebRoot.setText(Messages.WizardPageChooseSourceFolderAndPackage_11);
-		btnWebRoot.setBounds(484, 128, 87, 27);
+		btnPackage.setBounds(484, 90, 87, 27);		
 		
 		cmbProject = new Combo(choosePathGroup, SWT.NONE);
 		cmbProject.addSelectionListener(new SelectionAdapter() {
@@ -188,18 +144,13 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 				String projectSelected=cmbProject.getText();
 				project=ResourcesPlugin.getWorkspace().getRoot().getProject(projectSelected);
 				if(project!=null){
-					btnJavaSourceFolder.setEnabled(true);
-					btnWebRoot.setEnabled(true);
+					btnJavaSourceFolder.setEnabled(true);					
 					
 					String pathFilePOM = project.getLocation().toString() + GeneratorUtil.slash + GeneratorUtil.pomFile;
 					EclipseGeneratorUtil.pomXmlFile = new File(pathFilePOM);
 					EclipseGeneratorUtil.isMavenProject = EclipseGeneratorUtil.pomXmlFile.exists();
 					EclipseGeneratorUtil.project=project;
 					
-					if (EclipseGeneratorUtil.isMavenProject) {						
-						txtLib.setText("pom.xml"); //$NON-NLS-1$
-						EclipseGeneratorUtil.libFolderPath = ""; //$NON-NLS-1$
-					}
 				}			
 			}
 		});
@@ -251,53 +202,7 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 		
 		//Carga los Generadores de JPA
 		setDescription(Messages.WizardPageChooseSourceFolderAndPackage_22);
-		EclipseGeneratorUtil.makeItXml=false;
 		loadListGeneratorsNextWizard();
-		
-		/*
-		Button bRadioJPAReverseEngineering = new Button(container, SWT.RADIO);
-		bRadioJPAReverseEngineering.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				setDescription(Messages.WizardPageChooseSourceFolderAndPackage_22);
-				EclipseGeneratorUtil.makeItXml=false;
-				loadListGeneratorsNextWizard();
-			}
-		});
-		bRadioJPAReverseEngineering.setSelection(true);
-		bRadioJPAReverseEngineering.setBounds(10, 246, 189, 22);
-		bRadioJPAReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_23);
-		
-		
-		Button bRadioHibernateReverseEngineering = new Button(container, SWT.RADIO);
-		bRadioHibernateReverseEngineering.setSelection(true);
-		bRadioHibernateReverseEngineering.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				setDescription(Messages.WizardPageChooseSourceFolderAndPackage_24);
-				EclipseGeneratorUtil.makeItXml=true;
-				loadListGeneratorsNextWizard();
-			}
-		});
-		bRadioHibernateReverseEngineering.setBounds(10, 218, 232, 22);
-		bRadioHibernateReverseEngineering.setText(Messages.WizardPageChooseSourceFolderAndPackage_25);
-		*/
-		Label label = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label.setText(Messages.WizardPageChooseSourceFolderAndPackage_label_text);
-		label.setBounds(10, 282, 552, 2);
-		
-		Button btnFrontendCheckButton = new Button(container, SWT.CHECK);
-		btnFrontendCheckButton.setSelection(true);
-		btnFrontendCheckButton.addSelectionListener(new SelectionAdapter() {
-		@Override
-			public void widgetSelected(SelectionEvent e) {
-				isFrontend = (!isFrontend ? true : false);
-				System.out.println(isFrontend);
-				EclipseGeneratorUtil.isFrontend = isFrontend;
-			}
-		});
-		btnFrontendCheckButton.setBounds(10, 294, 189, 20);
-		btnFrontendCheckButton.setText(Messages.WizardPageChooseSourceFolderAndPackage_btnCheckButton_text);
 		
 		
 	}
@@ -401,14 +306,6 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 					throw new Exception(Messages.WizardPageChooseSourceFolderAndPackage_37);
 				}
 				
-				if(txtWebRoot==null || txtWebRoot.getText().equals("")==true){ //$NON-NLS-1$
-					throw new Exception(Messages.WizardPageChooseSourceFolderAndPackage_39);
-				}	
-				
-				if(txtLib==null || txtLib.getText().equals("")==true){ //$NON-NLS-1$
-					throw new Exception(Messages.WizardPageChooseSourceFolderAndPackage_41);		
-				}
-
 				//Valida si el paquete esta bien escrito porque el generador lo crea si no existe
 				ZathuraReverseEngineeringUtil.validarPackage(txtPackage.getText());				
 				
@@ -427,39 +324,9 @@ public class WizardPageChooseSourceFolderAndPackage extends WizardPage {
 	}
 		
 		
-		/**
-		 * Handle browse web root folder.
-		 */
-		private void handleBrowseWebRootFolder() {
-			
-			ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), project, false,	Messages.WizardPageChooseSourceFolderAndPackage_42);
-			dialog.showClosedProjects(false);
-			
-			if (dialog.open() == Window.OK) {
-				Object[] result = dialog.getResult();
-				if (result.length == 1) {
-					txtWebRoot.setText(((Path) result[0]).toString());
-					EclipseGeneratorUtil.webRootFolderPath=EclipseGeneratorUtil.workspaceFolderPath+txtWebRoot.getText()+GeneratorUtil.slash;
-					
-				}
-			}
-		}
 		
-		/**
-		 * Handle browse lib folder.
-		 */
-		private void handleBrowseLibFolder() {
-			ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), project, false,	Messages.WizardPageChooseSourceFolderAndPackage_43);
-			dialog.showClosedProjects(false);
-			
-			if (dialog.open() == Window.OK) {
-				Object[] result = dialog.getResult();
-				if (result.length == 1) {
-					txtLib.setText(((Path) result[0]).toString());
-					EclipseGeneratorUtil.libFolderPath=EclipseGeneratorUtil.workspaceFolderPath+txtLib.getText()+org.zcode.generator.utilities.GeneratorUtil.slash;				
-				}
-			}
-		}
+		
+		
 		
 		/**
 		 * Load list generators next wizard.

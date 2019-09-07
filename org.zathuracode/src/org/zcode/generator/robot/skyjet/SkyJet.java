@@ -55,7 +55,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	private String paqueteVirgen;
 	private VelocityEngine ve;
 	private Properties properties;
-	private String webRootPath;
+	
 
 	private final static String mainFolder="skyJet";
 
@@ -74,8 +74,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
 		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
 
-		try {
-			webRootPath=(propiedades.getProperty("webRootFolderPath"));					
+		try {								
 			properties=propiedades;
 			String nombrePaquete= propiedades.getProperty("jpaPckgName");
 			Integer specificityLevel = (Integer) propiedades.get("specificityLevel");
@@ -94,48 +93,12 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
-
+	/**
+	 * Se usa para que copie los archivos completos que no son Velocity
+	 */
 	public void copyLibraries(){		
-
-		//String pathWebXml= extPath+"WEB-INF"+GeneratorUtil.slash;
 		
 		String log4j = extPath+ GeneratorUtil.slash + "log4j"+ GeneratorUtil.slash;
-
-		if (EclipseGeneratorUtil.isFrontend) {
-			
-			String pathCss = extPath + GeneratorUtil.slash + "css"+ GeneratorUtil.slash;
-			String pathJs = extPath + GeneratorUtil.slash + "js"+ GeneratorUtil.slash;
-			String pathBootstrap = extPath + GeneratorUtil.slash + "bootstrap"+ GeneratorUtil.slash;
-			String generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages = extPath + GeneratorUtil.slash + "images"	+ GeneratorUtil.slash;
-			String pathIndexJsp = extPath+"index.jsp";
-			String pathLogin = extPath+"login.xhtml";
-			
-			// Copy Css
-			GeneratorUtil.createFolder(webRootPath + "css");
-			GeneratorUtil.copyFolder(pathCss, webRootPath + "css" + GeneratorUtil.slash);		
-			
-			// Copy JS
-			GeneratorUtil.createFolder(webRootPath + "js");
-			GeneratorUtil.copyFolder(pathJs, webRootPath + "js" + GeneratorUtil.slash);
-			
-			// Copy BOOTSRAP
-			GeneratorUtil.createFolder(webRootPath + "bootstrap");
-			GeneratorUtil.copyFolder(pathBootstrap, webRootPath + "bootstrap" + GeneratorUtil.slash);
-
-			//create folder images and insert .png
-			GeneratorUtil.createFolder(webRootPath + "images");
-			GeneratorUtil.copyFolder(generatorExtZathuraJavaEEWebSpringPrimeJpaCentricImages, webRootPath + "images" + GeneratorUtil.slash);
-
-			// create login.xhtml
-			GeneratorUtil.copy(pathLogin,webRootPath+"login.xhtml" );
-			// create index.jsp
-			GeneratorUtil.copy(pathIndexJsp,webRootPath+"index.jsp" );
-
-		}
-		
-		//GeneratorUtil.copyFolder(pathWebXml,webRootPath+"WEB-INF"+GeneratorUtil.slash);
-
-		//copy log4j
 		String log4jDestination = properties.getProperty("mainResoruces");
 		GeneratorUtil.copyFolder(log4j, log4jDestination);
 
@@ -189,7 +152,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			velocityContext.put("domainName", domainName);
 			velocityContext.put("modelName", modelName);
 			velocityContext.put("schema", EclipseGeneratorUtil.schema);
-			velocityContext.put("frontend", EclipseGeneratorUtil.isFrontend);
+			
 
 			//Variables para generar el persistence.xml
 			velocityContext.put("connectionUrl", EclipseGeneratorUtil.connectionUrl);
@@ -367,12 +330,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 				doEntityGenerator(metaData, velocityContext, hdLocation, metaDataModel);
 				doRepository(metaData, velocityContext, hdLocation);
-				/*
-				if (EclipseGeneratorUtil.isFrontend) {
-					doBackingBeans(metaData, velocityContext, hdLocation, metaDataModel);
-					doJsp(metaData, velocityContext, hdLocation, metaDataModel);
-				}
-				*/
+				
 				doService(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
@@ -384,27 +342,15 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				GeneratorUtil.doPomXml(velocityContext, ve);
 			}
 
-			//doRepositoryAPI(velocityContext, hdLocation);
+			
 			doExceptions(velocityContext, hdLocation);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
-			/*
-			if (EclipseGeneratorUtil.isFrontend) {
-				doAuthenticationProvider(velocityContext, hdLocation, metaDataModel, modelName);
-				doJspFacelets(velocityContext, hdLocation);
-				doJspInitialMenu(metaDataModel, velocityContext, hdLocation);
-				doFacesConfig(metaDataModel, velocityContext, hdLocation);
-				doBusinessDelegator(velocityContext, hdLocation, metaDataModel);
-				doSpringSecurityConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
-			}
-			*/
-			doApplicationProperties(metaDataModel, velocityContext, hdLocation);					
-			//doSpringContextConfFiles(velocityContext, hdLocation, metaDataModel, modelName);
+			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);			
+			doApplicationProperties(metaDataModel, velocityContext, hdLocation);	
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
 			restPath = restPath.replace(GeneratorUtil.slash, ".");
 			velocityContext.put("restPackage", restPath);
-
-			//doMvcDispatcherServlet(metaDataModel, velocityContext, hdLocation);
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -443,46 +389,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
-	/*
-	@Override
-	public void doRepositoryAPI(VelocityContext context, String hdLocation) throws Exception{
-
-		try {
-
-			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash + "repository"+ GeneratorUtil.slash;
-
-			log.info("Begin JpaGenericRepository");
-
-			Template apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaGenericRepository.vm");
-			StringWriter stringWriter = new StringWriter();
-			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			FileWriter fileWriter = new FileWriter(path+"JpaGenericRepository.java");
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(stringWriter.toString());
-			bufferedWriter.close();
-			fileWriter.close();
-
-			apiSpringPrimeHibernateTemplate = ve.getTemplate("JpaGenericRepositoryImpl.vm");
-			stringWriter = new StringWriter();
-			apiSpringPrimeHibernateTemplate.merge(context, stringWriter);
-			fileWriter = new FileWriter(path+"JpaGenericRepositoryImpl.java");
-			bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(stringWriter.toString());
-			bufferedWriter.close();
-			fileWriter.close();
-
-			log.info("End JpaGenericRepository");
-
-			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaGenericRepository.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "JpaGenericRepositoryImpl.java");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
+	
 
 	@Override
 	public void doService(MetaData metaData,
@@ -528,102 +435,9 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
-	/*
-	@Override
-	public void doBusinessDelegator(VelocityContext context, String hdLocation,
-			MetaDataModel dataModel)throws Exception {
-		try {
+	
 
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "view"+ GeneratorUtil.slash;
-			log.info("Begin IBusinessDelegate");
-			Template templateIbusinessDelegate= ve.getTemplate("BusinessDelegator.vm");
-			StringWriter swIbusinessDelegate = new StringWriter();
-			templateIbusinessDelegate.merge(context, swIbusinessDelegate);
-			FileWriter fwIbusinessDelegate = new FileWriter(path+"BusinessDelegator.java");
-			BufferedWriter bwIbusinessDelegate = new BufferedWriter(fwIbusinessDelegate);
-			bwIbusinessDelegate.write(swIbusinessDelegate.toString());
-			bwIbusinessDelegate.close();
-			fwIbusinessDelegate.close();
-			log.info("End IBusinessDelegate");
-
-			log.info("Begin BusinessDelegate");
-			Template templateBusinessDelegate = ve.getTemplate("BusinessDelegatorImpl.vm");
-			StringWriter swBusinessDelegate = new StringWriter();
-			templateBusinessDelegate.merge(context, swBusinessDelegate);
-			FileWriter fwBusinessDelegate = new FileWriter(path+"BusinessDelegatorImpl.java");
-			BufferedWriter bwBusinessDelegate = new BufferedWriter(fwBusinessDelegate);
-			bwBusinessDelegate.write(swBusinessDelegate.toString());
-			bwBusinessDelegate.close();
-			fwBusinessDelegate.close();
-			log.info("End BusinessDelegate");
-
-			JalopyCodeFormatter.formatJavaCodeFile(path + "BusinessDelegator.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + "BusinessDelegatorImpl.java");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-
-		}
-
-	}
-
-	*/
-
-	/*
-	@Override
-	public void doJspInitialMenu(MetaDataModel dataModel,
-			VelocityContext context, String hdLocation)throws Exception {
-		try {
-			String path = properties.getProperty("webRootFolderPath") + "XHTML" + GeneratorUtil.slash;
-
-			log.info("Begin InitialMaenu");
-			Template templateInitialMenu = ve.getTemplate("XHTMLinitialMenu.vm");
-			StringWriter swInitialMenu = new StringWriter();
-			templateInitialMenu.merge(context, swInitialMenu);
-			FileWriter fwInitialMenu = new FileWriter(path+"initialMenu.xhtml");
-			BufferedWriter bwInitialMenu = new BufferedWriter(fwInitialMenu);
-			bwInitialMenu.write(swInitialMenu.toString());
-			bwInitialMenu.close();
-			fwInitialMenu.close();
-			log.info("Begin InitialMaenu");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
-
-	//TODO Eliminar
-	/*
-	@Override
-	public void doFacesConfig(MetaDataModel dataModel, VelocityContext context,
-			String hdLocation) throws Exception{
-		try {
-
-			String path = properties.getProperty("webRootFolderPath")+"WEB-INF"+ GeneratorUtil.slash;
-			log.info("Begin FacesConfig");
-			Template templateFacesConfig = ve.getTemplate("faces-configSpringPrimeJpa.xml.vm");
-			StringWriter swFacesConfig = new StringWriter();
-			templateFacesConfig.merge(context, swFacesConfig);
-
-			FileWriter fwFacesConfig = new FileWriter(path+"faces-config.xml");
-			BufferedWriter bwFacesConfig = new BufferedWriter(fwFacesConfig);
-			bwFacesConfig.write(swFacesConfig.toString());
-			bwFacesConfig.close();
-			fwFacesConfig.close();
-			log.info("Begin FacesConfig");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-
-	}
-	*/
-
+	
 	@Override
 	public void doDto(MetaData metaData, VelocityContext context,
 			String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
@@ -835,4 +649,34 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			throw e;
 		}
 	}
+
+
+	@Override
+	public void doSpringBootRunner(VelocityContext context, String hdLocation,
+			MetaDataModel dataModel, String modelName) throws Exception {
+		
+			try {
+					String path=hdLocation + paqueteVirgen + GeneratorUtil.slash;
+	
+					log.info("Begin SpringBootRunner");
+					Template templateIlogic = ve.getTemplate("SpringBootRunner.vm");
+					StringWriter swIlogic = new StringWriter();
+					templateIlogic.merge(context, swIlogic);
+	
+					FileWriter fwIlogic = new FileWriter(path+"SpringBootRunner.java");
+					BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+					bwIlogic.write(swIlogic.toString());
+					bwIlogic.close();
+					fwIlogic.close();
+					log.info("End SpringBootRunner");
+	
+					JalopyCodeFormatter.formatJavaCodeFile(path+ "SpringBootRunner.java");
+				} catch (Exception e) {
+				log.error(e.toString());
+				throw e;
+			}
+
+
+		}
+	
 }

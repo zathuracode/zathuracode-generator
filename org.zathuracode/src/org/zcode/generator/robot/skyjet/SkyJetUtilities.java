@@ -559,13 +559,6 @@ public class SkyJetUtilities {
 		folderBuilder.add(pckge + "mapper");
 
 		folderBuilder.add(pckge + "dto");
-		
-		if (EclipseGeneratorUtil.isFrontend) {
-			folderBuilder.add(pckge + "security");
-			folderBuilder.add(pckge + "view");
-		}		
-
-		folderBuilder.add(properties.getProperty("webRootFolderPath"));
 
 
 		for (String string : folderBuilder) {
@@ -574,17 +567,6 @@ public class SkyJetUtilities {
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}
-		}
-
-		try {
-			GeneratorUtil.validateDirectory("WEB-INF", properties.getProperty("webRootFolderPath"));
-			
-			if (EclipseGeneratorUtil.isFrontend) {
-				GeneratorUtil.validateDirectory("XHTML", properties.getProperty("webRootFolderPath"));
-			}
-		
-		} catch (IOException e) {
-			log.error(e.getMessage());
 		}
 
 	}
