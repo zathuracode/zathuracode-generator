@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 @RestController
 @RequestMapping("/api/${metaData.getRealClassNameAsVariable()}")
+@CrossOrigin(origins = "*")
 public class ${metaData.getRealClassName()}RestController {
 	
 	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}RestController.class);
@@ -33,9 +35,9 @@ public class ${metaData.getRealClassName()}RestController {
 	private ${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
 	
 	#if (${primaryKey.isPrimiaryKeyAComposeKey()})	
-    	@GetMapping(value = "/#foreach($cka in $composeKeyAttributes)/{${cka.getShowName()}}#end") 
+    	@GetMapping(value = "/findById/#foreach($cka in $composeKeyAttributes)/{${cka.getShowName()}}#end") 
     #else	
-    	@GetMapping(value = "/{${primaryKey.getShowName()}}") 
+    	@GetMapping(value = "/findById/{${primaryKey.getShowName()}}") 
     #end
     public ResponseEntity<?> findById(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) {
     	log.debug("Request to findById() ${metaData.getRealClassName()}");
@@ -63,7 +65,7 @@ public class ${metaData.getRealClassName()}RestController {
 	
     }
     
-    @GetMapping(value = "/")
+    @GetMapping(value = "/findAll")
     public ResponseEntity<?> findAll(){
     	log.debug("Request to findAll() ${metaData.getRealClassName()}");
 		try {			

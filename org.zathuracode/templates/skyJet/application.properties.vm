@@ -1,10 +1,6 @@
 #Info SpringBoot Microservices App
-info.app.name=${name}
-info.app.description=This is SpringBoot Microservices App Generated with Zathuracode version 8
-info.app.version=1.0.0
-info.app.encoding=UTF-8
-info.app.java.source=1.8
-info.app.java.target=1.8
+spring.application.name=${name}
+spring.info.build.encoding=UTF-8
 
 #Spring DataSource Basic Config
 spring.datasource.url=${connectionUrl}
@@ -34,7 +30,7 @@ server.max-http-header-size=8KB
 server.tomcat.max-swallow-size=2MB
 server.tomcat.max-http-post-size=2MB
 #server.address=my_custom_ip
-#server.compression.enabled: true
+#server.compression.enabled=true
 #server.compression.mime-types=application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css,image/jpeg
 
 #Tomcat Server Access Logs
