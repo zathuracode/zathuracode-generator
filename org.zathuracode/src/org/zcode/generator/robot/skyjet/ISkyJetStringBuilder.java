@@ -41,6 +41,10 @@ public interface ISkyJetStringBuilder {
 	 * @return the type andvariable for many to one properties
 	 */
 	public String[] getTypeAndvariableForManyToOneProperties(String strClass, List<MetaData> theMetaData);
+	
+	public String getMappingsEntityToDTo(List<Member> manyToOne, List<MetaData> theMetaData);
+	
+	public String getMappingsDTOToEntity(List<Member> manyToOne, List<MetaData> theMetaData);
 
 	/**
 	 * Final param variables as list.

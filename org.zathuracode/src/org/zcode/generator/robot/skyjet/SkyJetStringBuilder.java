@@ -2,6 +2,7 @@ package org.zcode.generator.robot.skyjet;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -208,8 +209,6 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					Member member = metaData.getPrimaryKey();
 					ret[0] = member.getRealClassName();
 					ret[1] = member.getName() + "_" + metaData.getRealClassName();
-					// ret[2] = member.getGetNameOfPrimaryName();
-					// ret[3] = member.getRealClassName();
 				} else {
 					int contTmp = 0;
 					Field[] field = metaData.getComposeKey().getDeclaredFields();
@@ -230,6 +229,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 				}
 			}
 		}
+		
 
 		boolean watch = false;
 
@@ -245,6 +245,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		} else {
 			return null;
 		}
+		
+		
 
 	}
 
@@ -1543,6 +1545,85 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		return finalParam;
 	}
+	
+	/**
+	 * Construtye el @Mapping para los Mapper usando MapStruct
+	 */
+	public String getMappingsEntityToDTo(List<Member> manyToOne, List<MetaData> theMetaData) {
+		StringBuilder stringBuilder=new StringBuilder();
+		String nameTarget="";
+
+		for (MetaData metaData : theMetaData) {
+			for (Member member : manyToOne) {
+				if (metaData.getRealClassName().equalsIgnoreCase(member.getRealClassName())) {
+
+					if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+
+						Field[] field = metaData.getComposeKey().getDeclaredFields();
+
+						for (int i = 0; i < field.length; i++) {
+
+							Field field2 = field[i];
+
+							String name = field2.getName() + "_" + metaData.getRealClassName();
+
+							//finalParam.add(name);
+							nameTarget=name;
+
+						}
+
+					} else {
+						//finalParam.add(metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName());
+						nameTarget=metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName();
+					}
+					//TODO Escribir el @mappin @Mapping(source = "", target = "tdocId_TipoDocumento")
+					stringBuilder.append("@Mapping(source = \""+member.getShowName()+"."+metaData.getPrimaryKey().getName()+"\",  target = \""+nameTarget+"\")");
+					stringBuilder.append("\n");
+				}
+				
+			}
+		}
+
+		return stringBuilder.toString();
+	}
+	
+	public String getMappingsDTOToEntity(List<Member> manyToOne, List<MetaData> theMetaData) {
+		StringBuilder stringBuilder=new StringBuilder();
+		String nameSoruce="";
+
+		for (MetaData metaData : theMetaData) {
+			for (Member member : manyToOne) {
+				if (metaData.getRealClassName().equalsIgnoreCase(member.getRealClassName())) {
+
+					if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
+
+						Field[] field = metaData.getComposeKey().getDeclaredFields();
+
+						for (int i = 0; i < field.length; i++) {
+
+							Field field2 = field[i];
+
+							String name = field2.getName() + "_" + metaData.getRealClassName();
+
+							//finalParam.add(name);
+							nameSoruce=name;
+
+						}
+
+					} else {
+						//finalParam.add(metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName());
+						nameSoruce=metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName();
+					}
+					//TODO Escribir el @mappin @Mapping(source = "", target = "tdocId_TipoDocumento")
+					stringBuilder.append("@Mapping(source = \""+nameSoruce+"\",  target = \""+member.getShowName()+"."+metaData.getPrimaryKey().getName()+"\")");					
+					stringBuilder.append("\n");
+				}
+				
+			}
+		}
+
+		return stringBuilder.toString();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -2292,7 +2373,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			}
 		}
 
-		// txtCliCedulaDTO.setValue(entity.getClientes().getCliCedula());
+		
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 

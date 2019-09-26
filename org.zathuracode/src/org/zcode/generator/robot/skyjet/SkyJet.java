@@ -184,7 +184,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 				if (metaData.isGetManyToOneProperties()) {
 					velocityContext.put("getVariableForManyToOneProperties", stringBuilder.getVariableForManyToOneProperties(metaData.getManyToOneProperties(), listMetaData));
-					velocityContext.put("getStringsForManyToOneProperties", stringBuilder.getStringsForManyToOneProperties(metaData.getManyToOneProperties(), listMetaData));
+					velocityContext.put("getStringsForManyToOneProperties", stringBuilder.getStringsForManyToOneProperties(metaData.getManyToOneProperties(), listMetaData));					
 				}
 
 				// generacion de nuevos dto
@@ -249,13 +249,16 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				velocityContext.put("composeKeyAttributes", stringBuilderForId.attributesComposeKey(listMetaData,metaData));
 
 				// generacion de atributos para mapear de Entidad a DTO
-				velocityContext.put("dtoAttributes", stringBuilderForId.obtainDTOMembersAndSetEntityAttributes(listMetaData, metaData));
-				velocityContext.put("dtoAttributes2", stringBuilder.obtainDTOMembersAndSetEntityAttributes2(listMetaData, metaData));
-
-				// generacion de los atributos para mapear de DTO a Entidad 
-				velocityContext.put("entityAttributes", stringBuilderForId.obtainEntityMembersAndSetDTOAttributes(listMetaData, metaData));
-				velocityContext.put("entityAttributes2", stringBuilder.obtainEntityMembersAndSetDTOAttributes2(listMetaData, metaData));
-
+				//TODO Revisa la generacion de DTO
+					velocityContext.put("dtoAttributes", stringBuilderForId.obtainDTOMembersAndSetEntityAttributes(listMetaData, metaData));
+					velocityContext.put("dtoAttributes2", stringBuilder.obtainDTOMembersAndSetEntityAttributes2(listMetaData, metaData));
+					
+					// generacion de los atributos para mapear de DTO a Entidad 
+					velocityContext.put("entityAttributes", stringBuilderForId.obtainEntityMembersAndSetDTOAttributes(listMetaData, metaData));
+					velocityContext.put("entityAttributes2", stringBuilder.obtainEntityMembersAndSetDTOAttributes2(listMetaData, metaData));
+					
+					velocityContext.put("getMappingsEntityToDTo", stringBuilder.getMappingsEntityToDTo(metaData.getManyToOneProperties(), listMetaData));
+					velocityContext.put("getMappingsDTOToEntity", stringBuilder.getMappingsDTOToEntity(metaData.getManyToOneProperties(), listMetaData));
 
 				// generacion de la nueva logica 
 				velocityContext.put("dtoConvert", stringBuilderForId.dtoConvert(listMetaData,metaData));
@@ -555,20 +558,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bwIMapperDTO.close();
 			fwIMapperDTO.close();
 
-			log.info("Begin Interface DTO Mapper");
-
-			Template templateMapperDTO = ve.getTemplate("DTOMapperImpl.vm");
-			StringWriter swMapperDTO = new StringWriter();
-			templateMapperDTO.merge(context, swMapperDTO);
-
-			FileWriter fwMapperDTO = new FileWriter(path + metaData.getRealClassName() + "MapperImpl.java");
-			BufferedWriter bwMapperDTO = new BufferedWriter(fwMapperDTO);
-			bwMapperDTO.write(swMapperDTO.toString());
-			bwMapperDTO.close();
-			fwMapperDTO.close();
-
+			
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
-			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "MapperImpl.java");
 
 		} catch (Exception e) {
 			log.error(e.toString());

@@ -1,19 +1,32 @@
 package ${virginPackage}.mapper;
+
+import java.util.List;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 import $package.${metaData.getRealClassName()};
 import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 
-import java.util.List;
 
 /**
 * @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
 * 
+* Mapper Build with MapStruct https://mapstruct.org/
+* MapStruct is a code generator that greatly simplifies the
+* implementation of mappings between Java bean type
+* based on a convention over configuration approach.
 */
+
+@Mapper
 public interface ${metaData.getRealClassName()}Mapper {
 
+	${getMappingsEntityToDTo}
 	public ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}) throws Exception;
 	
+	${getMappingsDTOToEntity}
 	public ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO) throws Exception;
 	
 	public List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(List<${metaData.getRealClassName()}> ${metaData.getRealClassNameAsVariable()}s) throws Exception;
