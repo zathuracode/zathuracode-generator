@@ -38,7 +38,7 @@
 			   destdir="${destinationDirectory}" 
 			   includeantruntime="false"
 			   fork="true"
-			   source="1.6"
+			   source="1.8"
          	   target="${javaVersion}"
          	   compiler="javac${javaVersion}">			
 			<include name="*.java" />

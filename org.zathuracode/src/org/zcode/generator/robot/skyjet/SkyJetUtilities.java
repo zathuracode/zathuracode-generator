@@ -531,7 +531,7 @@ public class SkyJetUtilities {
 	 * @param packageOriginal the package original
 	 * @param properties the properties
 	 */
-	public void buildFolders(String packageName, String hardDiskLocation, Integer specificityLevel, String packageOriginal, Properties properties) {
+	public void buildFoldersJava(String packageName, String hardDiskLocation, Integer specificityLevel, String packageOriginal, Properties properties) {
 
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";
@@ -563,6 +563,41 @@ public class SkyJetUtilities {
 		for (String string : folderBuilder) {
 			try {
 				GeneratorUtil.validateDirectory(string, hardDiskLocation);
+			} catch (IOException e) {
+				log.error(e.getMessage());
+			}
+		}
+
+	}
+	
+	/**
+	 * Builds the folders.
+	 *
+	 * @param packageName the package name
+	 * @param hardDiskLocation the hard disk location
+	 * @param specificityLevel the specificity level
+	 * @param packageOriginal the package original
+	 * @param properties the properties
+	 */
+	public void buildFoldersTest(String packageName, String hardDiskLocation, Integer specificityLevel, String packageOriginal, Properties properties) {
+
+		// / se construye paquete
+		String pckge = packageName.replace('.', '_') + "_";
+		String modelPckg = packageOriginal.replace('.', '_') + "_";
+
+		String model = modelPckg;
+	
+		List<String> folderBuilder = new ArrayList<String>();
+
+		folderBuilder.add(pckge);
+		
+		//folderBuilder.add(pckge + "controller");
+		
+		folderBuilder.add(pckge + "service");
+		
+		for (String string : folderBuilder) {
+			try {
+				GeneratorUtil.validateDirectory(string, properties.getProperty("testJava"));
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}

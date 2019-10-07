@@ -53,12 +53,8 @@
     <body>
       <h3><img alt="SkyJet" src="${RELATIVE_PATH}/icons/Skyjet_Zathuracode.png" style="width: 150px;"/></h3>
       <p>Generate Spring Boot microservices App</p>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      &nbsp;
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
 	</body>
 </html>
 		]]>

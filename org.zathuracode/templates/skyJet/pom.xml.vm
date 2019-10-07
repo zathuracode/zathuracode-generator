@@ -21,6 +21,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
+		<org.junit.platform.version>1.5.2</org.junit.platform.version>
 	</properties>
 	
 	<dependencies>
@@ -64,6 +65,13 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-commons</artifactId>
+			<version>${org.junit.platform.version}</version>
+			<scope>test</scope>
+		</dependency>
 		
 	</dependencies>
 

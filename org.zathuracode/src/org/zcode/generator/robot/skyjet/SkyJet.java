@@ -74,7 +74,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
 
 		try {								
-			properties=propiedades;
+			this.properties=propiedades;
 			String nombrePaquete= propiedades.getProperty("jpaPckgName");
 			Integer specificityLevel = (Integer) propiedades.get("specificityLevel");
 			String  domainName= nombrePaquete.substring(0, nombrePaquete.indexOf("."));
@@ -162,7 +162,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			this.paqueteVirgen = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
 			
 			
-			SkyJetUtilities.getInstance().buildFolders(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
+			SkyJetUtilities.getInstance().buildFoldersJava(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
+			SkyJetUtilities.getInstance().buildFoldersTest(virginPackage, hdLocation, specificityLevel, packageOriginal, properties);
 			SkyJetUtilities.getInstance().biuldHashToGetIdValuesLengths(listMetaData);
 
 			for (MetaData metaData : listMetaData) {
@@ -337,6 +338,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 				doDto(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
 				doRestControllers(metaData, velocityContext, hdLocation, metaDataModel);
+				
+				doServiceTest(metaData, velocityContext, hdLocation, metaDataModel, modelName);
 
 			}
 
@@ -426,15 +429,36 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			JalopyCodeFormatter.formatJavaCodeFile(path+ metaData.getRealClassName() + "Service.java");
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "ServiceImpl.java");
 
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+	}
+	
+	@Override
+	public void doServiceTest(MetaData metaData,VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception {
+		try {
+			String path=properties.getProperty("testJava") + paqueteVirgen + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
 
+			log.info("Begin Interface Service");
+			Template templateIlogic = ve.getTemplate("ServiceTest.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
 
+			FileWriter fwIlogic = new FileWriter(path+ metaData.getRealClassName()+"ServiceTest.java");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("End Interface Service");
+
+			JalopyCodeFormatter.formatJavaCodeFile(path+ metaData.getRealClassName() + "ServiceTest.java");
+			
 
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
 		}
-
-
 	}
 
 	
