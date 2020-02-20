@@ -27,6 +27,8 @@ public interface IZathuraSkyJetTemplate {
 	public void doTemplate(String hdLocation, MetaDataModel metaDataModel, String jpaPckgName, String projectName, Integer specificityLevel, String domainName)throws Exception;
 
 	public void doRepository(MetaData metaData, VelocityContext context, String hdLocation)throws Exception;
+	
+	public void doGenericService( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
 	public void doService(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 	

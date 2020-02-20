@@ -349,6 +349,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 			
 			doExceptions(velocityContext, hdLocation);
+			doGenericService(velocityContext, hdLocation, metaDataModel, modelName);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);			
 			doApplicationProperties(metaDataModel, velocityContext, hdLocation);	
@@ -394,6 +395,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 
+	
 	
 
 	@Override
@@ -514,8 +516,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 
 	@Override
-	public void doUtilites(VelocityContext context, String hdLocation,
-			MetaDataModel dataModel, String modelName)throws Exception {
+	public void doUtilites(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception {
 
 		try {
 
@@ -536,6 +537,30 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			throw e;
 		}
 
+	}
+	
+	@Override
+	public void doGenericService(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception {
+		try {
+			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
+
+			log.info("Begin Interface GenericService");
+			Template templateIlogic = ve.getTemplate("GenericService.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
+
+			FileWriter fwIlogic = new FileWriter(path+"GenericService.java");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("End Interface GenericService");
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+		
 	}
 
 	
@@ -692,5 +717,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 
 		}
+
+	
 	
 }

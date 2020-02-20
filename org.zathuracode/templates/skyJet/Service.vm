@@ -13,20 +13,7 @@ import $package.${metaData.getRealClassName()};
 * www.zathuracode.org
 * 
 */
-public interface ${metaData.getRealClassName()}Service {
+public interface ${metaData.getRealClassName()}Service extends GenericService<${metaData.getRealClassName()},${metaData.primaryKey.getRealClassName()}>{
 
-	public List<${metaData.getRealClassName()}> findAll();
-	
-    public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity)throws Exception;
-    
-    public ${metaData.getRealClassName()} update(${metaData.getRealClassName()} entity)throws Exception;
-    
-    public void delete(${metaData.getRealClassName()} entity)throws Exception;
-    
-    public void deleteById(${metaData.primaryKey.getRealClassName()} id)throws Exception;
-    
-    public Optional<${metaData.getRealClassName()}> findById(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception;
-    
-    public void validate(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception;
     
 }

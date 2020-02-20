@@ -17,7 +17,7 @@ spring.datasource.hikari.auto-commit=true
 
 #Hibernate ORM
 spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
-#spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
 #spring.jpa.properties.hibernate.show_sql = true
 #spring.jpa.properties.hibernate.use_sql_comments = true
 #spring.jpa.properties.hibernate.format_sql = true
@@ -25,10 +25,8 @@ spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
 #Tomcat Server Basic Config
 server.port=9090
 server.tomcat.max-threads=200
-server.connection-timeout=5s
 server.max-http-header-size=8KB
 server.tomcat.max-swallow-size=2MB
-server.tomcat.max-http-post-size=2MB
 #server.address=my_custom_ip
 #server.compression.enabled=true
 #server.compression.mime-types=application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css,image/jpeg
@@ -41,7 +39,7 @@ server.tomcat.accesslog.prefix=access_log
 server.tomcat.accesslog.suffix=.log
 
 #Logs
-logging.file=${name}.log
+logging.file.name=${name}.log
 logging.level.org.springframework=INFO
 #logging.level.org.hibernate=INFO
 #logging.level.org.hibernate.SQL=DEBUG

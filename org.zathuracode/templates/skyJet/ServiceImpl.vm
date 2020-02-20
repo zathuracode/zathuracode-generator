@@ -57,6 +57,12 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 			throw e;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Long count(){
+	 	return ${metaData.getRealClassNameAsVariable()}Repository.count();
+	}
 
 	@Override
 	@Transactional(readOnly=true)

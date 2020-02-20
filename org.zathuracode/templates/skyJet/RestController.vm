@@ -133,6 +133,11 @@ public class ${metaData.getRealClassName()}RestController {
     		return ResponseEntity.badRequest().body(e.getMessage());
     	}
     }
+    
+    @GetMapping(value = "/count")
+    public ResponseEntity<?> count(){
+	 	return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Service.count());
+	}
      
     
          
