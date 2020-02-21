@@ -54,12 +54,9 @@ public class GeneratorUtil {
 	/** The xml config. */
 	private static String xmlConfig = "config" + slash;
 
-	// JavaEEJPAWebCentric
-	/** The web centric templates. */
-	private static String webCentricTemplates = "generatorTemplates" + GeneratorUtil.slash + "zathura-JavaEE-Web-Centric" + GeneratorUtil.slash;
-
+	
 	/** The generator libraries zathura java ee web centric. */
-	private static String generatorLibrariesZathuraJavaEEWebCentric = "generatorLibraries" + GeneratorUtil.slash;
+	//private static String generatorLibrariesZathuraJavaEEWebCentric = "generatorLibraries" + GeneratorUtil.slash;
 
 	/** The generator ext zathura java ee web centric. */
 	private static String generatorExtZathuraJavaEEWebCentric = "generatorExt" + GeneratorUtil.slash + "zathura-JavaEE-Web-Centric" + GeneratorUtil.slash;
@@ -320,18 +317,7 @@ public class GeneratorUtil {
 		return xmlConfigFactoryPath;
 	}
 
-	// JavaEEWebCentric
-	/**
-	 * Gets the generator libraries zathura java ee web centric.
-	 *
-	 * @return the generator libraries zathura java ee web centric
-	 */
-	public static String getGeneratorLibrariesZathuraJavaEEWebCentric() {
-		if (fullPath != null && fullPath.equals("") != true) {
-			return fullPath + generatorLibrariesZathuraJavaEEWebCentric;
-		}
-		return generatorLibrariesZathuraJavaEEWebCentric;
-	}
+	
 
 	/**
 	 * Gets the generator ext zathura java ee web centric.
@@ -345,17 +331,7 @@ public class GeneratorUtil {
 		return generatorExtZathuraJavaEEWebCentric;
 	}
 
-	/**
-	 * Gets the web centric templates.
-	 *
-	 * @return the web centric templates
-	 */
-	public static String getWebCentricTemplates() {
-		if (fullPath != null && fullPath.equals("") != true) {
-			return fullPath + webCentricTemplates;
-		}
-		return webCentricTemplates;
-	}
+	
 
 	// JavaEESpringWebCentric
 	/**

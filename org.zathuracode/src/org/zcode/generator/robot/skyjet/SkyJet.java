@@ -54,6 +54,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	private String paqueteVirgen;
 	private VelocityEngine ve;
 	private Properties properties;
+	private String fullPathProject;
 	
 
 	private final static String mainFolder="skyJet";
@@ -78,6 +79,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			String nombrePaquete= propiedades.getProperty("jpaPckgName");
 			Integer specificityLevel = (Integer) propiedades.get("specificityLevel");
 			String  domainName= nombrePaquete.substring(0, nombrePaquete.indexOf("."));
+			this.fullPathProject=propiedades.getProperty("fullPathProject");
 
 			log.info("===================== Begin SkyJet Zathuracode =====================");
 			doTemplate(folderProjectPath, metaDataModel, nombrePaquete, projectName, specificityLevel, domainName);
@@ -350,6 +352,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			
 			doExceptions(velocityContext, hdLocation);
 			doGenericService(velocityContext, hdLocation, metaDataModel, modelName);
+			doDocker(velocityContext, hdLocation, metaDataModel, modelName);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);			
 			doApplicationProperties(metaDataModel, velocityContext, hdLocation);	
@@ -539,31 +542,6 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 	}
 	
-	@Override
-	public void doGenericService(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception {
-		try {
-			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
-
-			log.info("Begin Interface GenericService");
-			Template templateIlogic = ve.getTemplate("GenericService.vm");
-			StringWriter swIlogic = new StringWriter();
-			templateIlogic.merge(context, swIlogic);
-
-			FileWriter fwIlogic = new FileWriter(path+"GenericService.java");
-			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
-			bwIlogic.write(swIlogic.toString());
-			bwIlogic.close();
-			fwIlogic.close();
-			log.info("End Interface GenericService");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-		
-	}
-
-	
 	
 	@Override
 	public void doApplicationProperties(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
@@ -717,6 +695,53 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 
 		}
+
+	@Override
+	public void doGenericService(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception {
+		try {
+			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
+
+			log.info("Begin Interface GenericService");
+			Template templateIlogic = ve.getTemplate("GenericService.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
+
+			FileWriter fwIlogic = new FileWriter(path+"GenericService.java");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("End Interface GenericService");
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}		
+	}
+
+	@Override
+	public void doDocker(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception {
+		try {
+			String path=this.fullPathProject+GeneratorUtil.slash;
+
+			log.info("Begin Dockerfile");
+			Template templateIlogic = ve.getTemplate("Dockerfile.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
+
+			FileWriter fwIlogic = new FileWriter(path+"Dockerfile");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("Begin Dockerfile");
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+		
+	}
 
 	
 	

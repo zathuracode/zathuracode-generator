@@ -219,6 +219,7 @@ public class EclipseGeneratorUtil {
 
 		// Variables para el properties
 		Properties properties = new Properties();
+		properties.put("fullPathProject", fullPathProject);
 		properties.put("jpaPath", jpaPath);
 		properties.put("jpaPckgName", jpaPckgName);
 		properties.put("specificityLevel", new Integer(specificityLevel));

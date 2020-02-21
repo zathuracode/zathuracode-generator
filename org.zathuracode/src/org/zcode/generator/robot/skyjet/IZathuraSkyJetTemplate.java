@@ -49,5 +49,7 @@ public interface IZathuraSkyJetTemplate {
 	void doEntityGenerator(MetaData metaData, VelocityContext velocityContext, String hdLocation,MetaDataModel metaDataModel) throws Exception;
 	
 	public void doServiceTest(MetaData metaData,VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception;
+	
+	public void doDocker( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
 }

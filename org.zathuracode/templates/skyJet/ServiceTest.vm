@@ -60,5 +60,11 @@ public class ${metaData.getRealClassName()}ServiceTest{
     public void findById() throws Exception {            
     	assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
     }
+    
+	@Test
+	@DisplayName("count")	
+    public void count() throws Exception {            
+    	assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
 			
 }
