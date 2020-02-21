@@ -1,0 +1,5 @@
+FROM openjdk:8
+VOLUME /tmp
+EXPOSE 9090
+COPY ${name}-1.0.0.jar /${name}-1.0.0.jar
+ENTRYPOINT ["java","-jar","${name}-1.0.0.jar"]
