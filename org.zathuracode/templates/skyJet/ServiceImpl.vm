@@ -119,8 +119,11 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
             #if(${metaData.isGetOneToManyProperties()})
 	            findById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()).ifPresent(entidad->{	            	
 	                #foreach($member  in ${metaData.getOneToManyProperties()})
-	                    List<${member.getRealClassName()}> ${member.name} = entidad.get${member.getRealClassName()}s();
-	                    
+						#if(${member.getRealClassName().toString().endsWith("s")})
+							List<${member.getRealClassName()}> ${member.name} = entidad.get${member.getRealClassName()}es();
+	                    #else
+							List<${member.getRealClassName()}> ${member.name} = entidad.get${member.getRealClassName()}s();
+						#end
 	                    if(Utilities.validationsList(${member.name})==true){
                        	 	throw new ZMessManager().new DeletingException("${member.name}");
                         }
