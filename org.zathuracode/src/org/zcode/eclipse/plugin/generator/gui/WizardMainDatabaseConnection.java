@@ -56,7 +56,7 @@ public class WizardMainDatabaseConnection extends Wizard {
 		wizardDatabaseConnection.setUser(connectionModel.getUser());
 		wizardDatabaseConnection.setPassword(connectionModel.getPassword());
 		wizardDatabaseConnection.setDriverClassName(connectionModel.getDriverClassName());
-		wizardDatabaseConnection.setJarPath(connectionModel.getJarPath());
+		//wizardDatabaseConnection.setJarPath(connectionModel.getJarPath());
 		
 		//Maven
 		wizardDatabaseConnection.setConnectionArtifactId(connectionModel.getConnectionArtifactId());
@@ -86,8 +86,7 @@ public class WizardMainDatabaseConnection extends Wizard {
 		try {
 			ConnectionModel connectionModel = new ConnectionModel(wizardDatabaseConnection.getCmbDriverTemplate().getText(), wizardDatabaseConnection
 					.getTxtDriverName().getText(), wizardDatabaseConnection.getTxtConnectionURL().getText(), wizardDatabaseConnection.getTxtUserName()
-					.getText(), wizardDatabaseConnection.getTxtPassword().getText(), wizardDatabaseConnection.getTxtDriverClassName().getText(),
-					wizardDatabaseConnection.getListJARs().getItem(0));
+					.getText(), wizardDatabaseConnection.getTxtPassword().getText(), wizardDatabaseConnection.getTxtDriverClassName().getText());
 			
 			//Pone la configuracion de Maven
 			connectionModel.setConnectionArtifactId(wizardDatabaseConnection.getConnectionArtifactId());

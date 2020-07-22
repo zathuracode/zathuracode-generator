@@ -20,6 +20,8 @@ import javax.validation.constraints.*;
 @Table ( name="${databaseName}", schema="${schema}" )
 public class ${metaData.getRealClassName()} implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	#if (${primaryKey.isPrimiaryKeyAComposeKey()})
 		@NotNull
 		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};

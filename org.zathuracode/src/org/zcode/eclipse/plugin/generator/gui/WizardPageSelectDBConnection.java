@@ -100,7 +100,7 @@ public class WizardPageSelectDBConnection extends WizardPage {
 					EclipseGeneratorUtil.connectionUrl=				connectionModel.getUrl();
 					EclipseGeneratorUtil.connectionUsername=		connectionModel.getUser();
 					EclipseGeneratorUtil.connectionPassword=		connectionModel.getPassword();
-					EclipseGeneratorUtil.connectionDriverJarPath=   connectionModel.getJarPath();
+					
 					EclipseGeneratorUtil.connectionDriverTemplate=	connectionModel.getDriverTemplate();
 					
 					//Maven
@@ -109,11 +109,10 @@ public class WizardPageSelectDBConnection extends WizardPage {
 					EclipseGeneratorUtil.connectionVersion=			connectionModel.getConnectionVersion();
 					
 					
-					String arrayJarList[]={connectionModel.getJarPath()};
-					EclipseGeneratorUtil.jarList=arrayJarList;
+				
 					
-					EclipseGeneratorUtil.loadJarSystem(EclipseGeneratorUtil.connectionDriverJarPath,connectionModel.getDriverClassName());
-					EclipseGeneratorUtil.loadJarSystem(EclipseGeneratorUtil.connectionDriverJarPath,connectionModel.getDriverClassName());
+					//EclipseGeneratorUtil.loadJarSystem(EclipseGeneratorUtil.connectionDriverJarPath,connectionModel.getDriverClassName());
+					//EclipseGeneratorUtil.loadJarSystem(EclipseGeneratorUtil.connectionDriverJarPath,connectionModel.getDriverClassName());
 					
 				
 					

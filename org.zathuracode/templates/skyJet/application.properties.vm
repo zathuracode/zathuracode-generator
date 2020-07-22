@@ -24,7 +24,6 @@ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialec
 
 #Tomcat Server Basic Config
 server.port=9090
-server.tomcat.max-threads=200
 server.max-http-header-size=8KB
 server.tomcat.max-swallow-size=2MB
 #server.address=my_custom_ip

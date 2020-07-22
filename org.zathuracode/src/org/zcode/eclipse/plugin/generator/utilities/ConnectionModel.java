@@ -24,9 +24,6 @@ public class ConnectionModel {
 	/** The driver class name. */
 	private String driverClassName;
 	
-	/** The jar path. */
-	private String jarPath;
-	
 	private  String connectionGroupId;
 	
 	private  String connectionArtifactId;
@@ -78,7 +75,7 @@ public class ConnectionModel {
 	 * @param driverClassName the driver class name
 	 * @param jarPath the jar path
 	 */
-	public ConnectionModel(String driverTemplate, String name, String url, String user, String password, String driverClassName, String jarPath) {
+	public ConnectionModel(String driverTemplate, String name, String url, String user, String password, String driverClassName) {
 		super();
 		this.driverTemplate = driverTemplate;
 		this.name = name;
@@ -86,25 +83,6 @@ public class ConnectionModel {
 		this.user = user;
 		this.password = password;
 		this.driverClassName = driverClassName;
-		this.jarPath = jarPath;
-	}
-
-	/**
-	 * Gets the jar path.
-	 *
-	 * @return the jar path
-	 */
-	public String getJarPath() {
-		return jarPath;
-	}
-
-	/**
-	 * Sets the jar path.
-	 *
-	 * @param jarPath the jar path
-	 */
-	public void setJarPath(String jarPath) {
-		this.jarPath = jarPath;
 	}
 
 	/**

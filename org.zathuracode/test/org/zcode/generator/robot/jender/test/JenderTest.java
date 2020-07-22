@@ -63,7 +63,7 @@ public class JenderTest {
 			
 			EclipseGeneratorUtil.workspaceFolderPath="/Users/dgomez/Workspaces/runtime-EclipseApplication";
 			EclipseGeneratorUtil.destinationDirectory="/demoBancoWeb/src/main/java";
-			EclipseGeneratorUtil.connectionDriverJarPath="/Users/dgomez/Software/java/jdbc/postgresql-9.4.1211.jre6.jar";
+			//EclipseGeneratorUtil.connectionDriverJarPath="/Users/dgomez/Software/java/jdbc/postgresql-9.4.1211.jre6.jar";
 			EclipseGeneratorUtil.connectionDriverClass="org.postgresql.Driver";
 			EclipseGeneratorUtil.connectionUrl="jdbc:postgresql://127.0.0.1:5432/banco";
 			EclipseGeneratorUtil.connectionUsername="postgres";

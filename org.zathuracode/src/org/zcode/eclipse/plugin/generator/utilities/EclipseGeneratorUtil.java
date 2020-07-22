@@ -101,7 +101,7 @@ public class EclipseGeneratorUtil {
 	public static String connectionPassword;
 	
 	/** The connection driver jar path. */
-	public static String connectionDriverJarPath;
+	//public static String connectionDriverJarPath;
 	
 	/** The connection driver template. */
 	public static String connectionDriverTemplate;
@@ -134,8 +134,7 @@ public class EclipseGeneratorUtil {
 	/** The meta data model. */
 	private static MetaDataModel metaDataModel = null;
 	
-	/** The jar list. */
-	public static String[] jarList;
+	
 
 	/** The wizard main. */
 	public static WizardMainZathura wizardMain;
@@ -172,7 +171,7 @@ public class EclipseGeneratorUtil {
 		connectionUsername = null;
 		connectionPassword = null;
 		companyDomainName = null;
-		connectionDriverJarPath = null;
+		//connectionDriverJarPath = null;
 		destinationDirectory = null;
 		schema = null;
 		catalogAndSchema = null;
@@ -270,7 +269,7 @@ public class EclipseGeneratorUtil {
 		connectionProperties.put("connectionPassword", connectionPassword);
 		connectionProperties.put("companyDomainName", companyDomainName);
 
-		connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
+		//connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
 		connectionProperties.put("destinationDirectory", destinationDirectory);
 		
 		connectionProperties.put("catalogAndSchema", catalogAndSchema == null ? "" : catalogAndSchema);
@@ -308,7 +307,7 @@ public class EclipseGeneratorUtil {
 		connectionProperties.put("connectionUsername", connectionUsername);
 		connectionProperties.put("connectionPassword", connectionPassword);
 		connectionProperties.put("companyDomainName", companyDomainName);
-		connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
+		//connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
 		connectionProperties.put("destinationDirectory", destinationDirectory);
 
 		connectionProperties.put("catalogAndSchema", catalogAndSchema == null ? "" : catalogAndSchema);
@@ -333,80 +332,81 @@ public class EclipseGeneratorUtil {
 			ZathuraReverseEngineeringUtil.resetTempFiles(destinationDirectory);
 		}
 	}
-
-	/**
-	 * Load jar system.
-	 *
-	 * @param jarLocation the jar location
-	 * @throws Exception the exception
-	 */
-	@SuppressWarnings("deprecation")
-	public static void loadJarSystem(String jarLocation,String driverClassName) throws Exception {
-
-		// Para que funcione con el RPC JDP se debe poner Eclipse-BuddyPolicy:
-		// appﬂ
-
-		try {
-			Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
-			addURL.setAccessible(true);// you're telling the JVM to override the
-			// default visibility
-			File[] files = getExternalJars(jarLocation);// some method returning
-			// the
-			// jars to add
-
-			ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-			for (int i = 0; i < files.length; i++) {
-				URL url = files[i].toURL();
-				addURL.invoke(cl, new Object[] { url });
-				
-				URLClassLoader classLoader = new URLClassLoader(new URL[]{url}, cl);
-				Driver driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance();
-				DriverManager.registerDriver(driver);
-				
-				
-				log.info("Loaded JRE:" + files[i].getName());
-			}
-
-			// at this point, the default class loader has all the jars you
-			// indicated
-			//Carga de jars en el Bundle del contenedor OSGI
-			
-			ClassLoader bundleClassLoader =  ZathuraGeneratorActivator.getDefault().getBundle().getClass().getClassLoader();
-			
-			for (int i = 0; i < files.length; i++) {
-				URL url = files[i].toURL();
-				addURL.invoke(bundleClassLoader, new Object[] { url });				
-			
-				
-			
-				URLClassLoader classLoader = new URLClassLoader(new URL[]{url}, bundleClassLoader);
-				Driver driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance();
-				DriverManager.registerDriver(driver);
-				ZathuraGeneratorActivator.getDefault().getBundle().loadClass(driverClassName);
-				
-				
-				log.info("Loaded Bundle:" + files[i].getName());
-			}
-			
-			
-			
-		} catch (Exception e) {
-			log.error("loadJarSystem",e);
-			throw e;
-		}
-	}
 	
+
+//	/**
+//	 * Load jar system.
+//	 *
+//	 * @param jarLocation the jar location
+//	 * @throws Exception the exception
+//	 */
+//	@SuppressWarnings("deprecation")
+//	public static void loadJarSystem(String jarLocation,String driverClassName) throws Exception {
+//
+//		// Para que funcione con el RPC JDP se debe poner Eclipse-BuddyPolicy:
+//		// appﬂ
+//
+//		try {
+//			Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
+//			addURL.setAccessible(true);// you're telling the JVM to override the
+//			// default visibility
+//			File[] files = getExternalJars(jarLocation);// some method returning
+//			// the
+//			// jars to add
+//
+////			ClassLoader cl = ClassLoader.getSystemClassLoader();
+////
+////			for (int i = 0; i < files.length; i++) {
+////				URL url = files[i].toURL();
+////				addURL.invoke(cl, new Object[] { url });
+////				
+////				URLClassLoader classLoader = new URLClassLoader(new URL[]{url}, cl);
+////				Driver driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance();
+////				DriverManager.registerDriver(driver);
+////				
+////				
+////				log.info("Loaded JRE:" + files[i].getName());
+////			}
+//
+//			// at this point, the default class loader has all the jars you
+//			// indicated
+//			//Carga de jars en el Bundle del contenedor OSGI
+//			
+//			ClassLoader bundleClassLoader =  ZathuraGeneratorActivator.getDefault().getBundle().getClass().getClassLoader();
+//			
+//			for (int i = 0; i < files.length; i++) {
+//				URL url = files[i].toURL();
+//				addURL.invoke(bundleClassLoader, new Object[] { url });				
+//			
+//				
+//			
+//				URLClassLoader classLoader = new URLClassLoader(new URL[]{url}, bundleClassLoader);
+//				Driver driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance();
+//				DriverManager.registerDriver(driver);
+//				ZathuraGeneratorActivator.getDefault().getBundle().loadClass(driverClassName);
+//				
+//				
+//				log.info("Loaded Bundle:" + files[i].getName());
+//			}
+//			
+//			
+//			
+//		} catch (Exception e) {
+//			log.error("loadJarSystem",e);
+//			throw e;
+//		}
+//	}
+//	
 	/**
 	 * Carga una lista de Jars en el JRE y El bundle del Plugin
 	 * @param jarLocation
 	 * @throws Exception
 	 */
-	public static void loadJarSystem(String []jarLocation,String driverClassName) throws Exception {
-		for (String path : jarLocation) {
-			loadJarSystem(path,driverClassName);
-		}
-	}
+//	public static void loadJarSystem(String []jarLocation,String driverClassName) throws Exception {
+//		for (String path : jarLocation) {
+//			loadJarSystem(path,driverClassName);
+//		}
+//	}
 
 	
 	
@@ -478,5 +478,7 @@ public class EclipseGeneratorUtil {
 		String nameJar = path.substring(lastIndex + 1, path.length());
 		return nameJar;
 	}
+	
+	
 
 }

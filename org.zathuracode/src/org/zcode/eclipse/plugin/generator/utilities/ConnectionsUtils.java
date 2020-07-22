@@ -80,7 +80,7 @@ public class ConnectionsUtils {
 		for (String nameConnection : connectionNames) {
 			ConnectionModel connectionModel = new ConnectionModel();
 			connectionModel.setDriverClassName(properties.getProperty(nameConnection + "-" + "driverClass"));
-			connectionModel.setJarPath(properties.getProperty(nameConnection + "-" + "jarPath"));
+			//connectionModel.setJarPath(properties.getProperty(nameConnection + "-" + "jarPath"));
 			connectionModel.setName(properties.getProperty(nameConnection + "-" + "name"));
 			connectionModel.setPassword(properties.getProperty(nameConnection + "-" + "password"));
 			connectionModel.setUrl(properties.getProperty(nameConnection + "-" + "url"));
@@ -173,9 +173,6 @@ public class ConnectionsUtils {
 		if (connectionModel.getDriverClassName() == null || connectionModel.getDriverClassName().trim().equals("") == true) {
 			throw new Exception("DriverClassName null");
 		}
-		if (connectionModel.getJarPath() == null || connectionModel.getJarPath().trim().equals("") == true) {
-			throw new Exception("JarPath null");
-		}
 		if (connectionModel.getName() == null || connectionModel.getName().trim().equals("") == true) {
 			throw new Exception("Name null");
 		}
@@ -201,7 +198,7 @@ public class ConnectionsUtils {
 
 		properties.put(connectionModel.getName() + "-name", connectionModel.getName());
 		properties.put(connectionModel.getName() + "-driverClass", connectionModel.getDriverClassName());
-		properties.put(connectionModel.getName() + "-jarPath", connectionModel.getJarPath());
+		//properties.put(connectionModel.getName() + "-jarPath", connectionModel.getJarPath());
 		properties.put(connectionModel.getName() + "-password", connectionModel.getPassword());
 		properties.put(connectionModel.getName() + "-url", connectionModel.getUrl());
 		properties.put(connectionModel.getName() + "-user", connectionModel.getUser());

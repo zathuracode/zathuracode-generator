@@ -528,8 +528,6 @@ public class ZathuraReverseEngineeringUtil {
 	public static File createFolder(String path) {
 		
 		File file = new File(path);
-		
-		
         
         //set application user permissions to 455
         file.setExecutable(false);
@@ -542,24 +540,6 @@ public class ZathuraReverseEngineeringUtil {
         file.setReadable(true, false);
         file.setWritable(true, false);
         
-        /*
-        //using PosixFilePermission to set file permissions 777
-        Set<PosixFilePermission> perms = new HashSet<PosixFilePermission>();
-        //add owners permission
-        perms.add(PosixFilePermission.OWNER_READ);
-        perms.add(PosixFilePermission.OWNER_WRITE);
-        perms.add(PosixFilePermission.OWNER_EXECUTE);
-        //add group permissions
-        perms.add(PosixFilePermission.GROUP_READ);
-        perms.add(PosixFilePermission.GROUP_WRITE);
-        perms.add(PosixFilePermission.GROUP_EXECUTE);
-        //add others permissions
-        perms.add(PosixFilePermission.OTHERS_READ);
-        perms.add(PosixFilePermission.OTHERS_WRITE);
-        perms.add(PosixFilePermission.OTHERS_EXECUTE);
-         
-        Files.setPosixFilePermissions(Paths.get(path), perms);
-		*/
         file.mkdirs();
 		return file;
 	}

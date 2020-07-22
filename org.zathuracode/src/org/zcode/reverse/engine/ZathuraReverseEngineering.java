@@ -36,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
-import org.zcode.reverse.utilities.ZathuraReverseJarLoader;
 
 
 /**
@@ -89,7 +88,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	private String companyDomainNameForPojoLocation;
 	
 	/** The connection driver jar path. */
-	private String connectionDriverJarPath;
+	//private String connectionDriverJarPath;
 	
 	/** The destination directory. */
 	private String destinationDirectory;
@@ -123,7 +122,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		connectionPassword = connectionProperties.getProperty("connectionPassword");
 		companyDomainName = connectionProperties.getProperty("companyDomainName");
 		companyDomainNameForPojoLocation = ZathuraReverseEngineeringUtil.fixDomain(companyDomainName);
-		connectionDriverJarPath = connectionProperties.getProperty("connectionDriverJarPath");
+		//connectionDriverJarPath = connectionProperties.getProperty("connectionDriverJarPath");
 		destinationDirectory = connectionProperties.getProperty("destinationDirectory");
 		schema = connectionProperties.getProperty("schema");
 		catalog = connectionProperties.getProperty("catalog");
@@ -136,8 +135,8 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		doTemplate();
 
 		
-		ZathuraReverseJarLoader.loadJarSystem(connectionDriverJarPath, connectionDriverClass);
-		ZathuraReverseJarLoader.loadJarSystem(connectionDriverJarPath, connectionDriverClass);
+		//ZathuraReverseJarLoader.loadJarSystem(connectionDriverJarPath, connectionDriverClass);
+		//ZathuraReverseJarLoader.loadJarSystem(connectionDriverJarPath, connectionDriverClass);
 		
 
 		// LLama el proceso de ANT con los archivos generados
@@ -191,7 +190,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			context.put("companyDomainName", companyDomainName);
 			context.put("companyDomainNameForPojoLocation", companyDomainNameForPojoLocation);
 			
-			context.put("connectionDriverJarPath", connectionDriverJarPath);
+			//context.put("connectionDriverJarPath", connectionDriverJarPath);
 			context.put("destinationDirectory", destinationDirectory);
 			context.put("tablesList", tablesList);
 			context.put("isTableList", ZathuraReverseEngineeringUtil.validationsList(tablesList));

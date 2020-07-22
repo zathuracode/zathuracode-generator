@@ -60,9 +60,6 @@ public class WizardPageDatabaseConnection extends WizardPage {
 	/** The cmb driver template. */
 	private Combo cmbDriverTemplate;
 	
-	/** The list ja rs. */
-	private List listJARs;
-	
 	/** The txt driver class name. */
 	private Text txtDriverClassName;
 	
@@ -189,58 +186,58 @@ public class WizardPageDatabaseConnection extends WizardPage {
 		Label lineSeparatorJar = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
 		lineSeparatorJar.setBounds(10, 152, 568, 2);
 
-		Label lblDriverJar = new Label(container, SWT.NONE);
-		lblDriverJar.setBounds(10, 182, 90, 17);
-		lblDriverJar.setText(Messages.WizardPageDatabaseConnection_8);
+//		Label lblDriverJar = new Label(container, SWT.NONE);
+//		lblDriverJar.setBounds(10, 182, 90, 17);
+//		lblDriverJar.setText(Messages.WizardPageDatabaseConnection_8);
+//
+//		final ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+//		scrolledComposite.setBounds(10, 205, 451, 84);
+//
+//		listJARs = new List(scrolledComposite, SWT.NONE);
+//		// listJARs = new List(container, SWT.BORDER | SWT.MULTI);
+//		listJARs.setBounds(10, 205, 451, 84);
+//		scrolledComposite.setContent(listJARs);
 
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setBounds(10, 205, 451, 84);
-
-		listJARs = new List(scrolledComposite, SWT.NONE);
-		// listJARs = new List(container, SWT.BORDER | SWT.MULTI);
-		listJARs.setBounds(10, 205, 451, 84);
-		scrolledComposite.setContent(listJARs);
-
-		Button btnAddJar = new Button(container, SWT.NONE);
-		btnAddJar.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				testConnection = false;
-				FileDialog fd = new FileDialog(getShell(), SWT.OPEN);
-				fd.setText(""); //$NON-NLS-1$
-				fd.setFilterPath(""); //$NON-NLS-1$
-				String[] filterExt = { "*.jar", "*.zip", "*.*" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				fd.setFilterExtensions(filterExt);
-				String selected = fd.open();
-				listJARs.add(selected);
-				try {
-					EclipseGeneratorUtil.loadJarSystem(selected,txtDriverClassName.getText());
-					EclipseGeneratorUtil.loadJarSystem(selected,txtDriverClassName.getText());
-					validatePageComplete();
-				} catch (Exception e1) {
-					ZathuraGeneratorLog.logError(e1);
-					MessageDialog.openError(getShell(), Messages.WizardPageDatabaseConnection_14, e1.getMessage());
-					log.info(e1.getMessage());
-				}
-
-			}
-		});
-		btnAddJar.setBounds(467, 205, 97, 25);
-		btnAddJar.setText(Messages.WizardPageDatabaseConnection_15);
-
-		Button btnRemove = new Button(container, SWT.NONE);
-		btnRemove.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				testConnection = false;
-				int i = listJARs.getSelectionIndex();
-				listJARs.remove(i);
-				validatePageComplete();
-			}
-
-		});
-		btnRemove.setBounds(467, 236, 97, 25);
-		btnRemove.setText(Messages.WizardPageDatabaseConnection_16);
+//		Button btnAddJar = new Button(container, SWT.NONE);
+//		btnAddJar.addSelectionListener(new SelectionAdapter() {
+//
+//			public void widgetSelected(SelectionEvent e) {
+//				testConnection = false;
+//				FileDialog fd = new FileDialog(getShell(), SWT.OPEN);
+//				fd.setText(""); //$NON-NLS-1$
+//				fd.setFilterPath(""); //$NON-NLS-1$
+//				String[] filterExt = { "*.jar", "*.zip", "*.*" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+//				fd.setFilterExtensions(filterExt);
+//				String selected = fd.open();
+//				listJARs.add(selected);
+//				try {
+//					EclipseGeneratorUtil.loadJarSystem(selected,txtDriverClassName.getText());
+//					EclipseGeneratorUtil.loadJarSystem(selected,txtDriverClassName.getText());
+//					validatePageComplete();
+//				} catch (Exception e1) {
+//					ZathuraGeneratorLog.logError(e1);
+//					MessageDialog.openError(getShell(), Messages.WizardPageDatabaseConnection_14, e1.getMessage());
+//					log.info(e1.getMessage());
+//				}
+//
+//			}
+//		});
+//		btnAddJar.setBounds(467, 205, 97, 25);
+//		btnAddJar.setText(Messages.WizardPageDatabaseConnection_15);
+//
+//		Button btnRemove = new Button(container, SWT.NONE);
+//		btnRemove.addSelectionListener(new SelectionAdapter() {
+//
+//			public void widgetSelected(SelectionEvent e) {
+//				testConnection = false;
+//				int i = listJARs.getSelectionIndex();
+//				listJARs.remove(i);
+//				validatePageComplete();
+//			}
+//
+//		});
+//		btnRemove.setBounds(467, 236, 97, 25);
+//		btnRemove.setText(Messages.WizardPageDatabaseConnection_16);
 
 		Label lblDriverClassName = new Label(container, SWT.NONE);
 		lblDriverClassName.setBounds(10, 306, 128, 17);
@@ -258,7 +255,7 @@ public class WizardPageDatabaseConnection extends WizardPage {
 				
 				try {			
 					
-					EclipseGeneratorUtil.loadJarSystem(listJARs.getItems(),txtDriverClassName.getText());
+					//EclipseGeneratorUtil.loadJarSystem(listJARs.getItems(),txtDriverClassName.getText());
 					
 					
 					ZathuraReverseEngineeringUtil.testDriver(url, driverClassName, user, password);
@@ -269,7 +266,7 @@ public class WizardPageDatabaseConnection extends WizardPage {
 					EclipseGeneratorUtil.connectionUrl = txtConnectionURL.getText();
 					EclipseGeneratorUtil.connectionUsername = txtUserName.getText();
 					EclipseGeneratorUtil.connectionPassword = txtPassword.getText();
-					EclipseGeneratorUtil.connectionDriverJarPath = listJARs.getItem(0);
+					
 					
 					//MAVEN
 					
@@ -328,7 +325,7 @@ public class WizardPageDatabaseConnection extends WizardPage {
 		 */
 		if (driverTemplate != null && driverTemplate.equals("") != true && name != null && name.equals("") != true && url != null && url.equals("") != true //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				&& user != null && user.equals("") != true && password != null && password.equals("") != true && driverClassName != null //$NON-NLS-1$ //$NON-NLS-2$
-				&& driverClassName.equals("") != true && jarPath != null && jarPath.equals("") != true) { //$NON-NLS-1$ //$NON-NLS-2$
+				&& driverClassName.equals("") != true) { //$NON-NLS-1$ //$NON-NLS-2$
 
 			getCmbDriverTemplate().setText(driverTemplate);
 			getTxtDriverName().setText(name);
@@ -336,8 +333,8 @@ public class WizardPageDatabaseConnection extends WizardPage {
 			getTxtDriverClassName().setText(driverClassName);
 			getTxtPassword().setText(password);
 			getTxtUserName().setText(user);
-			getListJARs().removeAll();
-			getListJARs().add(jarPath);
+			//getListJARs().removeAll();
+			//getListJARs().add(jarPath);
 
 			btnTestDriver.setEnabled(true);
 		}
@@ -357,9 +354,7 @@ public class WizardPageDatabaseConnection extends WizardPage {
 			if (ConnectionsUtils.connectionExist(txtDriverName.getText()) == true && (name == null || name.equals("") == true)) { //$NON-NLS-1$
 				throw new Exception(Messages.WizardPageDatabaseConnection_33);
 			}
-			if (listJARs.getItems() == null || listJARs.getItems().length == 0) {
-				throw new Exception(Messages.WizardPageDatabaseConnection_34);
-			}
+			
 			if (testConnection == false) {
 				btnTestDriver.setEnabled(true);
 				throw new Exception(Messages.WizardPageDatabaseConnection_35);
@@ -423,7 +418,7 @@ public class WizardPageDatabaseConnection extends WizardPage {
 	public void setPageComplete(boolean complete) {
 		super.setPageComplete(complete);
 		if (complete == true) {
-			EclipseGeneratorUtil.jarList = listJARs.getItems();
+			//EclipseGeneratorUtil.jarList = listJARs.getItems();
 
 		}
 	}
@@ -482,23 +477,7 @@ public class WizardPageDatabaseConnection extends WizardPage {
 		this.txtPassword = txtPassword;
 	}
 
-	/**
-	 * Gets the list ja rs.
-	 *
-	 * @return the list ja rs
-	 */
-	public List getListJARs() {
-		return listJARs;
-	}
-
-	/**
-	 * Sets the list ja rs.
-	 *
-	 * @param listJARs the list ja rs
-	 */
-	public void setListJARs(List listJARs) {
-		this.listJARs = listJARs;
-	}
+	
 
 	/**
 	 * Gets the txt driver class name.
