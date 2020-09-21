@@ -354,7 +354,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doGenericService(velocityContext, hdLocation, metaDataModel, modelName);
 			doDocker(velocityContext, hdLocation, metaDataModel, modelName);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
-			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);			
+			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
+			doSwaggerConfig(velocityContext, hdLocation, metaDataModel, modelName);
 			doApplicationProperties(metaDataModel, velocityContext, hdLocation);	
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
@@ -694,7 +695,34 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			}
 
 
-		}
+	}
+	
+	@Override
+	public void doSwaggerConfig(VelocityContext context, String hdLocation,	MetaDataModel dataModel, String modelName) throws Exception {
+		
+			try {
+					String path=hdLocation + paqueteVirgen + GeneratorUtil.slash;
+	
+					log.info("Begin SwaggerConfig");
+					Template templateIlogic = ve.getTemplate("SwaggerConfig.vm");
+					StringWriter swIlogic = new StringWriter();
+					templateIlogic.merge(context, swIlogic);
+	
+					FileWriter fwIlogic = new FileWriter(path+"SwaggerConfig.java");
+					BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+					bwIlogic.write(swIlogic.toString());
+					bwIlogic.close();
+					fwIlogic.close();
+					log.info("End SwaggerConfig");
+	
+					JalopyCodeFormatter.formatJavaCodeFile(path+ "SwaggerConfig.java");
+				} catch (Exception e) {
+				log.error(e.toString());
+				throw e;
+			}
+
+
+	}
 
 	@Override
 	public void doGenericService(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception {

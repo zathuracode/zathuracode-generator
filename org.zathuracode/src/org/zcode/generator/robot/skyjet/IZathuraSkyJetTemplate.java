@@ -33,6 +33,8 @@ public interface IZathuraSkyJetTemplate {
 	public void doService(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 	
 	public void doSpringBootRunner( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
+	
+	public void doSwaggerConfig( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
 	public void doDto(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
