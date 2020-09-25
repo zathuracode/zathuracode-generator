@@ -3,6 +3,7 @@ package  ${virginPackage}.service;
 
 import java.math.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import ${virginPackage}.utility.Utilities;
 import ${package}.*;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
 /**
@@ -40,22 +42,13 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 	private Validator validator;
                 
     @Override        		
-	public void validate(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws Exception{		
-		 try {
-			Set<ConstraintViolation<${metaData.getRealClassName()}>> constraintViolations =validator.validate(${metaData.getRealClassNameAsVariable()});
-			 if(constraintViolations.size()>0){
-				 StringBuilder strMessage=new StringBuilder();
-				 for (ConstraintViolation<${metaData.getRealClassName()}> constraintViolation : constraintViolations) {
-					strMessage.append(constraintViolation.getPropertyPath().toString());
-					strMessage.append(" - ");
-					strMessage.append(constraintViolation.getMessage());
-					strMessage.append(". \n");
-				}
-				 throw new Exception(strMessage.toString());
-			 }
-		 }catch (Exception e) {
-			throw e;
+	public void validate(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()})throws ConstraintViolationException{		
+		
+		Set<ConstraintViolation<${metaData.getRealClassName()}>> constraintViolations =validator.validate(${metaData.getRealClassNameAsVariable()});
+		 if (!constraintViolations.isEmpty()) {			
+			throw new ConstraintViolationException(constraintViolations);
 		}
+		
 	}
 	
 	@Override
@@ -73,7 +66,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 			
 			
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)			
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)			
     public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity) throws Exception {
 		log.debug("saving ${metaData.getRealClassName()} instance");
 	    try {
@@ -84,7 +77,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 		
 		validate(entity);	
 	
-		if(${metaData.getRealClassNameAsVariable()}Repository.findById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()).isPresent()){
+		if(${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())){
            throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
         }    
 	
@@ -98,7 +91,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 			
 			
 			@Override
-			@Transactional(readOnly=false , propagation=Propagation.REQUIRED)
+			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
             public void delete(${metaData.getRealClassName()} entity) throws Exception {
             	log.debug("deleting ${metaData.getRealClassName()} instance");
             	
@@ -115,6 +108,10 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
                     throw new ZMessManager().new EmptyFieldException("${metaData.primaryKey.getShowName()}");
                     }
             #end
+            
+            if(${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())==false){
+           		throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+        	} 
             
             #if(${metaData.isGetOneToManyProperties()})
 	            findById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}()).ifPresent(entidad->{	            	
@@ -145,19 +142,19 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
             }
             
             @Override
-			@Transactional(readOnly=false , propagation=Propagation.REQUIRED)
+			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
             public void deleteById(${metaData.primaryKey.getRealClassName()} id) throws Exception {            
             	log.debug("deleting ${metaData.getRealClassName()} instance");
             	if(id==null){
             		throw new ZMessManager().new EmptyFieldException("${metaData.primaryKey.getShowName()}");
             	}
-            	if(${metaData.getRealClassNameAsVariable()}Repository.findById(id).isPresent()){
+            	if(${metaData.getRealClassNameAsVariable()}Repository.existsById(id)){
            			delete(${metaData.getRealClassNameAsVariable()}Repository.findById(id).get());
        			}    
             }	
 			
 			@Override
-			@Transactional(readOnly=false , propagation=Propagation.REQUIRED)
+			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
             public ${metaData.getRealClassName()} update(${metaData.getRealClassName()} entity) throws Exception {
 
 				log.debug("updating ${metaData.getRealClassName()} instance");
@@ -169,6 +166,11 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 		    		}
 		    		
 	            validate(entity);
+	            
+	            
+	            if(${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())==false){
+           			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+        		}	            
 	
 	            return ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
 	            

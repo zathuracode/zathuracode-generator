@@ -354,6 +354,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doGenericService(velocityContext, hdLocation, metaDataModel, modelName);
 			doDocker(velocityContext, hdLocation, metaDataModel, modelName);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
+			doGeneralExceptionHandler(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
 			doSwaggerConfig(velocityContext, hdLocation, metaDataModel, modelName);
 			doApplicationProperties(metaDataModel, velocityContext, hdLocation);	
@@ -544,6 +545,10 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 	}
 	
 	
+	
+	
+	
+	
 	@Override
 	public void doApplicationProperties(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
 
@@ -588,6 +593,31 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 
 			
 			JalopyCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doGeneralExceptionHandler(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception {
+
+		try {
+
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "controller" + GeneratorUtil.slash;
+			
+			log.info("Begin GeneralExceptionHandler");
+			Template templateUtilities = ve.getTemplate("GeneralExceptionHandler.vm");
+			StringWriter swUtilities= new StringWriter();
+			templateUtilities.merge(context, swUtilities);
+			FileWriter fwUtilities = new FileWriter(path+"GeneralExceptionHandler.java");
+			BufferedWriter bwUtilities = new BufferedWriter(fwUtilities);
+			bwUtilities.write(swUtilities.toString());
+			bwUtilities.close();
+			fwUtilities.close();
+			log.info("Begin GeneralExceptionHandler");
 
 		} catch (Exception e) {
 			log.error(e.toString());

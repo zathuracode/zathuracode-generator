@@ -24,12 +24,12 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 public interface ${metaData.getRealClassName()}Mapper {
 
 	${getMappingsEntityToDTo}
-	public ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}) throws Exception;
+	public ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()});
 	
 	${getMappingsDTOToEntity}
-	public ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO) throws Exception;
+	public ${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO);
 	
-	public List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(List<${metaData.getRealClassName()}> ${metaData.getRealClassNameAsVariable()}s) throws Exception;
+	public List<${metaData.getRealClassName()}DTO> list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(List<${metaData.getRealClassName()}> ${metaData.getRealClassNameAsVariable()}s);
 
-	public List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}DTOToList${metaData.getRealClassName()}(List<${metaData.getRealClassName()}DTO> ${metaData.getRealClassNameAsVariable()}DTOs) throws Exception;
+	public List<${metaData.getRealClassName()}> list${metaData.getRealClassName()}DTOToList${metaData.getRealClassName()}(List<${metaData.getRealClassName()}DTO> ${metaData.getRealClassNameAsVariable()}DTOs);
 }

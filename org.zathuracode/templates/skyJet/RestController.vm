@@ -1,8 +1,9 @@
 package ${virginPackage}.controller;
 
+import javax.validation.Valid;
+
 import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
 import ${virginPackage}.service.${metaData.getRealClassName()}Service;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import ${package}.*;
 import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 @RestController
-@RequestMapping("/api/${metaData.getRealClassNameAsVariable()}")
+@RequestMapping("/api/v1/${metaData.getRealClassNameAsVariable()}")
 @CrossOrigin(origins = "*")
 public class ${metaData.getRealClassName()}RestController {
 	
@@ -35,13 +36,13 @@ public class ${metaData.getRealClassName()}RestController {
 	private ${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper;
 	
 	#if (${primaryKey.isPrimiaryKeyAComposeKey()})	
-    	@GetMapping(value = "/findById/#foreach($cka in $composeKeyAttributes)/{${cka.getShowName()}}#end") 
+    	@GetMapping(value = "/#foreach($cka in $composeKeyAttributes)/{${cka.getShowName()}}#end") 
     #else	
-    	@GetMapping(value = "/findById/{${primaryKey.getShowName()}}") 
+    	@GetMapping(value = "/{${primaryKey.getShowName()}}") 
     #end
-    public ResponseEntity<?> findById(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) {
+    public ResponseEntity<?> findById(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) throws Exception{
     	log.debug("Request to findById() ${metaData.getRealClassName()}");
-    	try {
+    	
     		#if (${primaryKey.isPrimiaryKeyAComposeKey()})
 				
 				${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()} = new ${primaryKey.getType().getSimpleName()}();
@@ -50,67 +51,53 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).get();
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).isPresent()==true?${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).get():null;
 				
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).get();
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).isPresent()==true?${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).get():null;
 			#end
 			
-			return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}));
+		return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}));
 			
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	
     }
     
-    @GetMapping(value = "/findAll")
-    public ResponseEntity<?> findAll(){
+    @GetMapping(value = "/")
+    public ResponseEntity<?> findAll()throws Exception{
     	log.debug("Request to findAll() ${metaData.getRealClassName()}");
-		try {			
-			return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}Service.findAll()));
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+				
+		return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}Service.findAll()));
+		
     }    
      
-    @PostMapping(value = "/save")
-    public ResponseEntity<?> save(@RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO){
+    @PostMapping()
+    public ResponseEntity<?> save(@Valid @RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws Exception {
     	log.debug("Request to save ${metaData.getRealClassName()}: {}", ${metaData.getRealClassNameAsVariable()}DTO);
-    	try {
+    	
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);    		
     		${metaData.getRealClassNameAsVariable()}=${metaData.getRealClassNameAsVariable()}Service.save(${metaData.getRealClassNameAsVariable()});
     		 return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}));
-    	} catch (Exception e) {
-    		log.error(e.getMessage(), e);
-    		return ResponseEntity.badRequest().body(e.getMessage());
-    	}
+  
     }
     
-    @PutMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO) {
+    @PutMapping()
+    public ResponseEntity<?> update(@Valid @RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws Exception {
     	log.debug("Request to update ${metaData.getRealClassName()}: {}", ${metaData.getRealClassNameAsVariable()}DTO);
-    	try {
+    	
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);    		
     		${metaData.getRealClassNameAsVariable()}=${metaData.getRealClassNameAsVariable()}Service.update(${metaData.getRealClassNameAsVariable()});
     		
     		return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()})); 
-    	} catch (Exception e) {
-    		log.error(e.getMessage(), e);
-    		return ResponseEntity.badRequest().body(e.getMessage());
-    	}
+    	
     }
     
     #if (${primaryKey.isPrimiaryKeyAComposeKey()})	
-    	@DeleteMapping(value = "/delete/#foreach($cka in $composeKeyAttributes)/{${cka.getShowName()}}#end") 
+    	@DeleteMapping(value = "/#foreach($cka in $composeKeyAttributes)/{${cka.getShowName()}}#end") 
     #else	
-    	@DeleteMapping(value = "/delete/{${primaryKey.getShowName()}}") 
+    	@DeleteMapping(value = "/{${primaryKey.getShowName()}}") 
     #end
     public ResponseEntity<?> delete(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) throws Exception {
     	log.debug("Request to delete ${metaData.getRealClassName()}");
-    	try {
+    	
     		
     		#if (${primaryKey.isPrimiaryKeyAComposeKey()})
 				
@@ -120,18 +107,14 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).get();
-				
+				${metaData.getRealClassNameAsVariable()}Service.deleteById(${primaryKey.getShowName()});
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).get();
+				${metaData.getRealClassNameAsVariable()}Service.deleteById(${primaryKey.getShowName()});
 			#end
     	
-    		${metaData.getRealClassNameAsVariable()}Service.delete(${metaData.getRealClassNameAsVariable()});
+    		
     		return ResponseEntity.ok().build();
-    	} catch (Exception e) {
-    		log.error(e.getMessage(), e);
-    		return ResponseEntity.badRequest().body(e.getMessage());
-    	}
+    
     }
     
     @GetMapping(value = "/count")

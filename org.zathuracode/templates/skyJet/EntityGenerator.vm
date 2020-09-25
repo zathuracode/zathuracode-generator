@@ -44,7 +44,7 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
 		private ${sim.getType().getSimpleName()} ${sim.getShowName()};	
     #end
 	#foreach($omm in $oneToManyMembers)
-		private List<${omm.getType().getSimpleName()}> ${omm.getShowName()} = new ArrayList<${omm.getType().getSimpleName()}>(0);	
+		private List<${omm.getType().getSimpleName()}> ${omm.getShowName()} = new ArrayList<>();	
     #end
     
     public ${metaData.getRealClassName()}() {

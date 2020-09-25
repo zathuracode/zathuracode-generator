@@ -41,6 +41,8 @@ public interface IZathuraSkyJetTemplate {
 	public void doExceptions(VelocityContext context, String hdLocation)throws Exception;
 	
 	public void doUtilites(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
+	
+	public void doGeneralExceptionHandler(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception;
 		
 	public void doApplicationProperties(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
 	
