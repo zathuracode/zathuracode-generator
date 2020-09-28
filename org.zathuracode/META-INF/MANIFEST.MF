@@ -41,7 +41,7 @@ Bundle-ClassPath: .,
  lib/velocity-1.7.jar,
  lib/mysql-connector-java-8.0.21.jar,
  lib/ojdbc10.jar,
- lib/postgresql-42.2.14.jar, 
+ lib/postgresql-42.2.14.jar,
  lib/
 Require-Bundle: org.eclipse.jdt.core;bundle-version="3.23.0",
  org.eclipse.ui;bundle-version="3.118.0",
@@ -51,3 +51,4 @@ Require-Bundle: org.eclipse.jdt.core;bundle-version="3.23.0",
  org.eclipse.jdt.ui;bundle-version="3.21.200",
  org.eclipse.ui.console;bundle-version="3.9.300",
  org.eclipse.m2e.core;bundle-version="1.16.2"
+Automatic-Module-Name: org.zathuracode
