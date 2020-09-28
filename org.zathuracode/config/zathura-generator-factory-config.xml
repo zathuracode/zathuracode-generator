@@ -9,7 +9,7 @@
 		<gui-name>SkyJet</gui-name>
 		<class>org.zcode.generator.robot.skyjet.SkyJet</class>
 		<persistence>jpa</persistence>
-		<zathuraVersion>8.0</zathuraVersion>
+		<zathuraVersion>9.0</zathuraVersion>
 		<description>
 		<![CDATA[<!doctype html>
 <html>
