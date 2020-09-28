@@ -29,16 +29,16 @@
 		<url>jdbc:mysql://&lt;hostname&gt;[&lt;:3306&gt;]/&lt;dbname&gt;</url>	
 		<groupId>mysql</groupId>
     	<artifactId>mysql-connector-java</artifactId>
-    	<version>8.0.18</version>
+    	<version>8.0.21</version>
 	</database>
 	
 	<database>
 		<name>Oracle 19c (ojdbc10) (Thin driver)</name>
 		<driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
 		<url>jdbc:oracle:thin:@&lt;server&gt;[:&lt;1521&gt;]:&lt;database_name&gt;</url>
-		<groupId>com.oracle</groupId>
-		<artifactId>ojdbc6</artifactId>
-		<version>11.2.0</version>
+		<groupId>com.oracle.database.jdbc</groupId>
+		<artifactId>ojdbc8</artifactId>
+		<version>19.7.0.0</version>
 	</database>
 	
 	 <database>
@@ -47,7 +47,7 @@
 		<driverClassName>org.postgresql.Driver</driverClassName>
 		<groupId>org.postgresql</groupId>
 	    <artifactId>postgresql</artifactId>
-	    <version>42.2.8</version>
+	    <version>42.2.16</version>
 	</database>
 
      
