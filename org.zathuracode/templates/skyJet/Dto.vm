@@ -3,14 +3,9 @@ import java.util.Date;
 import java.io.Serializable;
 import java.sql.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.validation.constraints.*;
+
+import lombok.Data;
 
 
 /**
@@ -18,44 +13,15 @@ import javax.validation.constraints.*;
 * www.zathuracode.org
 * 
 */
+@Data
 public class ${metaData.getRealClassName()}DTO implements Serializable {
 
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}DTO.class);
-
+	
+	
 	
 	#foreach($member  in $variableDto)	
 	private  $member;	
 	#end
-	    
-	#foreach($memberD  in $memberDto)	
-	  #set($str = $memberD ) 
-	  #set($upper = $str.toString().substring(0,1).toUpperCase())
-	  #set($str2 = $str.toString().substring(1))
-	  #set($type = $propertiesDto.get($memberD)) 
-	
-		public $type get$upper$str2 (){
-		 return $memberD;
-		}
-		
-		public void set$upper$str2 ($type $memberD ){
-		this.$memberD = $memberD;
-		}
-		
-	#end
-	
-		@Override
-		public String toString() {
-	        ObjectMapper mapper = new ObjectMapper();
-	        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        try {
-				return  mapper.writeValueAsString(this);
-			} catch (JsonProcessingException e) {
-				log.error(e.getMessage());
-				return super.toString();
-			}
-		}
-	
-	
-    }
+}

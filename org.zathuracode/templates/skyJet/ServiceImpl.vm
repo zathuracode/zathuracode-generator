@@ -23,6 +23,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
 * @author Zathura Code Generator http://zathuracode.org/
 * www.zathuracode.org
@@ -31,9 +33,8 @@ import javax.validation.Validator;
 
 @Scope("singleton")
 @Service
+@Slf4j
 public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.getRealClassName()}Service{
-
-	private static final Logger log = LoggerFactory.getLogger(${metaData.getRealClassName()}ServiceImpl.class);
 
 	@Autowired
 	private ${metaData.getRealClassName()}Repository ${metaData.getRealClassNameAsVariable()}Repository;
@@ -69,7 +70,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)			
     public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity) throws Exception {
 		log.debug("saving ${metaData.getRealClassName()} instance");
-	    try {
+	   
 	    
 	    if(entity==null){
 			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
@@ -82,11 +83,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
         }    
 	
 	    return ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
-	    
-	    } catch (Exception e) {
-	    	log.error("save ${metaData.getRealClassName()} failed", e);
-	    	throw e;
-	    }
+	   
     }
 			
 			
@@ -129,15 +126,12 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
             #end
            
 
-            try {
+           
             
             ${metaData.getRealClassNameAsVariable()}Repository.deleteById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}());
             log.debug("delete ${metaData.getRealClassName()} successful");
             
-            } catch (Exception e) {
-            	log.error("delete ${metaData.getRealClassName()} failed", e);
-            	throw e;
-            }
+           
             	
             }
             
@@ -159,7 +153,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 
 				log.debug("updating ${metaData.getRealClassName()} instance");
 				
-	            try {
+	           
 	            
 	            	if(entity==null){
 		    			throw new ZMessManager().new NullEntityExcepcion("${metaData.getRealClassName()}");
@@ -173,11 +167,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
         		}	            
 	
 	            return ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
-	            
-	            } catch (Exception e) {
-	            	log.error("update ${metaData.getRealClassName()} failed", e);
-	            	throw e;		
-	            }
+	        
             }
 			
 			@Override
