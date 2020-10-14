@@ -353,6 +353,7 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doExceptions(velocityContext, hdLocation);
 			doGenericService(velocityContext, hdLocation, metaDataModel, modelName);
 			doDocker(velocityContext, hdLocation, metaDataModel, modelName);
+			doJWTSecurity(velocityContext, hdLocation, metaDataModel, modelName);
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			doGeneralExceptionHandler(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
@@ -799,6 +800,95 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			throw e;
 		}
 		
+	}
+	
+	@Override
+	public void doJWTSecurity(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception {
+		try {
+			String path=hdLocation + paqueteVirgen + GeneratorUtil.slash +"security" + GeneratorUtil.slash;
+			String pathService=hdLocation + paqueteVirgen + GeneratorUtil.slash +"service" + GeneratorUtil.slash;
+			String pathDomain=hdLocation + paqueteVirgen + GeneratorUtil.slash +"domain" + GeneratorUtil.slash;
+			
+
+			log.info("Begin Constants");
+			Template templateIlogic = ve.getTemplate("Constants.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
+
+			FileWriter fwIlogic = new FileWriter(path+"Constants.java");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("End Constants");
+			
+			log.info("Begin JWTAuthenticationFilter");
+				templateIlogic = ve.getTemplate("JWTAuthenticationFilter.vm");
+				swIlogic = new StringWriter();
+				templateIlogic.merge(context, swIlogic);
+	
+				fwIlogic = new FileWriter(path+"JWTAuthenticationFilter.java");
+				bwIlogic = new BufferedWriter(fwIlogic);
+				bwIlogic.write(swIlogic.toString());
+				bwIlogic.close();
+				fwIlogic.close();
+			log.info("End JWTAuthenticationFilter");
+			
+			log.info("Begin JWTAuthorizationFilter");
+				templateIlogic = ve.getTemplate("JWTAuthorizationFilter.vm");
+				swIlogic = new StringWriter();
+				templateIlogic.merge(context, swIlogic);
+	
+				fwIlogic = new FileWriter(path+"JWTAuthorizationFilter.java");
+				bwIlogic = new BufferedWriter(fwIlogic);
+				bwIlogic.write(swIlogic.toString());
+				bwIlogic.close();
+				fwIlogic.close();
+			log.info("End JWTAuthorizationFilter");
+			
+			log.info("Begin WebSecurity");
+				templateIlogic = ve.getTemplate("WebSecurity.vm");
+				swIlogic = new StringWriter();
+				templateIlogic.merge(context, swIlogic);
+	
+				fwIlogic = new FileWriter(path+"WebSecurity.java");
+				bwIlogic = new BufferedWriter(fwIlogic);
+				bwIlogic.write(swIlogic.toString());
+				bwIlogic.close();
+				fwIlogic.close();
+			log.info("End WebSecurity");
+		
+			
+			log.info("Begin UserApplicationDetailsServiceImpl");
+				templateIlogic = ve.getTemplate("UserApplicationDetailsServiceImpl.vm");
+				swIlogic = new StringWriter();
+				templateIlogic.merge(context, swIlogic);
+	
+				fwIlogic = new FileWriter(pathService+"UserApplicationDetailsServiceImpl.java");
+				bwIlogic = new BufferedWriter(fwIlogic);
+				bwIlogic.write(swIlogic.toString());
+				bwIlogic.close();
+				fwIlogic.close();
+			log.info("End UserApplicationDetailsServiceImpl");
+			
+			log.info("Begin UserApplication");
+				templateIlogic = ve.getTemplate("UserApplication.vm");
+				swIlogic = new StringWriter();
+				templateIlogic.merge(context, swIlogic);
+	
+				fwIlogic = new FileWriter(pathDomain+"UserApplication.java");
+				bwIlogic = new BufferedWriter(fwIlogic);
+				bwIlogic.write(swIlogic.toString());
+				bwIlogic.close();
+				fwIlogic.close();
+			log.info("End UserApplication");
+
+
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}		
 	}
 
 	

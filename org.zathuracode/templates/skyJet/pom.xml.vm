@@ -24,6 +24,7 @@
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<org.apache.commons.collections4>4.4</org.apache.commons.collections4>
 		<org.projectlombok.version>1.18.12</org.projectlombok.version>
+		<io.jsonwebtoken.version>0.11.2</io.jsonwebtoken.version>
 	</properties>
 	
 	<dependencies>
@@ -81,6 +82,29 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+ 
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${io.jsonwebtoken.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${io.jsonwebtoken.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
+			<version>${io.jsonwebtoken.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 				
 		<dependency>

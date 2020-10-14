@@ -10,7 +10,9 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
 * @author Zathura Code Generator http://zathuracode.org/
@@ -20,6 +22,8 @@ import lombok.Data;
 @Entity
 @Table ( name="${databaseName}", schema="${schema}" )
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ${metaData.getRealClassName()} implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

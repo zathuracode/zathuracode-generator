@@ -558,6 +558,8 @@ public class SkyJetUtilities {
 		folderBuilder.add(pckge + "mapper");
 
 		folderBuilder.add(pckge + "dto");
+		
+		folderBuilder.add(pckge + "security");
 
 
 		for (String string : folderBuilder) {

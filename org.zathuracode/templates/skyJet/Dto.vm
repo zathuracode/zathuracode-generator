@@ -5,7 +5,9 @@ import java.sql.*;
 
 import javax.validation.constraints.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -14,12 +16,11 @@ import lombok.Data;
 * 
 */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ${metaData.getRealClassName()}DTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	
-	
 	
 	#foreach($member  in $variableDto)	
 	private  $member;	

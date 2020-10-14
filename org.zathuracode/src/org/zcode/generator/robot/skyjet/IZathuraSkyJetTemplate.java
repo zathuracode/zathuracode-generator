@@ -19,7 +19,7 @@ import org.apache.velocity.VelocityContext;
 import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.MetaDataModel;
 /**
- * @author Mauricio cárdenas Pérez
+ * @author Diego Armando Gomez Mosquera
  */
 
 public interface IZathuraSkyJetTemplate {
@@ -55,5 +55,7 @@ public interface IZathuraSkyJetTemplate {
 	public void doServiceTest(MetaData metaData,VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception;
 	
 	public void doDocker( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
+	
+	public void doJWTSecurity(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception;
 
 }
