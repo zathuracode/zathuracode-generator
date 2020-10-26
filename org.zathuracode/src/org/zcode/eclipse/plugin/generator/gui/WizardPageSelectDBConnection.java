@@ -107,15 +107,7 @@ public class WizardPageSelectDBConnection extends WizardPage {
 					EclipseGeneratorUtil.connectionArtifactId=		connectionModel.getConnectionArtifactId();
 					EclipseGeneratorUtil.connectionGroupId=			connectionModel.getConnectionGroupId();
 					EclipseGeneratorUtil.connectionVersion=			connectionModel.getConnectionVersion();
-					
-					
-				
-					
-					//EclipseGeneratorUtil.loadJarSystem(EclipseGeneratorUtil.connectionDriverJarPath,connectionModel.getDriverClassName());
-					//EclipseGeneratorUtil.loadJarSystem(EclipseGeneratorUtil.connectionDriverJarPath,connectionModel.getDriverClassName());
-					
-				
-					
+										
 					
 					ZathuraReverseEngineeringUtil.testDriver(EclipseGeneratorUtil.connectionUrl, 
 															 EclipseGeneratorUtil.connectionDriverClass,
@@ -231,6 +223,7 @@ public class WizardPageSelectDBConnection extends WizardPage {
 			for (String connectionName : theConnections) {
 				listConnections.add(connectionName);
 			}
+			listConnections.redraw();
 		}
 		
 		
