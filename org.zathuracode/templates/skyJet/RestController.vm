@@ -23,6 +23,13 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+
+
 @RestController
 @RequestMapping("/api/v1/${metaData.getRealClassNameAsVariable()}")
 @CrossOrigin(origins = "*")

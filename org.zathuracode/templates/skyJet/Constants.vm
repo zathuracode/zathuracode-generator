@@ -1,5 +1,10 @@
 package  ${virginPackage}.security;
 
+/**
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
 public class Constants {
 
 	// Spring Security

@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* @author Zathura Code Generator http://zathuracode.org/
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
 * www.zathuracode.org
 * 
 */

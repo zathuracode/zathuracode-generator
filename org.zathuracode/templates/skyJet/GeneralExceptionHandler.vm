@@ -27,7 +27,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 /**
  * * Handle all exceptions and java bean validation errors
  * for all endpoints income data that use the @Valid annotation
- *
+ * @author Zathura Code Generator Version 9.0 http://zathuracode.org/
  * @author Ehab Qadah
  */
 @ControllerAdvice

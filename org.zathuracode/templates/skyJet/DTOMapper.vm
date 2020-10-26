@@ -11,7 +11,7 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 
 /**
-* @author Zathura Code Generator http://zathuracode.org/
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
 * www.zathuracode.org
 * 
 * Mapper Build with MapStruct https://mapstruct.org/

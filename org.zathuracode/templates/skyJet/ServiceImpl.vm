@@ -26,7 +26,7 @@ import javax.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* @author Zathura Code Generator http://zathuracode.org/
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
 * www.zathuracode.org
 * 
 */

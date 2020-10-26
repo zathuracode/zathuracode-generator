@@ -9,8 +9,9 @@ import $package.${metaData.getRealClassName()};
     import $package.${metaData.primaryKey.getRealClassName()};
 #end
 /**
-* Interface for   ${metaData.getRealClassName()}Repository.
-*
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
 */
 public interface  ${metaData.getRealClassName()}Repository extends JpaRepository<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> {
 
