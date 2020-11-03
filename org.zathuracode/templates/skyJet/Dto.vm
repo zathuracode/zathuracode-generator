@@ -23,6 +23,6 @@ public class ${metaData.getRealClassName()}DTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	#foreach($member  in $variableDto)	
-	private  $member;	
+	 $member	
 	#end
 }
