@@ -1751,7 +1751,19 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					}
 				}
 				
-				String memberClass = realType + " "+member.getName();
+				//TODO Revisar si se pueden agregar mas tags
+				if (!member.getNullable()) {
+					parameterOut.add("@NotNull");
+					
+					if (member.getType() != null 
+							&& member.getType().getSimpleName().trim().equals("String")) {
+						parameterOut.add("@NotEmpty");
+						parameterOut.add("@Size(max=" + member.getLength() +")");
+					}
+					
+				}
+				
+				String memberClass = "private " + realType + " "+member.getName() + ";";
 				parameterOut.add(memberClass);
 				SkyJetUtilities.getInstance().dtoProperties.put(member.getName(),realType);
 				SkyJetUtilities.getInstance().nameMemberToDto.add(member.getName());
@@ -1761,7 +1773,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					Field[] field = metaData.getComposeKey().getDeclaredFields();
 					for (Field field2 : field) {
 						String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,(field2.getType().toString()).length());
-						String memberClass = realType + " "+field2.getName();
+						String memberClass =  "private " + realType + " "+field2.getName()+ ";";
 						parameterOut.add(memberClass);
 						composeKey.add(field2.getName());
 						SkyJetUtilities.getInstance().dtoProperties.put(field2.getName(),realType);
@@ -1780,7 +1792,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 				String cadena = params[0];
 				//String nombreMiembroClase = params[1].split("_")[0];
 				String nombreMiembroClase = params[1];
-				String salida = cadena+" "+nombreMiembroClase;
+				String salida =  "private " + cadena+" "+nombreMiembroClase + ";";
 				if(!composeKey.contains(nombreMiembroClase)){
 					parameterOut.add(salida);
 					SkyJetUtilities.getInstance().dtoProperties.put(nombreMiembroClase,cadena);
