@@ -2,6 +2,8 @@ package ${virginPackage}.security;
 
 import static ${virginPackage}.security.Constants.LOGIN_URL;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 /**
 * @author Zathura Code Generator Version 9.0 http://zathuracode.org/
 * www.zathuracode.org
-* 
+*
 */
 
 @Configuration
@@ -39,10 +41,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		/*
-		 * 1. Se desactiva el uso de cookies 
-		 * 2. Se activa la configuración CORS con los valores por defecto 
-		 * 3. Se desactiva el filtro CSRF 
-		 * 4. Se indica que el login no requiere autenticación 
+		 * 1. Se desactiva el uso de cookies
+		 * 2. Se activa la configuraciï¿½n CORS con los valores por defecto
+		 * 3. Se desactiva el filtro CSRF
+		 * 4. Se indica que el login no requiere autenticaciï¿½n
 		 * 5. Se indica que el resto de URLs esten securizadas
 		 */
 		httpSecurity.sessionManagement()
@@ -67,11 +69,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		// Se define la clase que recupera los usuarios y el algoritmo para procesar los passwords
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
-
+	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS", "HEAD"));
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedOrigin("*");
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+
 }
