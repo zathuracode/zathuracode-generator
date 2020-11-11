@@ -150,7 +150,6 @@
 					<compilerArgs>
                         <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
                         <arg>-Amapstruct.defaultComponentModel=spring</arg>
-                        <argLine>--enable-preview</argLine>
                     </compilerArgs>
 				</configuration>
 			</plugin>
