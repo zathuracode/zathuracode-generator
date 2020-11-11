@@ -18,7 +18,7 @@ import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Zathura Generator.
  *
@@ -306,6 +306,9 @@ public class WizardPageSelectTables extends WizardPage {
 			} else {
 				throw new Exception(Messages.WizardPageSelectTables_18);
 			}
+			
+			listAvailableTables.redraw();
+			listSelectedTables.redraw();
 
 			setPageComplete(true);
 			setErrorMessage(null);
