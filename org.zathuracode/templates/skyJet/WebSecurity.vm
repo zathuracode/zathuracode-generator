@@ -1,13 +1,13 @@
 package ${virginPackage}.security;
 
-import static ${virginPackage}.security.Constants.LOGIN_URL;
+import static com.bank.security.Constants.ACTUATOR_URL;
+import static com.bank.security.Constants.LOGIN_URL;
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -55,7 +55,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 				.csrf()
 				.disable()
 				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, LOGIN_URL)
+				.antMatchers(LOGIN_URL,ACTUATOR_URL)
 				.permitAll()
 				.anyRequest()
 				.authenticated()

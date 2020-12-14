@@ -58,4 +58,6 @@ public interface IZathuraSkyJetTemplate {
 	
 	public void doJWTSecurity(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception;
 
+	void doORMXML(MetaDataModel dataModel, VelocityContext context, String hdLocation) throws Exception;
+
 }

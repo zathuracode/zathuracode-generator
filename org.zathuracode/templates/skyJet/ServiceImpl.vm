@@ -172,7 +172,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 			
 			@Override
 			@Transactional(readOnly=true)
-            public Optional<${metaData.getRealClassName()}> findById(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) throws Exception {            
+            public Optional<${metaData.getRealClassName()}> findById(${metaData.primaryKey.getRealClassName()} ${metaData.primaryKey.getShowName()}) {            
             	log.debug("getting ${metaData.getRealClassName()} instance");
             	return ${metaData.getRealClassNameAsVariable()}Repository.findById(${metaData.primaryKey.getShowName()});
             }

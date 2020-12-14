@@ -112,6 +112,7 @@ public class GeneratorUtil {
 	 */
 	public static void generateMavenDirectoryStructure(String projectPath) {
 		String MAIN_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
+		String MAIN_RESOURCES_ORM_XML=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash+"META-INF"+GeneratorUtil.slash;
 		String TEST_JAVA=		GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"java"+GeneratorUtil.slash;
 		String TEST_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
 		
@@ -119,6 +120,7 @@ public class GeneratorUtil {
 		log.info("Begin Validate Maven Directory Structure");
 			projectPath=projectPath+GeneratorUtil.slash;
 			createFolder(projectPath+MAIN_RESOURCES);
+			createFolder(projectPath+MAIN_RESOURCES_ORM_XML);
 			createFolder(projectPath+TEST_JAVA);
 			createFolder(projectPath+TEST_RESOURCES);
 			//createFolder(projectPath+MAIN_META_INF);

@@ -358,7 +358,8 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			doGeneralExceptionHandler(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
 			doSwaggerConfig(velocityContext, hdLocation, metaDataModel, modelName);
-			doApplicationProperties(metaDataModel, velocityContext, hdLocation);	
+			doApplicationProperties(metaDataModel, velocityContext, hdLocation);
+			doORMXML(metaDataModel, velocityContext, hdLocation);
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
 			restPath = restPath.replace(GeneratorUtil.slash, ".");
@@ -566,6 +567,31 @@ public class SkyJet implements IZathuraSkyJetTemplate,IZathuraGenerator {
 			bwPersistence.close();
 			fwPersistence.close();
 			log.info("End application.properties.vm");
+
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doORMXML(MetaDataModel dataModel,VelocityContext context, String hdLocation)throws Exception {
+
+		try {
+			
+			log.info("Begin orm.xml.vm");
+			String path=properties.getProperty("mainResoruces");
+			Template templatePersistence = ve.getTemplate("orm.xml.vm");
+			StringWriter swPersistence = new StringWriter();
+			templatePersistence.merge(context, swPersistence);
+			FileWriter fwPersistence = new FileWriter(path + GeneratorUtil.slash +"META-INF"+ GeneratorUtil.slash + "orm.xml");
+			BufferedWriter bwPersistence = new BufferedWriter(fwPersistence);
+			bwPersistence.write(swPersistence.toString());
+			bwPersistence.close();
+			fwPersistence.close();
+			log.info("End orm.xml.vm");
 
 
 		} catch (Exception e) {
