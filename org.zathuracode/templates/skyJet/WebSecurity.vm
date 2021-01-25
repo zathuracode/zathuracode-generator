@@ -1,7 +1,7 @@
 package ${virginPackage}.security;
 
-import static com.bank.security.Constants.ACTUATOR_URL;
-import static com.bank.security.Constants.LOGIN_URL;
+import static ${virginPackage}.security.Constants.ACTUATOR_URL;
+import static ${virginPackage}.security.Constants.LOGIN_URL;
 
 import java.util.Arrays;
 
