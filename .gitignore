@@ -8,6 +8,7 @@ RemoteSystemsTempFiles/
 target/
 Servers/
 dataSourceContext.xml
+zathura-connections.properties
 
 HELP.md
 target/
