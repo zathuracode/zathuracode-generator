@@ -1,6 +1,7 @@
 package ${virginPackage}.controller;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
 import ${virginPackage}.service.${metaData.getRealClassName()}Service;
@@ -8,7 +9,7 @@ import ${virginPackage}.service.${metaData.getRealClassName()}Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/v1/${metaData.getRealClassNameAsVariable()}")
-@CrossOrigin(origins = "*")
 @Slf4j
 public class ${metaData.getRealClassName()}RestController {
 
@@ -58,10 +58,14 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).isPresent()==true?${metaData.getRealClassNameAsVariable()}Service.findById(${metaData.primaryKey.getShowName()}).get():null;
-
+				Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()} = documentTypeService.findById(dotyId);
+				
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()==true?optional${metaData.getRealClassName()}.get():null;
+						
 			#else
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).isPresent()==true?${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()}).get():null;
+				Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()}=${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()});
+				
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()==true?optional${metaData.getRealClassName()}.get():null;
 			#end
 
 		return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}));

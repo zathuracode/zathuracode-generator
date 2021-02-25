@@ -142,8 +142,9 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
             	if(id==null){
             		throw new ZMessManager().new EmptyFieldException("${metaData.primaryKey.getShowName()}");
             	}
-            	if(${metaData.getRealClassNameAsVariable()}Repository.existsById(id)){
-           			delete(${metaData.getRealClassNameAsVariable()}Repository.findById(id).get());
+            	Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()}=${metaData.getRealClassNameAsVariable()}Repository.findById(id);
+            	if(optional${metaData.getRealClassName()}.isPresent()){
+           			delete(optional${metaData.getRealClassName()}.get());
        			}    
             }	
 			
