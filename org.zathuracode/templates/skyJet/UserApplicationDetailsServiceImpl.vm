@@ -1,4 +1,4 @@
-package  ${virginPackage}.service;
+package  ${virginPackage}.entity.service;
 
 import static java.util.Collections.emptyList;
 
@@ -26,11 +26,11 @@ public class UserApplicationDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		if (username.isBlank()==true) {
+		if (username.isBlank()) {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		if (username.equals("admin")==false) {
+		if (!username.equals("admin")) {
 			throw new UsernameNotFoundException(username);
 		}
 	

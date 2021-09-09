@@ -1,7 +1,8 @@
-package  ${virginPackage}.service;
-
+package  ${virginPackage}.entity.service;
 import java.util.List;
 import java.util.Optional;
+
+import ${virginPackage}.exception.VortexbirdException;
 
 /**
 * @author Zathura Code Generator Version 9.0 http://zathuracode.org/
@@ -14,15 +15,15 @@ public interface GenericService <T,ID>{
 	 	
 	 	public Optional<T> findById(ID id);
 
-	    public T save(T entity) throws Exception;
+	    public T save(T entity) throws VortexbirdException;
 
-	    public T update(T entity) throws Exception;
+	    public T update(T entity) throws VortexbirdException;
 
-	    public void delete(T entity) throws Exception;
+	    public void delete(T entity) throws VortexbirdException;
 
-	    public void deleteById(ID id) throws Exception;	    
+	    public void deleteById(ID id) throws VortexbirdException;	    
 
-	    public void validate(T entity) throws Exception;
+	    public void validate(T entity) throws VortexbirdException;
 	    
 	    public Long count();
 

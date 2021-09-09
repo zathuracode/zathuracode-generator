@@ -1,0 +1,14 @@
+package ${virginPackage}.exception;
+
+public class UserException extends VortexbirdException {
+
+	private static final long serialVersionUID = 1L;
+
+	public UserException(String exception) {
+        super(400, exception, null);
+    }
+    
+    public UserException(String exception, Exception e) {
+        super(400, exception, e);
+    }
+}

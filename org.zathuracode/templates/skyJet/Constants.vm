@@ -7,6 +7,10 @@ package  ${virginPackage}.security;
 */
 public class Constants {
 
+	private Constants() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	// Spring Security
 
 	public static final String LOGIN_URL = "/login";

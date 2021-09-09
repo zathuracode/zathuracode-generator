@@ -14,16 +14,14 @@ import org.zcode.metadata.model.ManyToOneMember;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 
-
 /**
- * Zathuracode Generator
- * www.zathuracode.org
+ * Zathuracode Generator www.zathuracode.org
+ * 
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
 public class SkyJetStringBuilder implements ISkyJetStringBuilder {
-	
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SkyJetStringBuilder.class);
 
 	/** The string builder for id. */
@@ -32,7 +30,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/**
 	 * The Constructor.
 	 *
-	 * @param list the list
+	 * @param list               the list
 	 * @param stringBuilderForId the string builder for id
 	 */
 	public SkyJetStringBuilder(List<MetaData> list, SkyJetStringBuilderForId stringBuilderForId) {
@@ -43,10 +41,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
-	 * #finalParam(java.util.List,
-	 * org.zathuracode.metadata.model.MetaData)
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * #finalParam(java.util.List, org.zathuracode.metadata.model.MetaData)
 	 */
 	public String finalParam(List<MetaData> theMetaData, MetaData metaData) {
 		String finalParam = new String();
@@ -56,8 +52,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			for (Field field2 : field) {
 				String name = field2.getName();
 
-				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
-						(field2.getType().toString()).length());
+				String realType = field2.getType().toString().substring(
+						(field2.getType().toString()).lastIndexOf(".") + 1, (field2.getType().toString()).length());
 
 				finalParam = finalParam + realType + " " + name + ", ";
 			}
@@ -76,7 +72,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 				// String params[] = getTypeAndvariableForManyToOneProperties(
 				// member.getName(), theMetaData);
-				String params[] = SkyJetUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getRealClassName(), theMetaData);
+				String params[] = SkyJetUtilities.getInstance()
+						.getTypeAndvariableForManyToOneProperties(member.getRealClassName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -123,10 +120,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
-	 * #finalParamVariables(java.util.List,
-	 * org.zathuracode.metadata.model.MetaData)
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * #finalParamVariables(java.util.List, org.zathuracode.metadata.model.MetaData)
 	 */
 	public String finalParamVariables(List<MetaData> theMetaData, MetaData metaData) {
 		String finalParam = new String();
@@ -151,7 +146,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = SkyJetUtilities.getInstance().getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = SkyJetUtilities.getInstance()
+						.getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -191,10 +187,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
-	 * #getTypeAndvariableForManyToOneProperties(java.lang.String,
-	 * java.util.List)
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * #getTypeAndvariableForManyToOneProperties(java.lang.String, java.util.List)
 	 */
 	public String[] getTypeAndvariableForManyToOneProperties(String strClass, List<MetaData> theMetaData) {
 		String ret[] = new String[50];
@@ -217,7 +211,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 						String name = field2.getName();
 
-						String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
+						String realType = field2.getType().toString().substring(
+								(field2.getType().toString()).lastIndexOf(".") + 1,
 								(field2.getType().toString()).length());
 
 						ret[contTmp] = realType;
@@ -228,7 +223,6 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 				}
 			}
 		}
-		
 
 		boolean watch = false;
 
@@ -244,16 +238,13 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		} else {
 			return null;
 		}
-		
-		
 
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamVariablesAsList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -266,10 +257,10 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		// if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 		// Field[] field = metaData.getComposeKey().getDeclaredFields();
 		// for (Field field2 : field) {
-		//				
+		//
 		// String name = field2.getName().substring(0, 1).toUpperCase()
 		// + field2.getName().substring(1);
-		//				
+		//
 		// finalParam = finalParam + name + ", ";
 		// finalParam2.add(name);
 		// }
@@ -294,7 +285,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -353,8 +345,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamVariablesAsList2(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -377,7 +368,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -421,8 +413,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamVariablesDatesAsList2(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -447,7 +438,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -476,7 +468,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 							if (!finalParam.contains(tmpFinalParam)) {
 								if (tmpFinalType.equalsIgnoreCase("date")) {
-									String name = tmpFinalParam.substring(0, 1).toLowerCase() + tmpFinalParam.substring(1);
+									String name = tmpFinalParam.substring(0, 1).toLowerCase()
+											+ tmpFinalParam.substring(1);
 
 									finalParam = finalParam + tmpFinalParam + ", ";
 
@@ -498,8 +491,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForVariablesDataTablesAsList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -538,7 +530,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -602,10 +595,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
-	 * #finalParamForView(java.util.List,
-	 * org.zathuracode.metadata.model.MetaData)
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * #finalParamForView(java.util.List, org.zathuracode.metadata.model.MetaData)
 	 */
 	public String finalParamForView(List<MetaData> theMetaData, MetaData metaData) {
 		String finalParam = new String();
@@ -615,10 +606,11 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			for (Field field2 : field) {
 				String name = field2.getName();
 				String nameWithCapitalOnFirst = SkyJetUtilities.getInstance().getGetNameOfPrimaryName(name);
-				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
-						(field2.getType().toString()).length());
+				String realType = field2.getType().toString().substring(
+						(field2.getType().toString()).lastIndexOf(".") + 1, (field2.getType().toString()).length());
 
-				finalParam = finalParam + ("entity.set" + nameWithCapitalOnFirst + "(FacesUtils.check" + realType + "(txt" + nameWithCapitalOnFirst + ")); \""); 
+				finalParam = finalParam + ("entity.set" + nameWithCapitalOnFirst + "(FacesUtils.check" + realType
+						+ "(txt" + nameWithCapitalOnFirst + ")); \"");
 
 			}
 		}
@@ -627,14 +619,16 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			for (Member member : metaData.getSimpleProperties()) {
 				if (member.isPrimiaryKeyAComposeKey() == false) {
 
-					finalParam = finalParam + ("entity." + member.getMethodSetterName() +  "(FacesUtils.check" + member.getRealClassName() + "(txt" + member.getGetNameOfPrimaryName() + ")); \"");
+					finalParam = finalParam + ("entity." + member.getMethodSetterName() + "(FacesUtils.check"
+							+ member.getRealClassName() + "(txt" + member.getGetNameOfPrimaryName() + ")); \"");
 				}
 			}
 		}
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -676,8 +670,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForDtoUpdate(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -688,13 +681,14 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
-				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
-						(field2.getType().toString()).length());
+				String realType = field2.getType().toString().substring(
+						(field2.getType().toString()).lastIndexOf(".") + 1, (field2.getType().toString()).length());
 
 				if (realType.equalsIgnoreCase("date")) {
 					finalParam = finalParam + name + "==null || " + name + ".equals(\"\")?null:" + name + ", ";
 				} else {
-					finalParam = finalParam + name + "==null||" + name + ".equals(\"\")?null:new " + realType + "(" + name + "), ";
+					finalParam = finalParam + name + "==null||" + name + ".equals(\"\")?null:new " + realType + "("
+							+ name + "), ";
 				}
 
 			}
@@ -710,10 +704,12 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					// + ".getValue()), ";
 
 					if (member.getRealClassName().equalsIgnoreCase("date")) {
-						finalParam = finalParam + member.getName() + "==null|| " + member.getName() + ".equals(\"\")?null:" + member.getName() + ", ";
+						finalParam = finalParam + member.getName() + "==null|| " + member.getName()
+								+ ".equals(\"\")?null:" + member.getName() + ", ";
 					} else {
-						finalParam = finalParam + member.getName() + "==null||" + member.getName() + ".equals(\"\")?null:new " + member.getRealClassName()
-						+ "(" + member.getName() + "), ";
+						finalParam = finalParam + member.getName() + "==null||" + member.getName()
+								+ ".equals(\"\")?null:new " + member.getRealClassName() + "(" + member.getName()
+								+ "), ";
 					}
 				}
 			}
@@ -721,7 +717,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -742,7 +739,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 							if (tmpFinalParam.equalsIgnoreCase("date")) {
 								tmpFinalParam = tmp + "==null||" + tmp + ".equals(\"\")?null:" + tmp + ", ";
 							} else {
-								tmpFinalParam = tmp + "==null|| " + tmp + ".equals(\"\")?null:new " + tmpFinalParam + "(" + tmp + "), ";
+								tmpFinalParam = tmp + "==null|| " + tmp + ".equals(\"\")?null:new " + tmpFinalParam
+										+ "(" + tmp + "), ";
 							}
 
 							if (cont > params.length)
@@ -776,8 +774,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForDtoUpdateOnlyVariables(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -788,8 +785,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
 				String name = field2.getName();
-				String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
-						(field2.getType().toString()).length());
+				String realType = field2.getType().toString().substring(
+						(field2.getType().toString()).lastIndexOf(".") + 1, (field2.getType().toString()).length());
 
 				finalParam = finalParam + name + ", ";
 
@@ -807,7 +804,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -848,8 +846,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForViewVariablesInList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -884,7 +881,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				if (params != null) {
 					int cont = 0;
@@ -925,14 +923,14 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 				}
 
 				// String tmpFinalParam = params[0] + " " + params[1];
-				//				
+				//
 				// if (!finalParam.contains(tmpFinalParam)) {
-				//					
+				//
 				// finalParam = finalParam + params[0] + " " + params[1];
-				//					
+				//
 				// String tmp3 = (params[1].substring(0, 1)).toUpperCase()
 				// + params[1].substring(1);
-				//					
+				//
 				// finalParam2.add(tmp3);
 				// }
 			}
@@ -946,8 +944,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForViewForSetsVariablesInList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -961,9 +958,11 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 				if (!member.getName().equalsIgnoreCase(metaData.getPrimaryKey().getName())) {
 
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
-					String tmp2 = "txt" + (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + ".setValue(" + "entity.get"
-					+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()" + ");" + "txt"
-					+ (member.getName().substring(0, 1)).toUpperCase() + (member.getName().substring(1)) + ".setDisabled(false);";
+					String tmp2 = "txt" + (member.getName().substring(0, 1)).toUpperCase()
+							+ member.getName().substring(1) + ".setValue(" + "entity.get"
+							+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()"
+							+ ");" + "txt" + (member.getName().substring(0, 1)).toUpperCase()
+							+ (member.getName().substring(1)) + ".setDisabled(false);";
 					finalParam2.add(tmp2);
 
 				}
@@ -974,7 +973,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -1020,25 +1020,37 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 									String tmp3 = "";
 
 									if (hashMapProve == null) {
-										tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setValue("
-										+ "entity.get" + member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-										+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()" + ");" + "txt"
-										+ (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setDisabled(false);";
+										tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+												+ tmpFinalParam2.substring(1) + ".setValue(" + "entity.get"
+												+ member.getRealClassName() + "().get"
+												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()"
+												+ ");" + "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+												+ tmpFinalParam2.substring(1) + ".setDisabled(false);";
 									} else {
 										if (hashMapProve.equals("")) {
 
-											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setValue("
-											+ "entity.get" + member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()" + ");" + "txt"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setDisabled(false);";
+											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setValue(" + "entity.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()" + ");" + "txt"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setDisabled(false);";
 
 										} else {
 
-											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setValue("
-											+ "entity.get" + member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-											+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()" + ");" + "txt"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setDisabled(false);";
+											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setValue(" + "entity.get"
+													+ member.getRealClassName() + "().get"
+													+ hashMapProve.substring(0, 1).toUpperCase()
+													+ hashMapProve.substring(1) + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()" + ");" + "txt"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setDisabled(false);";
 
 										}
 									}
@@ -1076,10 +1088,13 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
 
-									String tmp3 = "txt" + (tmpFinalParam1.substring(0, 1)).toUpperCase() + tmpFinalParam1.substring(1) + ".setValue("
-									+ "entity.get" + member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-									+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "()" + ");" + "txt"
-									+ (tmpFinalParam1.substring(0, 1)).toUpperCase() + tmpFinalParam1.substring(1) + ".setDisabled(false);";
+									String tmp3 = "txt" + (tmpFinalParam1.substring(0, 1)).toUpperCase()
+											+ tmpFinalParam1.substring(1) + ".setValue(" + "entity.get"
+											+ member.getRealClassName() + "()" + ".get"
+											+ tmpFinalParam1.substring(0, 1).toUpperCase()
+											+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "()" + ");"
+											+ "txt" + (tmpFinalParam1.substring(0, 1)).toUpperCase()
+											+ tmpFinalParam1.substring(1) + ".setDisabled(false);";
 
 									finalParam2.add(tmp3);
 								}
@@ -1098,8 +1113,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForDtoForSetsVariablesInList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -1115,13 +1129,15 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					if (!member.getRealClassName().equalsIgnoreCase("date")) {
 						String tmp2 = member.getName() + "=" + metaData.getRealClassNameAsVariable() + ".get"
-						+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()!=null ? "
-						+ metaData.getRealClassNameAsVariable() + ".get" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "().toString() : null;";
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "().toString() : null;";
 						finalParam2.add(tmp2);
 					} else {
 						String tmp2 = member.getName() + "=" + metaData.getRealClassNameAsVariable() + ".get"
-						+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "();";
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "();";
 						finalParam2.add(tmp2);
 					}
 
@@ -1133,7 +1149,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -1186,46 +1203,64 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (hashMapProve == null) {
 										if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-											tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-											+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "().toString() : null;";
+											tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "().toString() : null;";
 										} else {
-											tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "();";
+											tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "();";
 										}
 									} else {
 										if (hashMapProve.equals("")) {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName()
-												+ "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-												+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "().toString() : null;";
+												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable()
+														+ ".get" + member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "().toString() : null;";
 											} else {
-												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName()
-												+ "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "();";
+												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable()
+														+ ".get" + member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "();";
 											}
 										} else {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName()
-												+ "().get" + hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-												+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-												+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "().toString() : null;";
+												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable()
+														+ ".get" + member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "().toString() : null;";
 											} else {
-												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName()
-												+ "().get" + hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "();";
+												tmp3 = tmpFinalParam2 + "=" + metaData.getRealClassNameAsVariable()
+														+ ".get" + member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "();";
 											}
 										}
 									}
@@ -1268,18 +1303,22 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
 									if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-										String tmp3 = tmpFinalParam1 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "()"
-										+ ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "()!=null ?"
-										+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "()" + ".get"
-										+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
-										+ "().toString() : null;";
+										String tmp3 = tmpFinalParam1 + "=" + metaData.getRealClassNameAsVariable()
+												+ ".get" + member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+												+ "()!=null ?" + metaData.getRealClassNameAsVariable() + ".get"
+												+ member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+												+ "().toString() : null;";
 
 										finalParam2.add(tmp3);
 									} else {
-										String tmp3 = tmpFinalParam1 + "=" + metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "()"
-										+ ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "();";
+										String tmp3 = tmpFinalParam1 + "=" + metaData.getRealClassNameAsVariable()
+												+ ".get" + member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "();";
 
 										finalParam2.add(tmp3);
 									}
@@ -1299,8 +1338,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForDtoInViewForSetsVariablesInList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -1315,16 +1353,20 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					if (!member.getRealClassName().equalsIgnoreCase("date")) {
-						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-						+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()!=null ?"
-						+ metaData.getRealClassNameAsVariable() + "Tmp.get" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "().toString() : null);";
+						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "()!=null ?" + metaData.getRealClassNameAsVariable() + "Tmp.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "().toString() : null);";
 						finalParam2.add(tmp2);
 					} else {
-						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-						+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "());";
+						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "());";
 						finalParam2.add(tmp2);
 					}
 
@@ -1336,7 +1378,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -1389,52 +1432,82 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (hashMapProve == null) {
 										if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-											+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-											+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-											+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "().get"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "().toString() : null);";
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()!=null ? " + metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "().toString() : null);";
 										} else {
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-											+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-											+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "());";
 										}
 									} else {
 										if (hashMapProve.equals("")) {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-												+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "().toString() : null);";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ? " + metaData.getRealClassNameAsVariable()
+														+ "Tmp.get" + member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "().toString() : null);";
 											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "());";
 											}
 										} else {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-												+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ?"
-												+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "().get"
-												+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "().toString() : null);";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ?" + metaData.getRealClassNameAsVariable()
+														+ "Tmp.get" + member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "().toString() : null);";
 											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-												+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "());";
 											}
 										}
 									}
@@ -1477,20 +1550,28 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
 									if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-										+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "()!=null ? "
-										+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "()" + ".get"
-										+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
-										+ "().toString() : null);";
+										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "("
+												+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+												+ member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+												+ "()!=null ? " + metaData.getRealClassNameAsVariable() + "Tmp.get"
+												+ member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+												+ "().toString() : null);";
 
 										finalParam2.add(tmp3);
 									} else {
-										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-										+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "());";
+										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "("
+												+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+												+ member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "());";
 
 										finalParam2.add(tmp3);
 									}
@@ -1510,8 +1591,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #getVariableForManyToOneProperties(java.util.List, java.util.List)
 	 */
 	public List<String> getVariableForManyToOneProperties(List<Member> manyToOne, List<MetaData> theMetaData) {
@@ -1544,13 +1624,13 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		return finalParam;
 	}
-	
+
 	/**
 	 * Construtye el @Mapping para los Mapper usando MapStruct
 	 */
 	public String getMappingsEntityToDTo(List<Member> manyToOne, List<MetaData> theMetaData) {
-		StringBuilder stringBuilder=new StringBuilder();
-		String nameTarget="";
+		StringBuilder stringBuilder = new StringBuilder();
+		String nameTarget = "";
 
 		for (MetaData metaData : theMetaData) {
 			for (Member member : manyToOne) {
@@ -1564,31 +1644,34 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 							Field field2 = field[i];
 
-							String name = field2.getName() + "_" + metaData.getRealClassName();
+							String name = field2.getName() + metaData.getRealClassName();
 
-							//finalParam.add(name);
-							nameTarget=name;
+							// finalParam.add(name);
+							nameTarget = name;
 
 						}
 
 					} else {
-						//finalParam.add(metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName());
-						nameTarget=metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName();
+						// finalParam.add(metaData.getPrimaryKey().getName() + "_" +
+						// metaData.getRealClassName());
+						nameTarget = metaData.getPrimaryKey().getName() + metaData.getRealClassName();
 					}
-					//TODO Escribir el @mappin @Mapping(source = "", target = "tdocId_TipoDocumento")
-					stringBuilder.append("@Mapping(source = \""+member.getShowName()+"."+metaData.getPrimaryKey().getName()+"\",  target = \""+nameTarget+"\")");
+					// TODO Escribir el @mappin @Mapping(source = "", target =
+					// "tdocId_TipoDocumento")
+					stringBuilder.append("@Mapping(source = \"" + member.getShowName() + "."
+							+ metaData.getPrimaryKey().getName() + "\",  target = \"" + nameTarget + "\")");
 					stringBuilder.append("\n");
 				}
-				
+
 			}
 		}
 
 		return stringBuilder.toString();
 	}
-	
+
 	public String getMappingsDTOToEntity(List<Member> manyToOne, List<MetaData> theMetaData) {
-		StringBuilder stringBuilder=new StringBuilder();
-		String nameSoruce="";
+		StringBuilder stringBuilder = new StringBuilder();
+		String nameSoruce = "";
 
 		for (MetaData metaData : theMetaData) {
 			for (Member member : manyToOne) {
@@ -1602,22 +1685,25 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 							Field field2 = field[i];
 
-							String name = field2.getName() + "_" + metaData.getRealClassName();
+							String name = field2.getName() + metaData.getRealClassName();
 
-							//finalParam.add(name);
-							nameSoruce=name;
+							// finalParam.add(name);
+							nameSoruce = name;
 
 						}
 
 					} else {
-						//finalParam.add(metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName());
-						nameSoruce=metaData.getPrimaryKey().getName() + "_" + metaData.getRealClassName();
+						// finalParam.add(metaData.getPrimaryKey().getName() + "_" +
+						// metaData.getRealClassName());
+						nameSoruce = metaData.getPrimaryKey().getName() + metaData.getRealClassName();
 					}
-					//TODO Escribir el @mappin @Mapping(source = "", target = "tdocId_TipoDocumento")
-					stringBuilder.append("@Mapping(source = \""+nameSoruce+"\",  target = \""+member.getShowName()+"."+metaData.getPrimaryKey().getName()+"\")");					
+					// TODO Escribir el @mappin @Mapping(source = "", target =
+					// "tdocId_TipoDocumento")
+					stringBuilder.append("@Mapping(source = \"" + nameSoruce + "\",  target = \"" + member.getShowName()
+							+ "." + metaData.getPrimaryKey().getName() + "\")");
 					stringBuilder.append("\n");
 				}
-				
+
 			}
 		}
 
@@ -1627,8 +1713,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #getStringsForManyToOneProperties(java.util.List, java.util.List)
 	 */
 	public List<String> getStringsForManyToOneProperties(List<Member> manyToOne, List<MetaData> theMetaData) {
@@ -1643,7 +1728,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		// Collections.sort(finalParam);
 
-		//TODO revisar Sservice
+		// TODO revisar Sservice
 		int cont = 1;
 		for (MetaData metaData1 : theMetaData) {
 			for (Member member : manyToOne) {
@@ -1652,8 +1737,9 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					if (metaData1.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 						Field[] field = metaData1.getComposeKey().getDeclaredFields();
 
-						finalParam.add(metaData1.getPrimaryKey().getRealClassName() + " " + metaData1.getPrimaryKey().getRealClassVariableName()
-								+ "Class = new " + metaData1.getPrimaryKey().getRealClassName() + "();");
+						finalParam.add(metaData1.getPrimaryKey().getRealClassName() + " "
+								+ metaData1.getPrimaryKey().getRealClassVariableName() + "Class = new "
+								+ metaData1.getPrimaryKey().getRealClassName() + "();");
 
 						for (int i = 0; i < field.length; i++) {
 
@@ -1666,23 +1752,27 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 							String build2 = name.substring(1, name.length());
 							String build3 = build + build2;
 
-							finalParam.add(metaData1.getPrimaryKey().getRealClassVariableName() + "Class.set" + build3 + "(" + name + "_"
-									+ metaData1.getRealClassName() + ");");
+							finalParam.add(metaData1.getPrimaryKey().getRealClassVariableName() + "Class.set" + build3
+									+ "(" + name + "_" + metaData1.getRealClassName() + ");");
 
 						}
 
-						finalParam.add(member.getRealClassName() + " " + member.getName() + "Class = logic" + member.getRealClassName()
+						finalParam.add(member.getRealClassName() + " " + member.getName() + "Class = logic"
+								+ member.getRealClassName()
 								/* + "%" */
-								+ cont + ".get" + member.getRealClassName() + "(" + metaData1.getPrimaryKey().getRealClassVariableName() + "Class);");
+								+ cont + ".get" + member.getRealClassName() + "("
+								+ metaData1.getPrimaryKey().getRealClassVariableName() + "Class);");
 						cont++;
 
 					} else {
-						
-						String name =  metaData1.getPrimaryKey().getName();
-						
-						String methodAccesorName =  "entity.get" + (name.substring(0, 1)).toUpperCase() + name.substring(1) + "()";
-						
-						finalParam.add(member.getRealClassName() + " " + member.getName() + "Class = logic" + member.getRealClassName()
+
+						String name = metaData1.getPrimaryKey().getName();
+
+						String methodAccesorName = "entity.get" + (name.substring(0, 1)).toUpperCase()
+								+ name.substring(1) + "()";
+
+						finalParam.add(member.getRealClassName() + " " + member.getName() + "Class = logic"
+								+ member.getRealClassName()
 								/* + "%" */
 								+ cont + ".get" + member.getRealClassName() + "(" + methodAccesorName + ");");
 						cont++;
@@ -1719,15 +1809,14 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		return stringReturn;
 	}
 
-
-	/** 
-	 * Este Metodo Sirve para crear los nuevos Dtos que tendran el tipo de dato correspondiente al mapeo de la base de datos
-	 * y como  resultado de este , se obtendra una lista de String  con el tipo de dato + espacio + nombreCampo
-	 * Ej: Long cliCedula
-	 * 	   String cliNombre	
-	 * */
+	/**
+	 * Este Metodo Sirve para crear los nuevos Dtos que tendran el tipo de dato
+	 * correspondiente al mapeo de la base de datos y como resultado de este , se
+	 * obtendra una lista de String con el tipo de dato + espacio + nombreCampo Ej:
+	 * Long cliCedula String cliNombre
+	 */
 	@Override
-	public List<String> getPropertiesDto(List<MetaData> theMetaData , MetaData metaData) {
+	public List<String> getPropertiesDto(List<MetaData> theMetaData, MetaData metaData) {
 		List<String> parameterOut = new ArrayList<String>();
 		List<String> composeKey = new ArrayList<String>();
 
@@ -1735,48 +1824,51 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		SkyJetUtilities.getInstance().nameMemberToDto = new ArrayList<String>();
 
 		for (Member member : metaData.getSimpleProperties()) {
-			
+
 			log.info(member.getName());
 
-			if (member.isPrimiaryKeyAComposeKey() == false) {				
-				String realType="";
-				//Cuando son Arreglos
-				if(member.getType().isArray()==false){
-					realType = member.getType().toString().substring((member.getType().toString()).lastIndexOf(".") + 1,(member.getType().toString()).length());
-				}else{
-					realType=member.getRealClassName();
-					//cuando son class [B es un arreglo de byte []
-					if(realType!=null && realType.equalsIgnoreCase("[B")==true){
-						realType="byte[]";
+			if (member.isPrimiaryKeyAComposeKey() == false) {
+				String realType = "";
+				// Cuando son Arreglos
+				if (member.getType().isArray() == false) {
+					realType = member.getType().toString().substring((member.getType().toString()).lastIndexOf(".") + 1,
+							(member.getType().toString()).length());
+				} else {
+					realType = member.getRealClassName();
+					// cuando son class [B es un arreglo de byte []
+					if (realType != null && realType.equalsIgnoreCase("[B") == true) {
+						realType = "byte[]";
 					}
 				}
-				
-				//TODO Revisar si se pueden agregar mas tags
+
+				// TODO Revisar si se pueden agregar mas tags
 				if (!member.getNullable()) {
 					parameterOut.add("@NotNull");
-					
-					if (member.getType() != null 
-							&& member.getType().getSimpleName().trim().equals("String")) {
+
+					if (member.getType() != null && member.getType().getSimpleName().trim().equals("String")) {
 						parameterOut.add("@NotEmpty");
-						parameterOut.add("@Size(max=" + member.getLength() +")");
+						parameterOut.add("@Size(max=" + member.getLength() + ")");
 					}
-					
+
 				}
-				
-				String memberClass = "private " + realType + " "+member.getName() + ";";
+
+				String memberClass = "private " + realType + " " + member.getName() + ";";
 				parameterOut.add(memberClass);
-				SkyJetUtilities.getInstance().dtoProperties.put(member.getName(),realType);
+				SkyJetUtilities.getInstance().dtoProperties.put(member.getName(), realType);
 				SkyJetUtilities.getInstance().nameMemberToDto.add(member.getName());
-			}
-			else{
-				if(metaData!=null && metaData.getComposeKey()!=null && metaData.getComposeKey().getDeclaredFields()!=null && metaData.getComposeKey().getDeclaredFields().length>0){
+			} else {
+				if (metaData != null && metaData.getComposeKey() != null
+						&& metaData.getComposeKey().getDeclaredFields() != null
+						&& metaData.getComposeKey().getDeclaredFields().length > 0) {
 					Field[] field = metaData.getComposeKey().getDeclaredFields();
 					for (Field field2 : field) {
-						String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,(field2.getType().toString()).length());
-						String memberClass =  "private " + realType + " "+field2.getName()+ ";";
+						String realType = field2.getType().toString().substring(
+								(field2.getType().toString()).lastIndexOf(".") + 1,
+								(field2.getType().toString()).length());
+						String memberClass = "private " + realType + " " + field2.getName() + ";";
 						parameterOut.add(memberClass);
 						composeKey.add(field2.getName());
-						SkyJetUtilities.getInstance().dtoProperties.put(field2.getName(),realType);
+						SkyJetUtilities.getInstance().dtoProperties.put(field2.getName(), realType);
 						SkyJetUtilities.getInstance().nameMemberToDto.add(field2.getName());
 					}
 				}
@@ -1784,21 +1876,23 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			}
 		}
 
-		if(metaData.isGetManyToOneProperties()){
-			// properties many-to-one to generate data type and name member Ex: Long cliCedula 
-			List<Member> properties =metaData.getManyToOneProperties();
+		if (metaData.isGetManyToOneProperties()) {
+			// properties many-to-one to generate data type and name member Ex: Long
+			// cliCedula
+			List<Member> properties = metaData.getManyToOneProperties();
 			for (int j = 0; j < properties.size(); j++) {
-				String params[] = getTypeAndvariableForManyToOneProperties(properties.get(j).getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(properties.get(j).getType().getSimpleName(),
+						theMetaData);
 				String cadena = params[0];
-				//String nombreMiembroClase = params[1].split("_")[0];
+				// String nombreMiembroClase = params[1].split("_")[0];
 				String nombreMiembroClase = params[1];
-				String salida =  "private " + cadena+" "+nombreMiembroClase + ";";
-				if(!composeKey.contains(nombreMiembroClase)){
+				nombreMiembroClase = nombreMiembroClase.replaceAll("_", "");
+				String salida = "private " + cadena + " " + nombreMiembroClase + ";";
+				if (!composeKey.contains(nombreMiembroClase)) {
 					parameterOut.add(salida);
-					SkyJetUtilities.getInstance().dtoProperties.put(nombreMiembroClase,cadena);
+					SkyJetUtilities.getInstance().dtoProperties.put(nombreMiembroClase, cadena);
 					SkyJetUtilities.getInstance().nameMemberToDto.add(nombreMiembroClase);
 				}
-
 
 			}
 		}
@@ -1807,8 +1901,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	}
 
 	@Override
-	public List<String> dtoConvert2(List<MetaData> theMetaData,
-			MetaData metaData) {
+	public List<String> dtoConvert2(List<MetaData> theMetaData, MetaData metaData) {
 
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
@@ -1819,16 +1912,20 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					if (!member.getRealClassName().equalsIgnoreCase("date")) {
-						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-						+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()!=null ?"
-						+ metaData.getRealClassNameAsVariable() + "Tmp.get" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "() : null);";
+						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "()!=null ?" + metaData.getRealClassNameAsVariable() + "Tmp.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "() : null);";
 						finalParam2.add(tmp2);
 					} else {
-						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set" + (member.getName().substring(0, 1)).toUpperCase()
-						+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-						+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "());";
+						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "());";
 						finalParam2.add(tmp2);
 					}
 
@@ -1840,7 +1937,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -1893,52 +1991,82 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (hashMapProve == null) {
 										if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-											+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-											+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-											+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "().get"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "() : null);";
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()!=null ? " + metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "() : null);";
 										} else {
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-											+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-											+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "());";
 										}
 									} else {
 										if (hashMapProve.equals("")) {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-												+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "() : null);";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ? " + metaData.getRealClassNameAsVariable()
+														+ "Tmp.get" + member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "() : null);";
 											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "());";
 											}
 										} else {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-												+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ?"
-												+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "().get"
-												+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
-												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "(): null);";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ?" + metaData.getRealClassNameAsVariable()
+														+ "Tmp.get" + member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "(): null);";
 											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-												+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-												+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-												+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-												+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "());";
 											}
 										}
 									}
@@ -1980,40 +2108,55 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
-									
-									if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-										
-										//M@URICIO
-										if(campoIsNull(metaData,member.getRealClassName().toLowerCase())){
-											String temp3= "if("+metaData.getRealClassNameAsVariable() + "Tmp.get"
-											+ member.getRealClassName() + "()!=null"+"){"+"\n"+metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-											+ tmpFinalParam1.substring(1) + "(" +metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "()" + ".get"
-											+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
-											+ "());" + "\n" +"}" +"\n"+ "else {"+"\n"+metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-											+ tmpFinalParam1.substring(1) + "("+"null);"+ "\n" +"}";
-											finalParam2.add(temp3);  	
-											
-											//String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-											//+ tmpFinalParam1.substring(1) + "("+"null);";
-											//finalParam2.add(tmp3);
-										}
-										else{
-										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-										+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "()!=null ? "
-										+ metaData.getRealClassNameAsVariable() + "Tmp.get" + member.getRealClassName() + "()" + ".get"
-										+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
-										+ "() : null);";
 
-										finalParam2.add(tmp3);
+									if (!tmpFinalParam3.equalsIgnoreCase("date")) {
+
+										// M@URICIO
+										if (campoIsNull(metaData, member.getRealClassName().toLowerCase())) {
+											String temp3 = "if(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "()!=null" + "){" + "\n"
+													+ metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "()" + ".get"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+													+ "());" + "\n" + "}" + "\n" + "else {" + "\n"
+													+ metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1) + "(" + "null);" + "\n" + "}";
+											finalParam2.add(temp3);
+
+											// String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" +
+											// tmpFinalParam1.substring(0, 1).toUpperCase()
+											// + tmpFinalParam1.substring(1) + "("+"null);";
+											// finalParam2.add(tmp3);
+										} else {
+											String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "()" + ".get"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+													+ "()!=null ? " + metaData.getRealClassNameAsVariable() + "Tmp.get"
+													+ member.getRealClassName() + "()" + ".get"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+													+ "() : null);";
+
+											finalParam2.add(tmp3);
 										}
-										
+
 									} else {
-										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + "Tmp.get"
-										+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-										+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "());";
+										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO2.set"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "("
+												+ metaData.getRealClassNameAsVariable() + "Tmp.get"
+												+ member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "());";
 
 										finalParam2.add(tmp3);
 									}
@@ -2043,28 +2186,27 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	// String tmp = "";
 	// System.out.println(tmp);
 	// }
-	
-	//M@URICIO
-	public boolean campoIsNull(MetaData Entry, String nameColumn ){
-		List<Member> miembrosManyToOne= Entry.getManyToOneProperties();
-		
-		ManyToOneMember memberBuscado= null;
-		Boolean salida=false;
-		
+
+	// M@URICIO
+	public boolean campoIsNull(MetaData Entry, String nameColumn) {
+		List<Member> miembrosManyToOne = Entry.getManyToOneProperties();
+
+		ManyToOneMember memberBuscado = null;
+		Boolean salida = false;
+
 		for (int i = 0; i < miembrosManyToOne.size(); i++) {
-			if(miembrosManyToOne.get(i).getName().equals(nameColumn)){
-				memberBuscado =(ManyToOneMember) miembrosManyToOne.get(i);
+			if (miembrosManyToOne.get(i).getName().equals(nameColumn)) {
+				memberBuscado = (ManyToOneMember) miembrosManyToOne.get(i);
 			}
 		}
-		
-		if(memberBuscado!=null){
-		salida =memberBuscado.getHashMapNullableColumn().get(nameColumn.toUpperCase());
+
+		if (memberBuscado != null) {
+			salida = memberBuscado.getHashMapNullableColumn().get(nameColumn.toUpperCase());
 		}
 		return salida;
-		
-			
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -2075,31 +2217,26 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	public List<String> finalParamForGetIdForViewClass(List<MetaData> list, MetaData metaData) {
 		List<String> finalParam = new ArrayList<String>();
 
-		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {			
+		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
 			String getEntityComposeKey = "";
-			
+
 			// se obtienen los campos que componene la llave primaria compuesta
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
-			
+
 			// se obtienen los miembros de clase que pertenencen a la llave compuesta
 			for (Member member : metaData.getManyToOneProperties()) {
-				String params = getTypeAndvariableForManyToOneProperties(member
-						.getType().getSimpleName(), list)[1].split("_")[0];
-				
+				String params = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), list)[1]
+						.split("_")[0];
+
 				for (Field field2 : field) {
 					String name = field2.getName();
 					if (name.toLowerCase().contains(params.toLowerCase())) {
 						String memberId = name.substring(0, 1).toUpperCase() + name.substring(1);
-						
-						getEntityComposeKey = "entity."
-								+ member.getMethodSetterName()
-								+ "(businessDelegatorView.get"
-								+ member.getGetNameOfPrimaryName()
-								+ "(entity.get"
-								+ metaData.getPrimaryKey().getGetNameOfPrimaryName()
-								+ "().get"
-								+ memberId + "()));";
-						
+
+						getEntityComposeKey = "entity." + member.getMethodSetterName() + "(businessDelegatorView.get"
+								+ member.getGetNameOfPrimaryName() + "(entity.get"
+								+ metaData.getPrimaryKey().getGetNameOfPrimaryName() + "().get" + memberId + "()));";
+
 						finalParam.add(getEntityComposeKey);
 					}
 				}
@@ -2108,7 +2245,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		return finalParam;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -2118,18 +2255,17 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	 */
 	public List<String> finalParamForGetManyToOneForViewClass(List<MetaData> list, MetaData metaData) {
 		List<String> finalParam = new ArrayList<String>();
-		String getEntityManyToOne =  new String();
-		
+		String getEntityManyToOne = new String();
+
 		for (Member member : metaData.getManyToOneProperties()) {
 
-			String params[] = getTypeAndvariableForManyToOneProperties(member
-					.getType().getSimpleName(), list);
-			
+			String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), list);
+
 			String paramClass = params[0];
 			String paramFieldName = params[1];
 			boolean memberBelongToComposeKey = false;
-			
-			if(metaData.hasComposeKey()){				
+
+			if (metaData.hasComposeKey()) {
 				Field[] field = metaData.getComposeKey().getDeclaredFields();
 				for (Field field2 : field) {
 					if (field2.getName().toLowerCase().contains(paramFieldName.split("_")[0].toLowerCase())) {
@@ -2137,16 +2273,12 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 					}
 				}
 			}
-			
+
 			if (!memberBelongToComposeKey) {
-				getEntityManyToOne =  "entity." + member.getMethodSetterName()
-						+ "(FacesUtils.check" + paramClass + "(txt"
-						+ paramFieldName.substring(0, 1).toUpperCase()
-						+ paramFieldName.substring(1) + ") != null ? "
-						+ "businessDelegatorView.get"
-						+ member.getGetNameOfPrimaryName()
-						+ "(FacesUtils.check" + paramClass + "(txt"
-						+ paramFieldName.substring(0, 1).toUpperCase()
+				getEntityManyToOne = "entity." + member.getMethodSetterName() + "(FacesUtils.check" + paramClass
+						+ "(txt" + paramFieldName.substring(0, 1).toUpperCase() + paramFieldName.substring(1)
+						+ ") != null ? " + "businessDelegatorView.get" + member.getGetNameOfPrimaryName()
+						+ "(FacesUtils.check" + paramClass + "(txt" + paramFieldName.substring(0, 1).toUpperCase()
 						+ paramFieldName.substring(1) + ")) : null );";
 				finalParam.add(getEntityManyToOne);
 			}
@@ -2154,7 +2286,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		return finalParam;
 
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -2166,9 +2298,9 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		List<String> finalParam = new ArrayList<String>();
 
 		if (metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()) {
-			String id = metaData.getPrimaryKey().getRealClassName() + " " + metaData.getPrimaryKey().getName() + " = " + "new "
-					+ metaData.getPrimaryKey().getRealClassName() + "();";
-			
+			String id = metaData.getPrimaryKey().getRealClassName() + " " + metaData.getPrimaryKey().getName() + " = "
+					+ "new " + metaData.getPrimaryKey().getRealClassName() + "();";
+
 			finalParam.add(id);
 			Field[] field = metaData.getComposeKey().getDeclaredFields();
 			for (Field field2 : field) {
@@ -2178,7 +2310,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 				String setToId = new String();
 
-				setToId = metaData.getPrimaryKey().getName() + ".set" + nameFragment + "(selected" + metaData.getRealClassName() + ".get" + nameFragment + "());";
+				setToId = metaData.getPrimaryKey().getName() + ".set" + nameFragment + "(selected"
+						+ metaData.getRealClassName() + ".get" + nameFragment + "());";
 
 				finalParam.add(setToId);
 			}
@@ -2186,20 +2319,19 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			String setToId = new String();
 
 			setToId = metaData.getPrimaryKey().getRealClassName() + " " + metaData.getPrimaryKey().getName() + " = new "
-					+ metaData.getPrimaryKey().getRealClassName() + "(selected" + metaData.getRealClassName() + ".get" + metaData.getPrimaryKey().getGetNameOfPrimaryName()	+ "());";
+					+ metaData.getPrimaryKey().getRealClassName() + "(selected" + metaData.getRealClassName() + ".get"
+					+ metaData.getPrimaryKey().getGetNameOfPrimaryName() + "());";
 
 			finalParam.add(setToId);
 		}
 
 		return finalParam;
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
+	 * @see org.zathuracode.generator.jeewebcentric.utils.IStringBuilder
 	 * #finalParamForViewForSetsVariablesDtoInList(java.util.List,
 	 * org.zathuracode.metadata.model.MetaData)
 	 */
@@ -2213,16 +2345,11 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 				if (!member.getName().equalsIgnoreCase(metaData.getPrimaryKey().getName())) {
 
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
-					String tmp2 = "txt"
-							+ (member.getName().substring(0, 1)).toUpperCase()
-							+ member.getName().substring(1) + ".setValue("
-							+ "selected" + metaData.getRealClassName() + ".get"
-							+ (member.getName().substring(0, 1)).toUpperCase()
-							+ member.getName().substring(1) + "()" + ");"
-							+ "txt"
-							+ (member.getName().substring(0, 1)).toUpperCase()
-							+ (member.getName().substring(1))
-							+ ".setDisabled(false);";
+					String tmp2 = "txt" + (member.getName().substring(0, 1)).toUpperCase()
+							+ member.getName().substring(1) + ".setValue(" + "selected" + metaData.getRealClassName()
+							+ ".get" + (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+							+ "()" + ");" + "txt" + (member.getName().substring(0, 1)).toUpperCase()
+							+ (member.getName().substring(1)) + ".setDisabled(false);";
 					finalParam2.add(tmp2);
 
 				}
@@ -2233,7 +2360,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -2279,25 +2407,35 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 									String tmp3 = "";
 
 									if (hashMapProve == null) {
-										tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setValue("
-										+ "selected" + metaData.getRealClassName() + ".get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-										+ tmpFinalParam2.substring(1) + "()" + ");" + "txt"
-										+ (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setDisabled(false);";
+										tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+												+ tmpFinalParam2.substring(1) + ".setValue(" + "selected"
+												+ metaData.getRealClassName() + ".get"
+												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+												+ tmpFinalParam2.substring(1) + "()" + ");" + "txt"
+												+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+												+ tmpFinalParam2.substring(1) + ".setDisabled(false);";
 									} else {
 										if (hashMapProve.equals("")) {
 
-											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setValue("
-											+ "selected" + metaData.getRealClassName() + ".get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1) + "()" + ");" + "txt"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setDisabled(false);";
+											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setValue(" + "selected"
+													+ metaData.getRealClassName() + ".get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "()" + ");" + "txt"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setDisabled(false);";
 
 										} else {
 
-											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setValue("
-											+ "selected" + metaData.getRealClassName() + ".get" + hashMapProve.substring(0, 1).toUpperCase()
-											+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-											+ tmpFinalParam2.substring(1) + "()" + ");" + "txt"
-											+ (tmpFinalParam2.substring(0, 1)).toUpperCase() + tmpFinalParam2.substring(1) + ".setDisabled(false);";
+											tmp3 = "txt" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setValue(" + "selected"
+													+ metaData.getRealClassName() + ".get"
+													+ hashMapProve.substring(0, 1).toUpperCase()
+													+ hashMapProve.substring(1) + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "()" + ");" + "txt"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1) + ".setDisabled(false);";
 
 										}
 									}
@@ -2335,10 +2473,12 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
 
-									String tmp3 = "txt" + (tmpFinalParam1.substring(0, 1)).toUpperCase() + tmpFinalParam1.substring(1) + ".setValue("
-									+ "selected" + metaData.getRealClassName() + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-									+ tmpFinalParam1.substring(1) + "()" + ");" + "txt"
-									+ (tmpFinalParam1.substring(0, 1)).toUpperCase() + tmpFinalParam1.substring(1) + ".setDisabled(false);";
+									String tmp3 = "txt" + (tmpFinalParam1.substring(0, 1)).toUpperCase()
+											+ tmpFinalParam1.substring(1) + ".setValue(" + "selected"
+											+ metaData.getRealClassName() + ".get"
+											+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1)
+											+ "()" + ");" + "txt" + (tmpFinalParam1.substring(0, 1)).toUpperCase()
+											+ tmpFinalParam1.substring(1) + ".setDisabled(false);";
 
 									finalParam2.add(tmp3);
 								}
@@ -2353,10 +2493,9 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		return ListUtils.subtract(finalParam2, primaryKey);
 	}
-	
+
 	@Override
-	public List<String> obtainDTOMembersAndSetEntityAttributes2(List<MetaData> theMetaData,
-			MetaData metaData) {
+	public List<String> obtainDTOMembersAndSetEntityAttributes2(List<MetaData> theMetaData, MetaData metaData) {
 
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
@@ -2367,16 +2506,20 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					if (!member.getRealClassName().equalsIgnoreCase("date")) {
-						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO.set" + (member.getName().substring(0, 1)).toUpperCase()
-								+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()!=null ?"
-								+ metaData.getRealClassNameAsVariable() + ".get" + (member.getName().substring(0, 1)).toUpperCase()
-								+ member.getName().substring(1) + "() : null);";
+						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO.set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + ".get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "()!=null ?" + metaData.getRealClassNameAsVariable() + ".get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "() : null);";
 						finalParam2.add(tmp2);
 					} else {
-						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO.set" + (member.getName().substring(0, 1)).toUpperCase()
-								+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "());";
+						String tmp2 = metaData.getRealClassNameAsVariable() + "DTO.set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + ".get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "());";
 						finalParam2.add(tmp2);
 					}
 
@@ -2384,11 +2527,11 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 			}
 		}
 
-		
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -2441,52 +2584,82 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (hashMapProve == null) {
 										if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-													+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-													+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-													+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
 													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "() : null);";
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "() : null);";
 										} else {
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-													+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-													+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "());";
 										}
 									} else {
 										if (hashMapProve.equals("")) {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ? "
-														+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
 														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "() : null);";
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "() : null);";
 											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "());";
 											}
 										} else {
 											if (!tmpFinalParam3.equalsIgnoreCase("date")) {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-														+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ?"
-														+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-														+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
 														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "(): null);";
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "()!=null ?" + metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "(): null);";
 											} else {
-												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-														+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-														+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-														+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "());";
+												tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+														+ tmpFinalParam2.substring(0, 1).toUpperCase()
+														+ tmpFinalParam2.substring(1) + "("
+														+ metaData.getRealClassNameAsVariable() + ".get"
+														+ member.getRealClassName() + "().get"
+														+ hashMapProve.substring(0, 1).toUpperCase()
+														+ hashMapProve.substring(1) + "().get"
+														+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+														+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+														+ "());";
 											}
 										}
 									}
@@ -2531,35 +2704,50 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (!tmpFinalParam3.equalsIgnoreCase("date")) {
 
-										//M@URICIO
-										if(campoIsNull(metaData,member.getRealClassName().toLowerCase())){
-											String temp3= "if("+metaData.getRealClassNameAsVariable() + ".get"
-													+ member.getRealClassName() + "()!=null"+"){"+"\n"+metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-													+ tmpFinalParam1.substring(1) + "(" +metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "()" + ".get"
-													+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
-													+ "());" + "\n" +"}" +"\n"+ "else {"+"\n"+metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-													+ tmpFinalParam1.substring(1) + "("+"null);"+ "\n" +"}";
-											finalParam2.add(temp3);  	
+										// M@URICIO
+										if (campoIsNull(metaData, member.getRealClassName().toLowerCase())) {
+											String tmp3 = "if(" + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "()!=null" + "){" + "\n"
+													+ metaData.getRealClassNameAsVariable() + "DTO.set"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "()" + ".get"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+													+ "());" + "\n" + "}" + "\n" + "else {" + "\n"
+													+ metaData.getRealClassNameAsVariable() + "DTO.set"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1) + "(" + "null);" + "\n" + "}";
+											tmp3 = tmp3.replaceAll("_", "");
+											finalParam2.add(tmp3);
 
-										}
-										else{
-											String tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-													+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-													+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "()!=null ? "
-													+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "()" + ".get"
-													+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+										} else {
+											String tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "()" + ".get"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
+													+ "()!=null ? " + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "()" + ".get"
+													+ tmpFinalParam1.substring(0, 1).toUpperCase()
+													+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_"))
 													+ "() : null);";
-
+											tmp3 = tmp3.replaceAll("_", "");
 											finalParam2.add(tmp3);
 										}
 
 									} else {
-										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam1.substring(0, 1).toUpperCase()
-												+ tmpFinalParam1.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-												+ member.getRealClassName() + "()" + ".get" + tmpFinalParam1.substring(0, 1).toUpperCase()
+										String tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "("
+												+ metaData.getRealClassNameAsVariable() + ".get"
+												+ member.getRealClassName() + "()" + ".get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
 												+ tmpFinalParam1.substring(1, tmpFinalParam1.lastIndexOf("_")) + "());";
-
+										tmp3 = tmp3.replaceAll("_", "");
 										finalParam2.add(tmp3);
 									}
 								}
@@ -2576,8 +2764,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 	}
 
 	@Override
-	public List<String> obtainEntityMembersAndSetDTOAttributes2(List<MetaData> theMetaData,
-			MetaData metaData) {
+	public List<String> obtainEntityMembersAndSetDTOAttributes2(List<MetaData> theMetaData, MetaData metaData) {
 
 		List<String> finalParam2 = new ArrayList<String>();
 		String finalParam = new String();
@@ -2589,16 +2776,20 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 					finalParam = finalParam + member.getRealClassName() + " " + member.getName();
 					if (!member.getRealClassName().equalsIgnoreCase("date")) {
-						String tmp2 = metaData.getRealClassNameAsVariable() + ".set" + (member.getName().substring(0, 1)).toUpperCase()
-								+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + "DTO.get"
-								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "()!=null ?"
-								+ metaData.getRealClassNameAsVariable() + "DTO.get" + (member.getName().substring(0, 1)).toUpperCase()
-								+ member.getName().substring(1) + "() : null);";
+						String tmp2 = metaData.getRealClassNameAsVariable() + ".set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + "DTO.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "()!=null ?" + metaData.getRealClassNameAsVariable() + "DTO.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "() : null);";
 						finalParam2.add(tmp2);
 					} else {
-						String tmp2 = metaData.getRealClassNameAsVariable() + ".set" + (member.getName().substring(0, 1)).toUpperCase()
-								+ member.getName().substring(1) + "(" + metaData.getRealClassNameAsVariable() + "DTO.get"
-								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "());";
+						String tmp2 = metaData.getRealClassNameAsVariable() + ".set"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1) + "("
+								+ metaData.getRealClassNameAsVariable() + "DTO.get"
+								+ (member.getName().substring(0, 1)).toUpperCase() + member.getName().substring(1)
+								+ "());";
 						finalParam2.add(tmp2);
 					}
 
@@ -2609,7 +2800,8 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 		if (metaData.isGetManyToOneProperties()) {
 			for (Member member : metaData.getManyToOneProperties()) {
 
-				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(), theMetaData);
+				String params[] = getTypeAndvariableForManyToOneProperties(member.getType().getSimpleName(),
+						theMetaData);
 
 				String tmpFinalParam = "";
 				String tmpFinalParam1 = "";
@@ -2660,41 +2852,55 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 									if (hashMapProve == null) {
 
-											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".findById"
-													+ "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-													+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
-													+ "()).get(); \n\n" + "if (" + member.getRealClassVariableName() + "!= null) { \n"
-													+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
-													+ member.getRealClassVariableName() + "); \n	}";
-											logicAux++;
-										
+										tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName()
+												+ " = service" + member.getRealClassName() + logicAux + ".findById"
+												+ "(" + metaData.getRealClassNameAsVariable() + "DTO.get"
+												+ tmpFinalParam2.substring(0, 1).toUpperCase()
+												+ tmpFinalParam2.substring(1) + "()).get(); \n\n" + "if ("
+												+ member.getRealClassVariableName() + "!= null) { \n"
+												+ metaData.getRealClassNameAsVariable() + ".set"
+												+ member.getRealClassName() + "(" + member.getRealClassVariableName()
+												+ "); \n	}";
+										logicAux++;
+
 									} else {
 										if (hashMapProve.equals("")) {
 
-											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-													+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam2.substring(0, 1).toUpperCase()
-													+ tmpFinalParam2.substring(1) + "() != null) {" 
-													+ member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".findById"
-													+ "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-													+ tmpFinalParam2.substring(0, 1).toUpperCase() + tmpFinalParam2.substring(1) 
-													+ "()).get(); \n } \n\n"
-													+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
-													+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
+											tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName()
+													+ " = new " + member.getRealClassName() + "(); \n\n" + "if ("
+													+ metaData.getRealClassNameAsVariable() + "DTO.get"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "() != null) {"
+													+ member.getRealClassVariableName() + " = service"
+													+ member.getRealClassName() + logicAux + ".findById" + "("
+													+ metaData.getRealClassNameAsVariable() + "DTO.get"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "()).get(); \n } \n\n" + "if ("
+													+ member.getRealClassVariableName() + "!= null) { \n"
+													+ metaData.getRealClassNameAsVariable() + ".set"
+													+ member.getRealClassName() + "("
 													+ member.getRealClassVariableName() + "); \n	}";
 
 											logicAux++;
 
 										} else {
 
-											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set" + tmpFinalParam2.substring(0, 1).toUpperCase()
-													+ tmpFinalParam2.substring(1) + "(" + metaData.getRealClassNameAsVariable() + ".get"
-													+ member.getRealClassName() + "().get" + hashMapProve.substring(0, 1).toUpperCase()
-													+ hashMapProve.substring(1) + "().get" + (tmpFinalParam2.substring(0, 1)).toUpperCase()
-													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "()!=null ?"
-													+ metaData.getRealClassNameAsVariable() + ".get" + member.getRealClassName() + "().get"
-													+ hashMapProve.substring(0, 1).toUpperCase() + hashMapProve.substring(1) + "().get"
+											tmp3 = metaData.getRealClassNameAsVariable() + "DTO.set"
+													+ tmpFinalParam2.substring(0, 1).toUpperCase()
+													+ tmpFinalParam2.substring(1) + "("
+													+ metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ hashMapProve.substring(0, 1).toUpperCase()
+													+ hashMapProve.substring(1) + "().get"
 													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
-													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_")) + "(): null);";
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "()!=null ?" + metaData.getRealClassNameAsVariable() + ".get"
+													+ member.getRealClassName() + "().get"
+													+ hashMapProve.substring(0, 1).toUpperCase()
+													+ hashMapProve.substring(1) + "().get"
+													+ (tmpFinalParam2.substring(0, 1)).toUpperCase()
+													+ tmpFinalParam2.substring(1, tmpFinalParam2.lastIndexOf("_"))
+													+ "(): null);";
 											logicAux++;
 
 										}
@@ -2737,33 +2943,43 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 								if (!finalParam.contains(tmpFinalParam)) {
 									finalParam = finalParam + tmpFinalParam;
-									if(campoIsNull(metaData,member.getRealClassName().toLowerCase())){
+									if (campoIsNull(metaData, member.getRealClassName().toLowerCase())) {
 
-										String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-												+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-												+ tmpFinalParam1.substring(1) + "() != null) {" 
-												+ member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".findById"
-												+ "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-												+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
-												+ "()).get(); \n } \n\n"
-												+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
-												+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
-												+ member.getRealClassVariableName() + "); \n	}";
+										String tmp3 = member.getRealClassName() + " "
+												+ member.getRealClassVariableName() + " = new "
+												+ member.getRealClassName() + "(); \n\n" + "if ("
+												+ metaData.getRealClassNameAsVariable() + "DTO.get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "() != null) {"
+												+ member.getRealClassVariableName() + " = service"
+												+ member.getRealClassName() + logicAux + ".findById" + "("
+												+ metaData.getRealClassNameAsVariable() + "DTO.get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "()).get(); \n } \n\n" + "if ("
+												+ member.getRealClassVariableName() + "!= null) { \n"
+												+ metaData.getRealClassNameAsVariable() + ".set"
+												+ member.getRealClassName() + "(" + member.getRealClassVariableName()
+												+ "); \n	}";
 
-										finalParam2.add(tmp3);  	
+										finalParam2.add(tmp3);
 										logicAux++;
-									} else{
+									} else {
 
-										String tmp3 = member.getRealClassName() + " " + member.getRealClassVariableName() + " = new " + member.getRealClassName() + "(); \n\n"
-												+ "if (" + metaData.getRealClassNameAsVariable() + "DTO.get" + tmpFinalParam1.substring(0, 1).toUpperCase()
-												+ tmpFinalParam1.substring(1) + "() != null) {" 
-												+ member.getRealClassVariableName() + " = service" + member.getRealClassName() + logicAux + ".findById"
-												+ "(" + metaData.getRealClassNameAsVariable() + "DTO.get" 
-												+ tmpFinalParam1.substring(0, 1).toUpperCase() + tmpFinalParam1.substring(1) 
-												+ "()).get(); \n } \n\n"
-												+ "if (" + member.getRealClassVariableName() + "!= null) { \n"
-												+ metaData.getRealClassNameAsVariable() + ".set" + member.getRealClassName() + "("
-												+ member.getRealClassVariableName() + "); \n	}";
+										String tmp3 = member.getRealClassName() + " "
+												+ member.getRealClassVariableName() + " = new "
+												+ member.getRealClassName() + "(); \n\n" + "if ("
+												+ metaData.getRealClassNameAsVariable() + "DTO.get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "() != null) {"
+												+ member.getRealClassVariableName() + " = service"
+												+ member.getRealClassName() + logicAux + ".findById" + "("
+												+ metaData.getRealClassNameAsVariable() + "DTO.get"
+												+ tmpFinalParam1.substring(0, 1).toUpperCase()
+												+ tmpFinalParam1.substring(1) + "()).get(); \n } \n\n" + "if ("
+												+ member.getRealClassVariableName() + "!= null) { \n"
+												+ metaData.getRealClassNameAsVariable() + ".set"
+												+ member.getRealClassName() + "(" + member.getRealClassVariableName()
+												+ "); \n	}";
 
 										logicAux++;
 										finalParam2.add(tmp3);
@@ -2783,5 +2999,4 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 	}
 
-	
 }

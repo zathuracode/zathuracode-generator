@@ -1,4 +1,4 @@
-package  ${virginPackage}.service;
+package  ${virginPackage}.entity.service;
 
 
 import java.math.*;
@@ -68,7 +68,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 			
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)			
-    public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity) throws Exception {
+    public ${metaData.getRealClassName()} save(${metaData.getRealClassName()} entity) throws VortexbirdException {
 		log.debug("saving ${metaData.getRealClassName()} instance");
 	   
 	    
@@ -78,10 +78,6 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 		
 		validate(entity);	
 	
-		if(${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())){
-           throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        }    
-	
 	    return ${metaData.getRealClassNameAsVariable()}Repository.save(entity);
 	   
     }
@@ -89,7 +85,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 			
 			@Override
 			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-            public void delete(${metaData.getRealClassName()} entity) throws Exception {
+            public void delete(${metaData.getRealClassName()} entity) throws VortexbirdException {
             	log.debug("deleting ${metaData.getRealClassName()} instance");
             	
 	            if(entity==null){
@@ -106,7 +102,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
                     }
             #end
             
-            if(${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())==false){
+            if(!${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())){
            		throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
         	} 
             
@@ -118,7 +114,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 	                    #else
 							List<${member.getRealClassName()}> ${member.name} = entidad.get${member.getRealClassName()}s();
 						#end
-	                    if(Utilities.validationsList(${member.name})==true){
+	                    if(Utilities.validationsList(${member.name})){
                        	 	throw new ZMessManager().new DeletingException("${member.name}");
                         }
 	                #end
@@ -137,7 +133,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
             
             @Override
 			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-            public void deleteById(${metaData.primaryKey.getRealClassName()} id) throws Exception {            
+            public void deleteById(${metaData.primaryKey.getRealClassName()} id) throws VortexbirdException {            
             	log.debug("deleting ${metaData.getRealClassName()} instance");
             	if(id==null){
             		throw new ZMessManager().new EmptyFieldException("${metaData.primaryKey.getShowName()}");
@@ -147,10 +143,10 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
            			delete(optional${metaData.getRealClassName()}.get());
        			}    
             }	
-			
+			                                                                                                                                                                                                                                                                                                                                                                              
 			@Override
 			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-            public ${metaData.getRealClassName()} update(${metaData.getRealClassName()} entity) throws Exception {
+            public ${metaData.getRealClassName()} update(${metaData.getRealClassName()} entity) throws VortexbirdException {
 
 				log.debug("updating ${metaData.getRealClassName()} instance");
 				
@@ -163,7 +159,7 @@ public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.get
 	            validate(entity);
 	            
 	            
-	            if(${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())==false){
+	            if(!${metaData.getRealClassNameAsVariable()}Repository.existsById(entity.get${metaData.primaryKey.getGetNameOfPrimaryName()}())){
            			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
         		}	            
 	

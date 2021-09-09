@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
+import ${virginPackage}.entity.service.${metaData.getRealClassName()}Service;
+
 /**
 * @author Zathura Code Generator Version 9.0 http://zathuracode.org/
 * www.zathuracode.org
@@ -17,14 +19,14 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 */
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ${metaData.getRealClassName()}ServiceTest{
+class ${metaData.getRealClassName()}ServiceTest{
 
 	@Autowired
 	private ${metaData.getRealClassName()}Service ${metaData.getRealClassNameAsVariable()}Service;
 
 	@Test
 	@DisplayName("findAll")
-	public void findAll(){
+	void findAll(){
 		//Arrange
 		
 		//Act
@@ -35,7 +37,7 @@ public class ${metaData.getRealClassName()}ServiceTest{
 
 	@Test
 	@DisplayName("save")
-    public void save() throws Exception {
+    void save() throws Exception {
     	//Arrange
 		
 		//Act
@@ -47,7 +49,7 @@ public class ${metaData.getRealClassName()}ServiceTest{
 
 	@Test
 	@DisplayName("delete")
-	public void delete() throws Exception {
+	void delete() throws Exception {
 		//Arrange
 		
 		//Act
@@ -58,7 +60,7 @@ public class ${metaData.getRealClassName()}ServiceTest{
 
     @Test
 	@DisplayName("deleteById")
-    public void deleteById() throws Exception {
+    void deleteById() throws Exception {
     	//Arrange
 		
 		//Act
@@ -69,7 +71,7 @@ public class ${metaData.getRealClassName()}ServiceTest{
 
 	@Test
 	@DisplayName("update")
-    public void update() throws Exception {
+    void update() throws Exception {
     	//Arrange
 		
 		//Act
@@ -80,7 +82,7 @@ public class ${metaData.getRealClassName()}ServiceTest{
 
 	@Test
 	@DisplayName("findById")
-    public void findById() throws Exception {
+    void findById() throws Exception {
     	//Arrange
 		
 		//Act
@@ -91,7 +93,7 @@ public class ${metaData.getRealClassName()}ServiceTest{
 
 	@Test
 	@DisplayName("count")
-    public void count() throws Exception {
+    void count() throws Exception {
     	//Arrange
 		
 		//Act

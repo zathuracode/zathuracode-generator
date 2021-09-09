@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 * 
 */
 @Entity
-@Table ( name="${databaseName}", schema="${schema}" )
+@Table ( name="${databaseName}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,7 +41,12 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
 	#else
 		@Id
 	    @Column(name="${primaryKey.getDatabaseName()}", unique=true, nullable=false)
-		@NotNull
+	     #if(${connectionDriverClass}=='oracle.jdbc.driver.OracleDriver')
+	    	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CALL_SEQ_${databaseName}")
+			@SequenceGenerator(sequenceName = "SEQ_${databaseName}", allocationSize = 1, name = "CALL_SEQ_${databaseName}")
+	    #else
+	    	@GeneratedValue(strategy = GenerationType.IDENTITY)
+		#end
 		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};
 	#end
 	

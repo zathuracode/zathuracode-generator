@@ -1,4 +1,4 @@
-package  ${virginPackage}.service;
+package  ${virginPackage}.entity.service;
 
 
 import java.math.*;

@@ -1,11 +1,11 @@
-package ${virginPackage}.controller;
+package ${virginPackage}.entity.controller;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
 import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
-import ${virginPackage}.service.${metaData.getRealClassName()}Service;
-
+import ${virginPackage}.entity.service.${metaData.getRealClassName()}Service;
+import ${virginPackage}.exception.VortexbirdException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +47,7 @@ public class ${metaData.getRealClassName()}RestController {
     #else
     	@GetMapping(value = "/{${primaryKey.getShowName()}}")
     #end
-    public ResponseEntity<?> findById(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) throws Exception{
+    public ResponseEntity<?> findById(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) throws VortexbirdException{
     	log.debug("Request to findById() ${metaData.getRealClassName()}");
 
     		#if (${primaryKey.isPrimiaryKeyAComposeKey()})
@@ -60,12 +60,12 @@ public class ${metaData.getRealClassName()}RestController {
 
 				Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()} = documentTypeService.findById(dotyId);
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()==true?optional${metaData.getRealClassName()}.get():null;
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()?optional${metaData.getRealClassName()}.get():null;
 						
 			#else
 				Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()}=${metaData.getRealClassNameAsVariable()}Service.findById(${primaryKey.getShowName()});
 				
-				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()==true?optional${metaData.getRealClassName()}.get():null;
+				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()?optional${metaData.getRealClassName()}.get():null;
 			#end
 
 		return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}));
@@ -73,7 +73,7 @@ public class ${metaData.getRealClassName()}RestController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> findAll()throws Exception{
+    public ResponseEntity<?> findAll()throws VortexbirdException{
     	log.debug("Request to findAll() ${metaData.getRealClassName()}");
 
 		return ResponseEntity.ok().body(${metaData.getRealClassNameAsVariable()}Mapper.list${metaData.getRealClassName()}ToList${metaData.getRealClassName()}DTO(${metaData.getRealClassNameAsVariable()}Service.findAll()));
@@ -81,7 +81,7 @@ public class ${metaData.getRealClassName()}RestController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> save(@Valid @RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws Exception {
+    public ResponseEntity<?> save(@Valid @RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws VortexbirdException {
     	log.debug("Request to save ${metaData.getRealClassName()}: {}", ${metaData.getRealClassNameAsVariable()}DTO);
 
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
@@ -91,7 +91,7 @@ public class ${metaData.getRealClassName()}RestController {
     }
 
     @PutMapping()
-    public ResponseEntity<?> update(@Valid @RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws Exception {
+    public ResponseEntity<?> update(@Valid @RequestBody ${metaData.getRealClassName()}DTO ${metaData.getRealClassNameAsVariable()}DTO)throws VortexbirdException {
     	log.debug("Request to update ${metaData.getRealClassName()}: {}", ${metaData.getRealClassNameAsVariable()}DTO);
 
     		${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = ${metaData.getRealClassNameAsVariable()}Mapper.${metaData.getRealClassNameAsVariable()}DTOTo${metaData.getRealClassName()}(${metaData.getRealClassNameAsVariable()}DTO);
@@ -106,7 +106,7 @@ public class ${metaData.getRealClassName()}RestController {
     #else
     	@DeleteMapping(value = "/{${primaryKey.getShowName()}}")
     #end
-    public ResponseEntity<?> delete(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) throws Exception {
+    public ResponseEntity<?> delete(#if (${primaryKey.isPrimiaryKeyAComposeKey()}) #foreach($cka in $composeKeyAttributes) @PathVariable("${cka.getShowName()}") ${cka.getType().getSimpleName()} ${cka.getShowName()} #if($foreach.hasNext) , #end #end #else @PathVariable("${primaryKey.getShowName()}") ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()}#end) throws VortexbirdException {
     	log.debug("Request to delete ${metaData.getRealClassName()}");
 
 

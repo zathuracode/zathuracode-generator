@@ -19,15 +19,14 @@ import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.MetaDataModel;
 import org.zcode.metadata.model.SimpleMember;
 
-
 /**
- * Zathuracode Generator
- * www.zathuracode.org
+ * Zathuracode Generator www.zathuracode.org
+ * 
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
 public class SkyJetUtilities {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SkyJetUtilities.class);
 
 	/** The instance. */
@@ -54,56 +53,56 @@ public class SkyJetUtilities {
 
 	/** The length. */
 	public Long length;
-	
+
 	/** The precision. */
 	public Long precision;
-	
+
 	/** The scale. */
 	public Long scale;
-	
+
 	/** The nullable. */
 	public Boolean nullable;
 
 	/** The ifcondition. */
 	public String ifcondition = "if(";
-	
+
 	/** The ifcondition close. */
 	public String ifconditionClose = "){";
-	
+
 	/** The throw exception null. */
 	public String throwExceptionNull = "throw new ZMessManager().new EmptyFieldException(";
-	
+
 	/** The throw exception length. */
 	public String throwExceptionLength = "throw new ZMessManager().new NotValidFormatException(";
-	
+
 	/** The throw exception close. */
 	public String throwExceptionClose = ");}";
 
 	/** The dates. */
 	public List<String> dates;
-	
+
 	/** The dates jsp. */
 	public List<String> datesJSP;
-	
+
 	/** The dates id. */
 	public List<String> datesId;
-	
+
 	/** The dates id jsp. */
 	public List<String> datesIdJSP;
-	
+
 	/** The many to one temp hash. */
 	public HashMap<String, Member> manyToOneTempHash;
-	
-	/** Properties to data type and name member class  @author Mauricio */
+
+	/** Properties to data type and name member class @author Mauricio */
 	public HashMap<String, String> dtoProperties;
-	/** name to member class to generate dto  @author Mauricio */
+	/** name to member class to generate dto @author Mauricio */
 	public List<String> nameMemberToDto;
-	
+
 	// getTypeAndvariableForManyToOneProperties
 	/**
 	 * Gets the type andvariable for many to one properties.
 	 *
-	 * @param strClass the str class
+	 * @param strClass    the str class
 	 * @param theMetaData the meta data
 	 * @return the type andvariable for many to one properties
 	 */
@@ -130,7 +129,8 @@ public class SkyJetUtilities {
 
 						String name = field2.getName();
 
-						String realType = field2.getType().toString().substring((field2.getType().toString()).lastIndexOf(".") + 1,
+						String realType = field2.getType().toString().substring(
+								(field2.getType().toString()).lastIndexOf(".") + 1,
 								(field2.getType().toString()).length());
 
 						ret[contTmp] = realType;
@@ -162,13 +162,14 @@ public class SkyJetUtilities {
 	/**
 	 * Adds the variables values to list depending on data type for id.
 	 *
-	 * @param finalParam2 the final param2
-	 * @param field the field
+	 * @param finalParam2  the final param2
+	 * @param field        the field
 	 * @param variableName the variable name
-	 * @param clazz the clazz
+	 * @param clazz        the clazz
 	 * @return the list< string>
 	 */
-	public List<String> addVariablesValuesToListDependingOnDataTypeForID(List<String> finalParam2, Field field, String variableName, String methodAccesorName, Class clazz) {
+	public List<String> addVariablesValuesToListDependingOnDataTypeForID(List<String> finalParam2, Field field,
+			String variableName, String methodAccesorName, Class clazz) {
 
 		String realClassName = field.getType().getSimpleName();
 
@@ -178,33 +179,42 @@ public class SkyJetUtilities {
 
 		if (realClassName.equalsIgnoreCase("String")) {
 			if (!length.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkWordAndCheckWithlength(" + methodAccesorName + "," + length + ")==false"
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkWordAndCheckWithlength(" + methodAccesorName + "," + length + ")==false"
 						+ ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
 
 		}
 
 		if (realClassName.equalsIgnoreCase("Integer")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\""
+						+ variableName + "\"" + throwExceptionClose);
 		}
 
 		if (realClassName.equalsIgnoreCase("Double")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ precision + "," + scale + ")==false" + ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ precision + "," + scale + ")==false" + ifconditionClose + throwExceptionLength + "\""
+						+ variableName + "\"" + throwExceptionClose);
 		}
 
 		if (realClassName.equalsIgnoreCase("Long")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\""
+						+ variableName + "\"" + throwExceptionClose);
 		}
 
 		if (realClassName.equalsIgnoreCase("Float")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ precision + "," + scale + ")==false" + ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ precision + "," + scale + ")==false" + ifconditionClose + throwExceptionLength + "\""
+						+ variableName + "\"" + throwExceptionClose);
 		}
 
 		return finalParam2;
@@ -213,8 +223,8 @@ public class SkyJetUtilities {
 	/**
 	 * Builds the string to check lengths.
 	 *
-	 * @param field the field
-	 * @param clazz the clazz
+	 * @param field         the field
+	 * @param clazz         the clazz
 	 * @param realClassName the real class name
 	 */
 	public void buildStringToCheckLengths(Field field, Class clazz, String realClassName) {
@@ -278,48 +288,55 @@ public class SkyJetUtilities {
 	/**
 	 * Adds the variables values to list depending on data type.
 	 *
-	 * @param finalParam2 the final param2
+	 * @param finalParam2   the final param2
 	 * @param realClassName the real class name
-	 * @param variableName the variable name
-	 * @param precision the precision
-	 * @param scale the scale
-	 * @param length the length
+	 * @param variableName  the variable name
+	 * @param precision     the precision
+	 * @param scale         the scale
+	 * @param length        the length
 	 * @return the list< string>
 	 */
-	public List<String> addVariablesValuesToListDependingOnDataType(List<String> finalParam2, String realClassName, String variableName, String methodAccesorName, String precision,
-			String scale, String length) {
+	public List<String> addVariablesValuesToListDependingOnDataType(List<String> finalParam2, String realClassName,
+			String variableName, String methodAccesorName, String precision, String scale, String length) {
 
 		if (realClassName.equalsIgnoreCase("String")) {
 			if (!length.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkWordAndCheckWithlength(" + methodAccesorName + "," + length + ")==false"
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkWordAndCheckWithlength(" + methodAccesorName + "," + length + ")==false"
 						+ ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
 
 		}
 
 		if (realClassName.equalsIgnoreCase("Integer")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\""
+						+ variableName + "\"" + throwExceptionClose);
 		}
 
 		if (realClassName.equalsIgnoreCase("Double")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ (new Integer(precision) - new Integer(scale)) + "," + scale + ")==false" + ifconditionClose + throwExceptionLength + "\""
-						+ variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ (new Integer(precision) - new Integer(scale)) + "," + scale + ")==false" + ifconditionClose
+						+ throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
 		}
 
 		if (realClassName.equalsIgnoreCase("Long")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ precision + "," + 0 + ")==false" + ifconditionClose + throwExceptionLength + "\""
+						+ variableName + "\"" + throwExceptionClose);
 		}
 
 		if (realClassName.equalsIgnoreCase("Float")) {
 			if (!precision.equals("0"))
-				finalParam2.add(ifcondition + methodAccesorName + "!=null && " + "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
-						+ (new Integer(precision) - new Integer(scale)) + "," + scale + ")==false" + ifconditionClose + throwExceptionLength + "\""
-						+ variableName + "\"" + throwExceptionClose);
+				finalParam2.add(ifcondition + methodAccesorName + "!=null && "
+						+ "Utilities.checkNumberAndCheckWithPrecisionAndScale(\"\"+" + methodAccesorName + ","
+						+ (new Integer(precision) - new Integer(scale)) + "," + scale + ")==false" + ifconditionClose
+						+ throwExceptionLength + "\"" + variableName + "\"" + throwExceptionClose);
 		}
 
 		return finalParam2;
@@ -328,7 +345,7 @@ public class SkyJetUtilities {
 	/**
 	 * Gets the related classes.
 	 *
-	 * @param metaData the meta data
+	 * @param metaData  the meta data
 	 * @param dataModel the data model
 	 * @return the related classes
 	 */
@@ -363,8 +380,8 @@ public class SkyJetUtilities {
 	 * Gets the related classes.
 	 *
 	 * @param dataModel the data model
-	 * @param member the member
-	 * @param imports the imports
+	 * @param member    the member
+	 * @param imports   the imports
 	 */
 	public void getRelatedClasses(MetaDataModel dataModel, Member member, List<String> imports) {
 
@@ -391,7 +408,8 @@ public class SkyJetUtilities {
 		String[] tmp = (firstLetters.replace(".", "%")).split("%");
 
 		if (tmp != null) {
-			if ((tmp[0].equalsIgnoreCase("java") && tmp[1].equalsIgnoreCase("lang")) || (tmp[0].equalsIgnoreCase("java") && tmp[1].equalsIgnoreCase("util"))) {
+			if ((tmp[0].equalsIgnoreCase("java") && tmp[1].equalsIgnoreCase("lang"))
+					|| (tmp[0].equalsIgnoreCase("java") && tmp[1].equalsIgnoreCase("util"))) {
 				ret = false;
 			} else {
 				ret = true;
@@ -442,7 +460,8 @@ public class SkyJetUtilities {
 	 */
 	public Object isFinalParamForIdClassAsVariablesForDates() {
 		if (SkyJetUtilities.getInstance().datesIdJSP != null) {
-			if (!SkyJetUtilities.getInstance().datesIdJSP.isEmpty() && SkyJetUtilities.getInstance().datesIdJSP.size() > 0) {
+			if (!SkyJetUtilities.getInstance().datesIdJSP.isEmpty()
+					&& SkyJetUtilities.getInstance().datesIdJSP.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -459,7 +478,8 @@ public class SkyJetUtilities {
 	 */
 	public Object isFinalParamDatesAsList() {
 		if (SkyJetUtilities.getInstance().datesJSP != null) {
-			if (!SkyJetUtilities.getInstance().datesJSP.isEmpty() && SkyJetUtilities.getInstance().datesJSP.size() > 0) {
+			if (!SkyJetUtilities.getInstance().datesJSP.isEmpty()
+					&& SkyJetUtilities.getInstance().datesJSP.size() > 0) {
 				return true;
 			} else {
 				return false;
@@ -507,7 +527,8 @@ public class SkyJetUtilities {
 				}
 			} else {
 
-				Member member = new SimpleMember(metaData.getPrimaryKey().getName(), metaData.getPrimaryKey().getName(), metaData.getPrimaryKey().getType(), -1);
+				Member member = new SimpleMember(metaData.getPrimaryKey().getName(), metaData.getPrimaryKey().getName(),
+						metaData.getPrimaryKey().getType(), -1);
 
 				member.setLength(metaData.getPrimaryKey().getLength());
 				member.setPrecision(metaData.getPrimaryKey().getPrecision());
@@ -525,42 +546,48 @@ public class SkyJetUtilities {
 	/**
 	 * Builds the folders.
 	 *
-	 * @param packageName the package name
+	 * @param packageName      the package name
 	 * @param hardDiskLocation the hard disk location
 	 * @param specificityLevel the specificity level
-	 * @param packageOriginal the package original
-	 * @param properties the properties
+	 * @param packageOriginal  the package original
+	 * @param properties       the properties
 	 */
-	public void buildFoldersJava(String packageName, String hardDiskLocation, Integer specificityLevel, String packageOriginal, Properties properties) {
+	public void buildFoldersJava(String packageName, String hardDiskLocation, Integer specificityLevel,
+			String packageOriginal, Properties properties) {
 
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";
 		String modelPckg = packageOriginal.replace('.', '_') + "_";
 
 		String model = modelPckg;
-	
+
 		List<String> folderBuilder = new ArrayList<String>();
 
 		folderBuilder.add(pckge);
-		
+
 		folderBuilder.add(pckge + "exception");
 
 		folderBuilder.add(pckge + "utility");
-		
+
 		folderBuilder.add(pckge + "controller");
-		
+
 		folderBuilder.add(model);
-		
+
 		folderBuilder.add(pckge + "repository");
 
 		folderBuilder.add(pckge + "service");
-		
+
 		folderBuilder.add(pckge + "mapper");
 
 		folderBuilder.add(pckge + "dto");
-		
+
 		folderBuilder.add(pckge + "security");
 
+		folderBuilder.add(pckge + "entity");
+
+		folderBuilder.add(pckge + "entity_service");
+
+		folderBuilder.add(pckge + "entity_controller");
 
 		for (String string : folderBuilder) {
 			try {
@@ -571,32 +598,37 @@ public class SkyJetUtilities {
 		}
 
 	}
-	
+
 	/**
 	 * Builds the folders.
 	 *
-	 * @param packageName the package name
+	 * @param packageName      the package name
 	 * @param hardDiskLocation the hard disk location
 	 * @param specificityLevel the specificity level
-	 * @param packageOriginal the package original
-	 * @param properties the properties
+	 * @param packageOriginal  the package original
+	 * @param properties       the properties
 	 */
-	public void buildFoldersTest(String packageName, String hardDiskLocation, Integer specificityLevel, String packageOriginal, Properties properties) {
+	public void buildFoldersTest(String packageName, String hardDiskLocation, Integer specificityLevel,
+			String packageOriginal, Properties properties) {
 
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";
 		String modelPckg = packageOriginal.replace('.', '_') + "_";
 
 		String model = modelPckg;
-	
+
 		List<String> folderBuilder = new ArrayList<String>();
 
 		folderBuilder.add(pckge);
-		
-		//folderBuilder.add(pckge + "controller");
-		
+
+		// folderBuilder.add(pckge + "controller");
+
 		folderBuilder.add(pckge + "service");
 		
+		folderBuilder.add(pckge + "integration");
+		
+		folderBuilder.add(pckge + "builder");
+
 		for (String string : folderBuilder) {
 			try {
 				GeneratorUtil.validateDirectory(string, properties.getProperty("testJava"));
@@ -606,6 +638,7 @@ public class SkyJetUtilities {
 		}
 
 	}
+
 	/**
 	 * Gets the get name of primary name.
 	 *
@@ -633,9 +666,9 @@ public class SkyJetUtilities {
 
 	public String camelCaseToUnderScore(String name) {
 
-		String replaceString=name.replaceAll("([A-Z]+)","\\_$1").toLowerCase(); 
+		String replaceString = name.replaceAll("([A-Z]+)", "\\_$1").toLowerCase();
 
 		return replaceString;
 	}
-	
+
 }

@@ -8,14 +8,14 @@ package ${virginPackage}.exception;
 public class ZMessManager extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public final static String ALL = "All ";
-	public final static String ENTCHILD = "related tables(childs)";
-	public final static String FOREIGNDATA = "foreign classes data: ";
-	public static String ENTITY_SUCCESFULLYSAVED = "Entity succesfully saved";
-	public static String ENTITY_SUCCESFULLYDELETED = "Entity succesfully deleted";
-	public static String ENTITY_SUCCESFULLYMODIFIED = "Entity succesfully modified";
-	public static String ENTITY_WITHSAMEKEY = "Another Entity with the same key was found";
-	public static String ENTITY_NOENTITYTOUPDATE = "No Entity was found, with the typed key ";
+	public static final String ALL = "All ";
+	public static final String ENTCHILD = "related tables(childs)";
+	public static final String FOREIGNDATA = "foreign classes data: ";
+	public static final String ENTITY_SUCCESFULLYSAVED = "Entity succesfully saved";
+	public static final String ENTITY_SUCCESFULLYDELETED = "Entity succesfully deleted";
+	public static final String ENTITY_SUCCESFULLYMODIFIED = "Entity succesfully modified";
+	public static final String ENTITY_WITHSAMEKEY = "Another Entity with the same key was found";
+	public static final String ENTITY_NOENTITYTOUPDATE = "No Entity was found, with the typed key ";
 
 	public ZMessManager() {
 	}

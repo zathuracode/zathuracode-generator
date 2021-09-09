@@ -1,4 +1,4 @@
-package ${virginPackage}.controller;
+package ${virginPackage}.entity.controller;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ${virginPackage}.exception.VortexbirdException;
 
 /**
  * * Handle all exceptions and java bean validation errors
@@ -83,16 +84,22 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 	/**
 	 * A general handler for all uncaught exceptions
 	 */
-	@ExceptionHandler({Exception.class})
-	public ResponseEntity<Object> handleAllExceptions(Exception exception, WebRequest request) {
-		ResponseStatus responseStatus =
-				exception.getClass().getAnnotation(ResponseStatus.class);
-		final HttpStatus status =
-				responseStatus!=null ? responseStatus.value():HttpStatus.INTERNAL_SERVER_ERROR;
-		final String localizedMessage = exception.getLocalizedMessage();
+	@ExceptionHandler({ VortexbirdException.class })
+	public ResponseEntity<Object> handleAllExceptions(VortexbirdException exception, WebRequest request) {
+		if (exception == null) {
+			return getExceptionResponseEntity(exception, HttpStatus.INTERNAL_SERVER_ERROR, request,
+					Collections.singletonList("null"));
+		}
+		final HttpStatus status = exception.getCode() != null ? HttpStatus.valueOf(exception.getCode())
+				: HttpStatus.INTERNAL_SERVER_ERROR;
+		final String localizedMessage = exception.getException() != null ? exception.getException()
+				: exception.getLocalizedMessage();
 		final String path = request.getDescription(false);
-		String message = (StringUtils.isNotEmpty(localizedMessage) ? localizedMessage:status.getReasonPhrase());
+
+		String message = (StringUtils.isNotEmpty(localizedMessage) ? localizedMessage : status.getReasonPhrase());
+
 		logger.error(String.format(ERROR_MESSAGE_TEMPLATE, message, path), exception);
+
 		return getExceptionResponseEntity(exception, status, request, Collections.singletonList(message));
 	}
 

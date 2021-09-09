@@ -1,0 +1,14 @@
+package ${virginPackage}.exception;
+
+public class ConfigException extends VortexbirdException {
+
+private static final long serialVersionUID = 1L;
+	
+	public ConfigException(String exception) {
+        super(412, exception, null);
+    }
+    
+    public ConfigException(String exception, Exception e) {
+        super(412, exception, e);
+    }
+}

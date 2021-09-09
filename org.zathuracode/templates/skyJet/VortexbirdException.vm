@@ -1,0 +1,24 @@
+package ${virginPackage}.exception;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class VortexbirdException extends Exception {
+    private static final long serialVersionUID = 1L;
+    private final Integer code;
+    private final String exception;
+
+    public VortexbirdException(Integer code, String exception, Exception e) {
+    	super(e);
+    	this.code = code;
+    	this.exception = exception;
+    }
+
+    public VortexbirdException(String exception, Exception e) {
+    	super(e);
+    	this.code = null;
+    	this.exception = exception;
+    }
+}
